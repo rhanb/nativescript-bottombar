@@ -9,11 +9,11 @@ tns plugin add nativescript-bottomnavigation
 
 ## Usage
 
+```xml
 ...
 xmlns:bottomnav="nativescript-bottomnavigation"
 ...
 
-```xml
 <bottomnav:BottomNavigation tabSelected="tabSelected">
   <bottomnav:BottomNavigation.items>
     <bottomnav:BottomNavigationItem title="Cake" icon="ic_cake_white_24dp" color="#4CAF50" />
