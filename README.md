@@ -12,6 +12,8 @@ tns plugin add nativescript-bottomnavigation
 ...
 xmlns:bottomnav="nativescript-bottomnavigation"
 ...
+
+```xml
 <bottomnav:BottomNavigation tabSelected="tabSelected">
   <bottomnav:BottomNavigation.items>
     <bottomnav:BottomNavigationItem title="Cake" icon="ic_cake_white_24dp" color="#4CAF50" />
@@ -19,3 +21,4 @@ xmlns:bottomnav="nativescript-bottomnavigation"
     <bottomnav:BottomNavigationItem title="Settings" icon="ic_settings_white_24dp" color="#FF4081" />
   </bottomnav:BottomNavigation.items>
 </bottomnav:BottomNavigation>
+```
