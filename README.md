@@ -4,8 +4,9 @@ NativeScript plugin for AHBottomNavigation.
 https://github.com/aurelhubert/ahbottomnavigation
 
 ## Install
-
+```bash
 tns plugin add nativescript-bottomnavigation
+```xml
 
 ## Usage
 
