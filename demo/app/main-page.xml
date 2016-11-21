@@ -1,0 +1,16 @@
+<Page 
+	xmlns="http://schemas.nativescript.org/tns.xsd" 
+	xmlns:bottomnav="nativescript-bottomnavigation" loaded="pageLoaded">
+	<GridLayout rows="*, auto">
+		<Label row="0" text="Hello" class="message" textWrap="true" />
+		<GridLayout row="1">
+			<bottomnav:BottomNavigation tabSelected="tabSelected">
+				<bottomnav:BottomNavigation.items>
+					<bottomnav:BottomNavigationItem title="Cake" icon="ic_cake_white_24dp" color="#4CAF50" />
+					<bottomnav:BottomNavigationItem title="Favorites" icon="ic_favorite_white_24dp" color="#2196F3" />
+					<bottomnav:BottomNavigationItem title="Settings" icon="ic_settings_white_24dp" color="#FF4081" />
+				</bottomnav:BottomNavigation.items>
+			</bottomnav:BottomNavigation>
+		</GridLayout>
+	</GridLayout>
+</Page>

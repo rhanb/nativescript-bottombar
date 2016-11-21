@@ -1,0 +1,12 @@
+//default elements
+android {
+    productFlavors {
+        "nativescriptbottomnavigation" {
+            dimension "nativescriptbottomnavigation"
+        }
+    }
+}
+
+dependencies {
+	compile 'com.aurelhubert:ahbottomnavigation:2.0.1'
+}

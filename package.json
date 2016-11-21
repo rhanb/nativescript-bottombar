@@ -1,0 +1,47 @@
+{
+	"name": "nativescript-bottomnavigation",
+	"version": "1.0.0",
+	"description": "NativeScript plugin for AHBottomNavigation.",
+	"main": "bottomnavigation.js",
+	"nativescript": {
+		"platforms": {
+			"android": "2.3.0"
+		}
+	},
+	"scripts": {
+		"build": "tsc",
+    "demo.ios": "npm run preparedemo && cd demo && tns emulate ios",
+		"demo.android": "npm run preparedemo && cd demo && tns run android",
+		"preparedemo": "npm run build && cd demo && tns plugin remove nativescript-bottomnavigation && tns plugin add .. && tns install",
+		"setup": "cd demo && npm install && cd .. && npm run build && cd demo && tns plugin add .. && cd .."
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kobby-sun/nativescript-bottomnavigation.git"
+	},
+	"keywords": [
+		"NativeScript",
+		"JavaScript",
+		"TypeScript",
+		"Material Design",
+		"bottom navigation",
+		"tab navigation",
+		"Android"
+	],
+	"author": {
+		"name": "Kobby Sun",
+		"email": "kobbysun@gmail.com"
+	},
+	"bugs": {
+		"url": "https://github.com/kobby-sun/nativescript-bottomnavigation/issues"
+	},
+	"license": {
+		"type": "MIT",
+		"url": "https://github.com/kobby-sun/nativescript-bottomnavigation/blob/master/LICENSE"
+	},
+	"homepage": "https://github.com/kobby-sun/nativescript-bottomnavigation",
+	"readmeFilename": "README.md",
+	"devDependencies": {
+		"typescript": "^2.0.10"
+	}
+}
