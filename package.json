@@ -1,6 +1,6 @@
 {
 	"name": "nativescript-bottomnavigation",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "NativeScript plugin for AHBottomNavigation.",
 	"main": "bottomnavigation.js",
 	"nativescript": {
