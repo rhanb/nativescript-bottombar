@@ -8,6 +8,7 @@
     },
     "files": [
       "demo/node_modules/tns-core-modules/tns-core-modules.d.ts",
+      "bottomnavigation.d.ts", 
       "bottomnavigation.android.ts", 
       "bottomnavigation.ios.ts"
     ],

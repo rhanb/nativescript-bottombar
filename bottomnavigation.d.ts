@@ -28,8 +28,5 @@ declare module "nativescript-bottomnavigation"
         public _addChildFromBuilder(name: string, value: any): void;
         
         public insertTab(tabItem: BottomNavigationItem, index?: number): void;
-
-        ios: any;
-        android: com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
     }
 }

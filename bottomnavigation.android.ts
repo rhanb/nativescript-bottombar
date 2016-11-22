@@ -29,8 +29,8 @@ export class BottomNavigationItem extends common.BottomNavigationItem {
 }
 
 export class BottomNavigation extends common.BottomNavigation {
-    private _android: AHBottomNavigation;
-    public _listener: AHBottomNavigation.OnTabSelectedListener;
+    private _android: any;
+    public _listener: any;
 
     get android(): any {
         return this._android;
