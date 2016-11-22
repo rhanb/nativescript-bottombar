@@ -7,18 +7,14 @@ import { PropertyMetadataSettings, Property, PropertyChangeData } from "ui/core/
 import { View } from "ui/core/view";
 import { Color } from "color";
 import * as imageSource from "image-source";
-var stringify = require('json-stringify-safe');
-
-
-let BitmapDrawable = android.graphics.drawable.BitmapDrawable;
-let AHBottomNavigation = com.aurelhubert.ahbottomnavigation.AHBottomNavigation; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigation.java#L1
-let AHBottomNavigationItem = com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigationItem.java#L86
-
 
 declare var com, android: any;
 
 global.moduleMerge(common, exports);
 
+let BitmapDrawable = android.graphics.drawable.BitmapDrawable;
+let AHBottomNavigation = com.aurelhubert.ahbottomnavigation.AHBottomNavigation; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigation.java#L1
+let AHBottomNavigationItem = com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigationItem.java#L86
 
 export class BottomNavigationItem extends common.BottomNavigationItem {
     public _update() {
