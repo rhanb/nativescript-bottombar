@@ -1,3 +1,6 @@
+[![npm](https://img.shields.io/npm/v/nativescript-bottomnavigation.svg)](https://www.npmjs.com/package/nativescript-bottomnavigation)
+[![npm](https://img.shields.io/npm/dt/nativescript-bottomnavigation.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-bottomnavigation)
+
 # NativeScript Bottom Navigation
 
 NativeScript plugin for AHBottomNavigation.
