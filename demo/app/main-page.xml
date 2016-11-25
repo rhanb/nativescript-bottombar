@@ -2,7 +2,7 @@
 	xmlns="http://schemas.nativescript.org/tns.xsd" 
 	xmlns:bn="nativescript-bottomnavigation" loaded="pageLoaded">
 	<GridLayout rows="*, auto">
-		<Label row="0" text="Hello" class="message" textWrap="true" />
+		<Label row="0" text="{{ message || 'Hello' }}" class="message" textWrap="true" />
 		<GridLayout row="1">
 			<bn:BottomNavigation tabSelected="tabSelected">
 				<bn:BottomNavigation.items>
