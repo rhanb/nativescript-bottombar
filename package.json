@@ -5,7 +5,7 @@
 	"main": "bottomnavigation.js",
 	"nativescript": {
 		"platforms": {
-			"android": "2.3.0"
+			"android": "2.4.0"
 		}
 	},
 	"scripts": {
