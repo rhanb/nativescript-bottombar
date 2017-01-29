@@ -5,4 +5,5 @@ demo/app/*.js
 demo/*.d.ts
 demo/platforms
 demo/node_modules
+demo/.tmp_backup
 node_modules

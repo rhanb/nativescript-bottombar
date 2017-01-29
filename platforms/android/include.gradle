@@ -8,5 +8,5 @@ android {
 }
 
 dependencies {
-	compile 'com.aurelhubert:ahbottomnavigation:2.0.1'
+	compile 'com.aurelhubert:ahbottomnavigation:2.0.4'
 }

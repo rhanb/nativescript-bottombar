@@ -1,11 +1,11 @@
 {
 	"name": "nativescript-bottomnavigation",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "NativeScript plugin for AHBottomNavigation.",
 	"main": "bottomnavigation.js",
 	"nativescript": {
 		"platforms": {
-			"android": "2.3.0"
+			"android": "2.4.1"
 		}
 	},
 	"scripts": {
@@ -42,6 +42,6 @@
 	"homepage": "https://github.com/kobby-sun/nativescript-bottomnavigation",
 	"readmeFilename": "README.md",
 	"devDependencies": {
-		"typescript": "^2.0.10"
+		"typescript": "^2.1.5"
 	}
 }
