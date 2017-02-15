@@ -7,3 +7,4 @@ demo/platforms
 demo/node_modules
 demo/.tmp_backup
 node_modules
+.idea

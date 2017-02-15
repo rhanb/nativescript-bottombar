@@ -1,16 +1,16 @@
 <Page 
 	xmlns="http://schemas.nativescript.org/tns.xsd" 
-	xmlns:bn="nativescript-bottomnavigation" loaded="pageLoaded">
+	xmlns:bn="nativescript-bottombar" loaded="pageLoaded">
 	<GridLayout rows="*, auto">
 		<Label row="0" text="{{ message || 'Hello' }}" class="message" textWrap="true" />
 		<GridLayout row="1">
-			<bn:BottomNavigation tabSelected="tabSelected">
-				<bn:BottomNavigation.items>
-					<bn:BottomNavigationItem title="Cake" icon="ic_cake_white_24dp" color="#4CAF50" />
-					<bn:BottomNavigationItem title="Favorites" icon="ic_favorite_white_24dp" color="#2196F3" />
-					<bn:BottomNavigationItem title="Settings" icon="ic_settings_white_24dp" color="#FF4081" />
-				</bn:BottomNavigation.items>
-			</bn:BottomNavigation>
+			<bn:BottomBar tabSelected="tabSelected">
+				<bn:BottomBar.items>
+					<bn:BottomBarItem title="Cake" icon="ic_cake_white_24dp" color="#4CAF50" />
+					<bn:BottomBarItem title="Favorites" icon="ic_favorite_white_24dp" color="#2196F3" />
+					<bn:BottomBarItem title="Settings" icon="ic_settings_white_24dp" color="#FF4081" />
+				</bn:BottomBar.items>
+			</bn:BottomBar>
 		</GridLayout>
 	</GridLayout>
 </Page>

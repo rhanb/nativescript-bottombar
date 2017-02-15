@@ -1,17 +1,17 @@
-declare module "nativescript-bottomnavigation"
+declare module "nativescript-bottombar"
 {
     import view = require("ui/core/view");
     import dependencyObservable = require("ui/core/dependency-observable");
     import bindable = require("ui/core/bindable");
     import observable = require("data/observable");
 
-    class BottomNavigationItem extends bindable.Bindable {
+    class BottomBarItem extends bindable.Bindable {
         public title: string;
         public icon: string;
         public color: string;
     }
 
-    export class BottomNavigation extends view.View implements view.AddChildFromBuilder
+    export class BottomBar extends view.View implements view.AddChildFromBuilder
     {
         public static tabSelectedEvent: string;
 
@@ -23,10 +23,10 @@ declare module "nativescript-bottomnavigation"
 
         selectedIndex: number;
 
-        items: Array<BottomNavigationItem>;
+        items: Array<BottomBarItem>;
 
         public _addChildFromBuilder(name: string, value: any): void;
         
-        public insertTab(tabItem: BottomNavigationItem, index?: number): void;
+        public insertTab(tabItem: BottomBarItem, index?: number): void;
     }
 }

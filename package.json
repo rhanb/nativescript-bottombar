@@ -1,47 +1,47 @@
 {
-	"name": "nativescript-bottomnavigation",
-	"version": "1.0.5",
-	"description": "NativeScript plugin for AHBottomNavigation.",
-	"main": "bottomnavigation.js",
-	"nativescript": {
-		"platforms": {
-			"android": "2.4.1"
-		}
-	},
-	"scripts": {
-		"build": "tsc",
+  "name": "nativescript-bottombar",
+  "version": "1.0.0",
+  "description": "NativeScript plugin for AHBottomNavigation.",
+  "main": "bottombar.js",
+  "nativescript": {
+    "platforms": {
+      "android": "2.4.1"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
     "demo.ios": "npm run preparedemo && cd demo && tns emulate ios",
-		"demo.android": "npm run preparedemo && cd demo && tns run android",
-		"preparedemo": "npm run build && cd demo && tns plugin remove nativescript-bottomnavigation && tns plugin add .. && tns install",
-		"setup": "cd demo && npm install && cd .. && npm run build && cd demo && tns plugin add .. && cd .."
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/kobby-sun/nativescript-bottomnavigation.git"
-	},
-	"keywords": [
-		"NativeScript",
-		"JavaScript",
-		"TypeScript",
-		"Material Design",
-		"bottom navigation",
-		"tab navigation",
-		"Android"
-	],
-	"author": {
-		"name": "Kobby Sun",
-		"email": "kobbysun@gmail.com"
-	},
-	"bugs": {
-		"url": "https://github.com/kobby-sun/nativescript-bottomnavigation/issues"
-	},
-	"license": {
-		"type": "MIT",
-		"url": "https://github.com/kobby-sun/nativescript-bottomnavigation/blob/master/LICENSE"
-	},
-	"homepage": "https://github.com/kobby-sun/nativescript-bottomnavigation",
-	"readmeFilename": "README.md",
-	"devDependencies": {
-		"typescript": "^2.1.5"
-	}
+    "demo.android": "npm run preparedemo && cd demo && tns run android",
+    "preparedemo": "npm run build && cd demo && tns plugin remove nativescript-bottombar && tns plugin add .. && tns install",
+    "setup": "cd demo && npm install && cd .. && npm run build && cd demo && tns plugin add .. && cd .."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rhanbIT/nativescript-bottombar.git"
+  },
+  "keywords": [
+    "NativeScript",
+    "JavaScript",
+    "TypeScript",
+    "Material Design",
+    "bottom navigation",
+    "tab navigation",
+    "Android"
+  ],
+  "author": {
+    "name": "Jean-Baptiste Aniel",
+    "email": "aniel.jeanbaptiste@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/rhanbIT/nativescript-bottombar/issues"
+  },
+  "homepage": "https://github.com/rhanbIT/nativescript-bottombar",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "typescript": "^2.1.5",
+    "tns-core-modules": "^2.5.0",
+    "tns-platform-declarations": "^2.5.0",
+    "prompt": "^1.0.0",
+    "rimraf": "^2.5.0"
+  }
 }

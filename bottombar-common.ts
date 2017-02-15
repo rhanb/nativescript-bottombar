@@ -1,4 +1,4 @@
-import definition = require("nativescript-bottomnavigation");
+import definition = require("nativescript-bottombar");
 import {View, AddArrayFromBuilder} from "ui/core/view";
 import {PropertyMetadataSettings, Property, PropertyChangeData} from "ui/core/dependency-observable";
 import {Bindable} from "ui/core/bindable";
@@ -11,7 +11,7 @@ import color = require("color");
 // on Android we explicitly set propertySettings to None because android will invalidate its layout (skip unnecessary native call).
 let AffectsLayout = isAndroid ? PropertyMetadataSettings.None : PropertyMetadataSettings.AffectsLayout;
 
-export var traceCategory = "BottomNavigation";
+export var traceCategory = "BottomBar";
 
 export module knownCollections {
     export var items = "items";
@@ -19,14 +19,14 @@ export module knownCollections {
 
 var ITEMS = "items";
 var SELECTED_INDEX = "selectedIndex"
-var BOTTOM_NAV = "BottomNavigation"
-var CHILD_BOTTOM_NAV_ITEM = "BottomNavigationItem"
+var BOTTOM_NAV = "BottomBar"
+var CHILD_BOTTOM_NAV_ITEM = "BottomBarItem"
 
-export class BottomNavigationItem extends Bindable implements definition.BottomNavigationItem {
+export class BottomBarItem extends Bindable implements definition.BottomBarItem {
     private _title: string = "";
     private _icon: string = "";
     private _color: string = "";
-    public _parent: BottomNavigation;
+    public _parent: BottomBar;
 
     get title(): string {
         return this._title;
@@ -68,24 +68,24 @@ var selectedIndexProperty = new Property(SELECTED_INDEX, BOTTOM_NAV, new Propert
 
 
 (<PropertyMetadata>itemsProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
-    var bottomnav = <BottomNavigation>data.object;
+    var bottomnav = <BottomBar>data.object;
     bottomnav._onItemsPropertyChangedSetNativeValue(data);
 };
 
 (<PropertyMetadata>selectedIndexProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
-    var bottomnav = <BottomNavigation>data.object;
+    var bottomnav = <BottomBar>data.object;
     bottomnav._onSelectedIndexPropertyChangedSetNativeValue(data);
 };
 
-export class BottomNavigation extends View implements definition.BottomNavigation {
+export class BottomBar extends View implements definition.BottomBar {
     public static itemsProperty = itemsProperty;
     public static selectedIndexProperty = selectedIndexProperty;
     public static tabSelectedEvent = "tabSelected";
 
     public _addArrayFromBuilder(name: string, value: Array<any>) {
-        // console.log('BottomNavigation._addArrayFromBuilder: ' + name)
+        // console.log('BottomBar._addArrayFromBuilder: ' + name)
         if (name === ITEMS) {
-            this._setValue(BottomNavigation.itemsProperty, value);
+            this._setValue(BottomBar.itemsProperty, value);
         }
     }
 
@@ -101,28 +101,28 @@ export class BottomNavigation extends View implements definition.BottomNavigatio
     }
 
     public _addChildFromBuilder(name: string, value: any): void {
-        // console.log('BottomNavigation._addChildFromBuilder: ' + name)
+        // console.log('BottomBar._addChildFromBuilder: ' + name)
         if(name === CHILD_BOTTOM_NAV_ITEM) {
             if (!this.items) {
-                this.items = new Array<BottomNavigationItem>();
+                this.items = new Array<BottomBarItem>();
             }
-            // console.log(JSON.stringify(<BottomNavigationItem>value))
-            this.items.push(<BottomNavigationItem>value);
+            // console.log(JSON.stringify(<BottomBarItem>value))
+            this.items.push(<BottomBarItem>value);
             // console.log(JSON.stringify(this.items))
-            this.insertTab(<BottomNavigationItem>value);
+            this.insertTab(<BottomBarItem>value);
             
         }
     }
 
-    public insertTab(tabItem: BottomNavigationItem, index?: number): void {
+    public insertTab(tabItem: BottomBarItem, index?: number): void {
         //
     }
 
-    get items(): Array<definition.BottomNavigationItem> {
-        return this._getValue(BottomNavigation.itemsProperty);
+    get items(): Array<definition.BottomBarItem> {
+        return this._getValue(BottomBar.itemsProperty);
     }
-    set items(value: Array<definition.BottomNavigationItem>) {
-        this._setValue(BottomNavigation.itemsProperty, value);
+    set items(value: Array<definition.BottomBarItem>) {
+        this._setValue(BottomBar.itemsProperty, value);
     }
 
     public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
@@ -158,10 +158,10 @@ export class BottomNavigation extends View implements definition.BottomNavigatio
     // }
 
     get selectedIndex(): number {
-        return this._getValue(BottomNavigation.selectedIndexProperty);
+        return this._getValue(BottomBar.selectedIndexProperty);
     }
     set selectedIndex(value: number) {
-        this._setValue(BottomNavigation.selectedIndexProperty, value);
+        this._setValue(BottomBar.selectedIndexProperty, value);
     }
 
     public _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData) {

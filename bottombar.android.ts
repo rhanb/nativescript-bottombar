@@ -1,5 +1,5 @@
-import common = require("./bottomnavigation-common");
-import definition = require("nativescript-bottomnavigation");
+import common = require("./bottombar-common");
+import definition = require("nativescript-bottombar");
 import trace = require("trace");
 import types = require("utils/types");
 import { PropertyMetadata } from "ui/core/proxy";
@@ -16,7 +16,7 @@ let BitmapDrawable = android.graphics.drawable.BitmapDrawable;
 let AHBottomNavigation = com.aurelhubert.ahbottomnavigation.AHBottomNavigation; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigation.java#L1
 let AHBottomNavigationItem = com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigationItem.java#L86
 
-export class BottomNavigationItem extends common.BottomNavigationItem {
+export class BottomBarItem extends common.BottomBarItem {
     public _update() {
         if (this._parent && this._parent.android) {
 
@@ -24,7 +24,7 @@ export class BottomNavigationItem extends common.BottomNavigationItem {
     }
 }
 
-export class BottomNavigation extends common.BottomNavigation {
+export class BottomBar extends common.BottomBar {
     private _android: any;
     public _listener: any;
 
@@ -90,7 +90,7 @@ export class BottomNavigation extends common.BottomNavigation {
         this._android.removeAllItems();
 
 
-        let items = <Array<definition.BottomNavigationItem>>data.newValue
+        let items = <Array<definition.BottomBarItem>>data.newValue
 
         items.forEach((item, idx, arr) => {
             console.log(item.title, idx)
@@ -123,7 +123,7 @@ export class BottomNavigation extends common.BottomNavigation {
         //     }
         // }
 
-        var args = { eventName: BottomNavigation.tabSelectedEvent, object: this, oldIndex: data.oldValue, newIndex: data.newValue };
+        var args = { eventName: BottomBar.tabSelectedEvent, object: this, oldIndex: data.oldValue, newIndex: data.newValue };
         this.notify(args);
     }
 

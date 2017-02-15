@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "removeComments": true,
-        "experimentalDecorators": true,
-        "sourceMap": true
-    },
-    "files": [
-      "demo/node_modules/tns-core-modules/tns-core-modules.d.ts",
-      "bottomnavigation.d.ts", 
-      "bottomnavigation.android.ts", 
-      "bottomnavigation.ios.ts"
-    ],
-    "compileOnSave": false
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  },
+  "files": [
+    "demo/node_modules/tns-core-modules/tns-core-modules.d.ts",
+    "bottombar.d.ts",
+    "bottombar.android.ts",
+    "bottombar.ios.ts"
+  ],
+  "compileOnSave": false
 }

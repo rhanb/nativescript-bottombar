@@ -11,6 +11,7 @@ export function pageLoaded(args: EventData) {
     // Get the event sender
     page = <Page>args.object;
     page.bindingContext = new HelloWorldModel();
+    console.log('itemsProperty');
 }
 
 export function tabSelected(args) {

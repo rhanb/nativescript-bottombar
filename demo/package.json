@@ -1,20 +1,21 @@
 {
-	"nativescript": {
-		"id": "org.nativescript.demo",
-		"tns-android": {
-			"version": "2.4.1"
-		}
-	},
-	"dependencies": {
-		"nativescript-bottomnavigation": "file:..",
-		"tns-core-modules": "^2.4.4"
-	},
-	"devDependencies": {
-		"babel-traverse": "6.22.1",
-		"babel-types": "6.22.0",
-		"babylon": "6.15.0",
-		"filewalker": "0.1.3",
-		"lazy": "1.0.11",
-		"nativescript-dev-typescript": "^0.3.6",
-		"typescript": "^2.1.5"
+  "nativescript": {
+    "id": "org.nativescript.demo",
+    "tns-android": {
+      "version": "2.4.1"
+    }
+  },
+  "dependencies": {
+    "nativescript-bottombar": "file:///home/rhanb/Documents/mooveed/nativescript-bottombar",
+    "tns-core-modules": "^2.4.4"
+  },
+  "devDependencies": {
+    "babel-traverse": "6.22.1",
+    "babel-types": "6.22.0",
+    "babylon": "6.15.0",
+    "filewalker": "0.1.3",
+    "lazy": "1.0.11",
+    "nativescript-dev-typescript": "^0.3.6",
+    "typescript": "^2.1.5"
+  }
 }
