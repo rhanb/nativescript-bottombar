@@ -2,10 +2,10 @@ import common = require("./bottombar-common");
 import definition = require("nativescript-bottombar");
 import trace = require("trace");
 import types = require("utils/types");
-import { PropertyMetadata } from "ui/core/proxy";
-import { PropertyMetadataSettings, Property, PropertyChangeData } from "ui/core/dependency-observable";
-import { View } from "ui/core/view";
-import { Color } from "color";
+import {PropertyMetadata} from "ui/core/proxy";
+import {PropertyMetadataSettings, Property, PropertyChangeData} from "ui/core/dependency-observable";
+import {View} from "ui/core/view";
+import {Color} from "color";
 import * as imageSource from "image-source";
 
 declare var com, android: any;
@@ -52,8 +52,18 @@ export class BottomBar extends common.BottomBar {
             onTabSelected: function (position: number, wasSelected: boolean): boolean {
                 // console.log(position + ' ' + wasSelected)
                 var bar = that.get();
+                let oldIndex = bar.selectedIndex;
+                let newIndex = (index === 0 ? undefined : index - 1);
                 if (bar) {
                     bar.selectedIndex = position;
+                }
+                if (newIndex !== oldIndex) {
+                    bar.notify(<SelectedIndexChangedEventData>{
+                        eventName: common.BottomNavigation.tabSelectedEvent,
+                        object: bar,
+                        oldIndex: oldIndex,
+                        newIndex: newIndex
+                    })
                 }
                 return true;
             }
@@ -75,9 +85,9 @@ export class BottomBar extends common.BottomBar {
 
     public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
 
-        // console.log("BottomNavigation.__onItemsPropertyChangedSetNativeValue(" + data.oldValue + " -> " + data.newValue + ");");
+        console.log("BottomNavigation.__onItemsPropertyChangedSetNativeValue(" + data.oldValue + " -> " + data.newValue + ");");
 
-        // console.log(JSON.stringify(data.newValue))
+        console.log(JSON.stringify(data.newValue));
 
         // if (data.oldValue) {
         //     this._removeTabs(data.oldValue);
@@ -90,7 +100,7 @@ export class BottomBar extends common.BottomBar {
         this._android.removeAllItems();
 
 
-        let items = <Array<definition.BottomBarItem>>data.newValue
+        let items = <Array<definition.BottomBarItem>>data.newValue;
 
         items.forEach((item, idx, arr) => {
             console.log(item.title, idx)
@@ -107,7 +117,7 @@ export class BottomBar extends common.BottomBar {
     }
 
     public _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData) {
-        // console.log("BottomNavigation._onSelectedIndexPropertyChangedSetNativeValue(" + data.oldValue + " ---> " + data.newValue + ");");
+        console.log("BottomNavigation._onSelectedIndexPropertyChangedSetNativeValue(" + data.oldValue + " ---> " + data.newValue + ");");
 
         super._onSelectedIndexPropertyChangedSetNativeValue(data);
 
@@ -123,7 +133,12 @@ export class BottomBar extends common.BottomBar {
         //     }
         // }
 
-        var args = { eventName: BottomBar.tabSelectedEvent, object: this, oldIndex: data.oldValue, newIndex: data.newValue };
+        var args = {
+            eventName: BottomBar.tabSelectedEvent,
+            object: this,
+            oldIndex: data.oldValue,
+            newIndex: data.newValue
+        };
         this.notify(args);
     }
 

@@ -83,7 +83,7 @@ export class BottomBar extends View implements definition.BottomBar {
     public static tabSelectedEvent = "tabSelected";
 
     public _addArrayFromBuilder(name: string, value: Array<any>) {
-        // console.log('BottomBar._addArrayFromBuilder: ' + name)
+         console.log('BottomBar._addArrayFromBuilder: ' + name)
         if (name === ITEMS) {
             this._setValue(BottomBar.itemsProperty, value);
         }
@@ -101,14 +101,14 @@ export class BottomBar extends View implements definition.BottomBar {
     }
 
     public _addChildFromBuilder(name: string, value: any): void {
-        // console.log('BottomBar._addChildFromBuilder: ' + name)
+         console.log('BottomBar._addChildFromBuilder: ' + name)
         if(name === CHILD_BOTTOM_NAV_ITEM) {
             if (!this.items) {
                 this.items = new Array<BottomBarItem>();
             }
-            // console.log(JSON.stringify(<BottomBarItem>value))
+             console.log(JSON.stringify(<BottomBarItem>value))
             this.items.push(<BottomBarItem>value);
-            // console.log(JSON.stringify(this.items))
+             console.log(JSON.stringify(this.items))
             this.insertTab(<BottomBarItem>value);
             
         }
@@ -139,23 +139,6 @@ export class BottomBar extends View implements definition.BottomBar {
 
         // this._updateSelectedIndexOnItemsPropertyChanged(data.newValue);
     }
-
-    // public _updateSelectedIndexOnItemsPropertyChanged(newItems) {
-    //     if (trace.enabled) {
-    //         trace.write("TabView._updateSelectedIndexOnItemsPropertyChanged(" + newItems + ");", traceCategory);
-    //     }
-    //     var newItemsCount = 0;
-    //     if (newItems) {
-    //         newItemsCount = newItems.length;
-    //     }
-
-    //     if (newItemsCount === 0) {
-    //         this.selectedIndex = undefined;
-    //     }
-    //     else if (types.isUndefined(this.selectedIndex) || this.selectedIndex >= newItemsCount) {
-    //         this.selectedIndex = 0;
-    //     }
-    // }
 
     get selectedIndex(): number {
         return this._getValue(BottomBar.selectedIndexProperty);

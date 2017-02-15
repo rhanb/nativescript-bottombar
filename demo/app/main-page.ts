@@ -3,6 +3,7 @@ import { HelloWorldModel } from './main-view-model';
 import { Page } from 'ui/page';
 import { Color } from "color";
 import * as imageSource from "image-source";
+import {BottomBar, BottomBarItem} from 'nativescript-bottombar';
 
 var page: Page;
 
@@ -11,7 +12,15 @@ export function pageLoaded(args: EventData) {
     // Get the event sender
     page = <Page>args.object;
     page.bindingContext = new HelloWorldModel();
+    /*console.dir(BottomBar);
+    console.dir(BottomBarItem);
     console.log('itemsProperty');
+    console.dir(BottomBar.itemsProperty);
+    console.log("selectedIndexProperty");
+    console.dir(BottomBar.selectedIndexProperty);
+    console.log('tabSelectedEvent');
+    console.dir(BottomBar.tabSelectedEvent);
+    console.dir(BottomBarItem);*/
 }
 
 export function tabSelected(args) {

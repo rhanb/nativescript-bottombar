@@ -1,5 +1,5 @@
-[![npm](https://img.shields.io/npm/v/nativescript-bottomnavigation.svg)](https://www.npmjs.com/package/nativescript-bottomnavigation)
-[![npm](https://img.shields.io/npm/dt/nativescript-bottomnavigation.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-bottomnavigation)
+[![npm](https://img.shields.io/npm/v/nativescript-bottombar.svg)](https://www.npmjs.com/package/nativescript-bottombar)
+[![npm](https://img.shields.io/npm/dt/nativescript-bottombar.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-bottombar)
 
 # NativeScript Bottom Navigation
 
