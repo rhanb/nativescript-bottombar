@@ -12,4 +12,6 @@ export declare class BottomBar extends common.BottomBar {
     _createUI(): void;
     _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    private setTitleStateNative(newTitleState);
 }

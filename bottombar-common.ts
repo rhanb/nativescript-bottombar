@@ -86,7 +86,10 @@ var titleStateProperty = new Property(TITLE_STATE_PROPERTY, BOTTOM_NAV, new Prop
     var bottomnav = <BottomBar>data.object;
     bottomnav._titleStatePropertyChangedSetNativeValue(data);
 };
-export enum TITLE_STATE {
+declare module Enum {
+
+}
+export const enum TITLE_STATE {
     SHOW_WHEN_ACTIVE,
     ALWAYS_SHOW,
     ALWAYS_HIDE

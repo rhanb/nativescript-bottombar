@@ -7,6 +7,6 @@ export class HelloWorldModel extends Observable {
 
   constructor() {
     super();
-    this.titleStateValue = TITLE_STATE.SHOW_WHEN_ACTIVE;
+    this.titleStateValue = TITLE_STATE.ALWAYS_SHOW;
   }
 }

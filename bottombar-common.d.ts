@@ -16,10 +16,16 @@ export declare class BottomBarItem extends Bindable implements definition.Bottom
     color: string;
     _update(): void;
 }
+export declare const enum TITLE_STATE {
+    SHOW_WHEN_ACTIVE = 0,
+    ALWAYS_SHOW = 1,
+    ALWAYS_HIDE = 2,
+}
 export declare class BottomBar extends View implements definition.BottomBar {
     static itemsProperty: Property;
     static selectedIndexProperty: Property;
     static tabSelectedEvent: string;
+    static titleStateProperty: Property;
     _addArrayFromBuilder(name: string, value: Array<any>): void;
     _onBindingContextChanged(oldValue: any, newValue: any): void;
     _addChildFromBuilder(name: string, value: any): void;
@@ -28,4 +34,6 @@ export declare class BottomBar extends View implements definition.BottomBar {
     _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     selectedIndex: number;
     _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    titleState: TITLE_STATE;
+    _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
 }
