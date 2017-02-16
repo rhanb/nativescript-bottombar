@@ -81,9 +81,8 @@ export class HelloWorldModel extends Observable {
 <GridLayout rows="*, auto">
     <Label row="0" text="test"></Label>
     <GridLayout row="1">
-        <Label text="bottomnavigation component"></Label>
-        <BottomNavigation [items]="items" (tabSelected)="tabSelected($event)">
-        </BottomNavigation>
+        <BottomBar [items]="items" (tabSelected)="tabSelected($event)" [titleState]="titleState">
+        </BottomBar>
     </GridLayout>
 </GridLayout>
 ```
@@ -92,16 +91,17 @@ export class HelloWorldModel extends Observable {
 ```typescript
 import { Component } from "@angular/core";
 import {registerElement} from 'nativescript-angular/element-registry';
+import {TITLE_STATE} from 'nativescript-bottombar/bottombar-common';
 import {SelectedIndexChangedEventData} from 'nativescript-bottombar';
 registerElement("BottomBar", () => require("nativescript-bottombar").BottomBar);
-registerElement("BottomBarItem", () => require("nativescript-bottombar").BottomBar);
 @Component({
     selector: "ns-app",
     templateUrl: "app.component.html",
 })
 
 export class AppComponent {
-    items: Array<any> = [
+    public titleState: TITLE_STATE;
+    public items: Array<any> = [
         {
             title: "Calendar", // Your title
             icon: "ic_collaborator", // Your path to icon (App_Ressources > drawables, should be 24dp)
@@ -119,6 +119,10 @@ export class AppComponent {
         }
     ];
 
+    constructor () {
+    this.titleState = TITLE_STATE.ALWAYS_HIDE; // will always add
+    // if less than 4 items SHOW_WHEN_ACTIVE won't work since the android library follows google guideline
+    }
     tabSelected (args: SelectedIndexChangedEventData) {
         console.log(args.oldIndex);
         console.log(args.newIndex);
