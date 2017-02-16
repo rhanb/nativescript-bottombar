@@ -7,7 +7,6 @@
     "sourceMap": true
   },
   "files": [
-    "demo/node_modules/tns-core-modules/tns-core-modules.d.ts",
     "bottombar.d.ts",
     "bottombar.android.ts",
     "bottombar.ios.ts"

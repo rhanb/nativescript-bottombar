@@ -1,4 +1,4 @@
-import common = require("./bottomnavigation-common");
+import common = require("./bottombar-common");
 import { PropertyChangeData } from "ui/core/dependency-observable";
 export declare class BottomBarItem extends common.BottomBarItem {
     _update(): void;

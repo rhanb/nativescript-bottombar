@@ -18,9 +18,11 @@ export module knownCollections {
 }
 
 var ITEMS = "items";
-var SELECTED_INDEX = "selectedIndex"
-var BOTTOM_NAV = "BottomBar"
-var CHILD_BOTTOM_NAV_ITEM = "BottomBarItem"
+var SELECTED_INDEX = "selectedIndex";
+var BOTTOM_NAV = "BottomBar";
+var CHILD_BOTTOM_NAV_ITEM = "BottomBarItem";
+var TITLE_STATE_PROPERTY = "titleState";
+
 
 export class BottomBarItem extends Bindable implements definition.BottomBarItem {
     private _title: string = "";
@@ -31,6 +33,7 @@ export class BottomBarItem extends Bindable implements definition.BottomBarItem 
     get title(): string {
         return this._title;
     }
+
     set title(value: string) {
         if (this._title !== value) {
             this._title = value;
@@ -41,6 +44,7 @@ export class BottomBarItem extends Bindable implements definition.BottomBarItem 
     get icon(): string {
         return this._icon;
     }
+
     set icon(value: string) {
         if (this._icon !== value) {
             this._icon = value;
@@ -51,6 +55,7 @@ export class BottomBarItem extends Bindable implements definition.BottomBarItem 
     get color(): string {
         return this._color;
     }
+
     set color(value: string) {
         if (this._color !== value) {
             this._color = value;
@@ -65,6 +70,7 @@ export class BottomBarItem extends Bindable implements definition.BottomBarItem 
 
 var itemsProperty = new Property(ITEMS, BOTTOM_NAV, new PropertyMetadata(undefined));
 var selectedIndexProperty = new Property(SELECTED_INDEX, BOTTOM_NAV, new PropertyMetadata(undefined));
+var titleStateProperty = new Property(TITLE_STATE_PROPERTY, BOTTOM_NAV, new PropertyMetadata(undefined));
 
 
 (<PropertyMetadata>itemsProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
@@ -76,14 +82,23 @@ var selectedIndexProperty = new Property(SELECTED_INDEX, BOTTOM_NAV, new Propert
     var bottomnav = <BottomBar>data.object;
     bottomnav._onSelectedIndexPropertyChangedSetNativeValue(data);
 };
-
+(<PropertyMetadata>titleStateProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
+    var bottomnav = <BottomBar>data.object;
+    bottomnav._titleStatePropertyChangedSetNativeValue(data);
+};
+export enum TITLE_STATE {
+    SHOW_WHEN_ACTIVE,
+    ALWAYS_SHOW,
+    ALWAYS_HIDE
+}
 export class BottomBar extends View implements definition.BottomBar {
     public static itemsProperty = itemsProperty;
     public static selectedIndexProperty = selectedIndexProperty;
     public static tabSelectedEvent = "tabSelected";
+    public static titleStateProperty = titleStateProperty;
+
 
     public _addArrayFromBuilder(name: string, value: Array<any>) {
-         console.log('BottomBar._addArrayFromBuilder: ' + name)
         if (name === ITEMS) {
             this._setValue(BottomBar.itemsProperty, value);
         }
@@ -101,16 +116,13 @@ export class BottomBar extends View implements definition.BottomBar {
     }
 
     public _addChildFromBuilder(name: string, value: any): void {
-         console.log('BottomBar._addChildFromBuilder: ' + name)
-        if(name === CHILD_BOTTOM_NAV_ITEM) {
+        if (name === CHILD_BOTTOM_NAV_ITEM) {
             if (!this.items) {
                 this.items = new Array<BottomBarItem>();
             }
-             console.log(JSON.stringify(<BottomBarItem>value))
             this.items.push(<BottomBarItem>value);
-             console.log(JSON.stringify(this.items))
             this.insertTab(<BottomBarItem>value);
-            
+
         }
     }
 
@@ -121,28 +133,18 @@ export class BottomBar extends View implements definition.BottomBar {
     get items(): Array<definition.BottomBarItem> {
         return this._getValue(BottomBar.itemsProperty);
     }
+
     set items(value: Array<definition.BottomBarItem>) {
         this._setValue(BottomBar.itemsProperty, value);
     }
 
     public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
-        // if (trace.enabled) {
-        //     trace.write("TabView.__onItemsPropertyChangedSetNativeValue(" + data.oldValue + " -> " + data.newValue + ");", traceCategory);
-        // }
-        // if (data.oldValue) {
-        //     this._removeTabs(data.oldValue);
-        // }
-
-        // if (data.newValue) {
-        //     this._addTabs(data.newValue);
-        // }
-
-        // this._updateSelectedIndexOnItemsPropertyChanged(data.newValue);
     }
 
     get selectedIndex(): number {
         return this._getValue(BottomBar.selectedIndexProperty);
     }
+
     set selectedIndex(value: number) {
         this._setValue(BottomBar.selectedIndexProperty, value);
     }
@@ -159,6 +161,17 @@ export class BottomBar extends View implements definition.BottomBar {
                 throw new Error("SelectedIndex should be between [0, items.length)");
             }
         }
+    }
+
+    get titleState(): TITLE_STATE {
+        return this._getValue(BottomBar.titleStateProperty);
+    }
+
+    set titleState(value: TITLE_STATE) {
+        this._setValue(BottomBar.titleStateProperty, value);
+    }
+
+    public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
     }
 
 }

@@ -7,6 +7,8 @@ import {PropertyMetadataSettings, Property, PropertyChangeData} from "ui/core/de
 import {View} from "ui/core/view";
 import {Color} from "color";
 import * as imageSource from "image-source";
+import {SelectedIndexChangedEventData} from "nativescript-bottombar";
+
 
 declare var com, android: any;
 
@@ -50,19 +52,17 @@ export class BottomBar extends common.BottomBar {
 
         this._listener = new AHBottomNavigation.OnTabSelectedListener({
             onTabSelected: function (position: number, wasSelected: boolean): boolean {
-                // console.log(position + ' ' + wasSelected)
                 var bar = that.get();
                 let oldIndex = bar.selectedIndex;
-                let newIndex = (index === 0 ? undefined : index - 1);
-                if (bar) {
+                if (bar && bar.selectedIndex !== position) {
                     bar.selectedIndex = position;
                 }
-                if (newIndex !== oldIndex) {
-                    bar.notify(<SelectedIndexChangedEventData>{
-                        eventName: common.BottomNavigation.tabSelectedEvent,
+                if (position !== oldIndex) {
+                    bar.notify(<definition.SelectedIndexChangedEventData>{
+                        eventName: common.BottomBar.tabSelectedEvent,
                         object: bar,
                         oldIndex: oldIndex,
-                        newIndex: newIndex
+                        newIndex: position
                     })
                 }
                 return true;
@@ -73,7 +73,12 @@ export class BottomBar extends common.BottomBar {
         this._android.setOnTabSelectedListener(this._listener);
 
         //always show title
-        this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+        let owner = that.get();
+        if (types.isDefined(owner.titleState)) {
+            this.setTitleStateNative(owner.titleState);
+        } else {
+            this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+        }
 
         // Set background color
         this._android.setDefaultBackgroundColor(new Color('#333').android);
@@ -84,55 +89,23 @@ export class BottomBar extends common.BottomBar {
     }
 
     public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
-
-        console.log("BottomNavigation.__onItemsPropertyChangedSetNativeValue(" + data.oldValue + " -> " + data.newValue + ");");
-
-        console.log(JSON.stringify(data.newValue));
-
-        // if (data.oldValue) {
-        //     this._removeTabs(data.oldValue);
-        // }
-
-        // if (data.newValue) {
-        //     this._addTabs(data.newValue);
-        // }
-
         this._android.removeAllItems();
-
-
         let items = <Array<definition.BottomBarItem>>data.newValue;
-
         items.forEach((item, idx, arr) => {
-            console.log(item.title, idx)
-
             let icon1 = new BitmapDrawable(imageSource.fromResource(item.icon).android);
             let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);
             this._android.addItem(item1);
         });
 
-        if (this.selectedIndex != null)
-            this._android.setCurrentItem(this.selectedIndex)
+        if (this.selectedIndex != null) {
+            this._android.setCurrentItem(this.selectedIndex);
+        }
 
-        // this._updateSelectedIndexOnItemsPropertyChanged(data.newValue);
     }
 
     public _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData) {
-        console.log("BottomNavigation._onSelectedIndexPropertyChangedSetNativeValue(" + data.oldValue + " ---> " + data.newValue + ");");
-
         super._onSelectedIndexPropertyChangedSetNativeValue(data);
-
         var index = data.newValue;
-        // if (!types.isNullOrUndefined(index)) {
-        //     // Select the respective page in the ViewPager
-        //     var viewPagerSelectedIndex = this._viewPager.getCurrentItem();
-        //     if (viewPagerSelectedIndex !== index) {
-        //         if (trace.enabled) {
-        //             trace.write("TabView this._viewPager.setCurrentItem(" + index + ", true);", common.traceCategory);
-        //         }
-        //         this._viewPager.setCurrentItem(index, true);
-        //     }
-        // }
-
         var args = {
             eventName: BottomBar.tabSelectedEvent,
             object: this,
@@ -142,4 +115,35 @@ export class BottomBar extends common.BottomBar {
         this.notify(args);
     }
 
+    public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
+        let newTitleState = data.newValue;
+        let isValid = false;
+        if (types.isDefined(newTitleState)) {
+            if (types.isNumber(newTitleState)) {
+                isValid = true;
+            }
+            if (!isValid) {
+                throw new Error("Must be an enum");
+
+            } else {
+                this.setTitleStateNative(newTitleState);
+            }
+        } else {
+            throw new Error('Must have titleState');
+        }
+    }
+
+    private setTitleStateNative(newTitleState: common.TITLE_STATE) {
+        switch (newTitleState) {
+            case common.TITLE_STATE.ALWAYS_SHOW:
+                this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+                break;
+            case common.TITLE_STATE.SHOW_WHEN_ACTIVE:
+                this._android.setTitleState(AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE);
+                break;
+            case common.TITLE_STATE.ALWAYS_HIDE:
+                this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
+                break;
+        }
+    }
 }

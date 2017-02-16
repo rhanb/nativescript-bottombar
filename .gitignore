@@ -1,10 +1,14 @@
 *.js
 *.js.map
 *.log
+!scripts/*.js
 demo/app/*.js
+!demo/karma.conf.js
+!demo/app/tests/*.js
 demo/*.d.ts
+!demo/references.d.ts
+demo/lib
 demo/platforms
 demo/node_modules
-demo/.tmp_backup
 node_modules
 .idea

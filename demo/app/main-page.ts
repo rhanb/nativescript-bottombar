@@ -3,7 +3,6 @@ import { HelloWorldModel } from './main-view-model';
 import { Page } from 'ui/page';
 import { Color } from "color";
 import * as imageSource from "image-source";
-import {BottomBar, BottomBarItem} from 'nativescript-bottombar';
 
 var page: Page;
 
