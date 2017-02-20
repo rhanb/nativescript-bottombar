@@ -60,7 +60,7 @@ export function tabSelected(args) {
 
 ```typescript
 import {Observable} from 'data/observable';
-import {TITLE_STATE} from 'nativescript-bottombar/bottombar-common';
+import {TITLE_STATE} from 'nativescript-bottombar/bottombar.common';
 
 export class HelloWorldModel extends Observable {
   public message: string;
@@ -91,7 +91,7 @@ export class HelloWorldModel extends Observable {
 ```typescript
 import { Component } from "@angular/core";
 import {registerElement} from 'nativescript-angular/element-registry';
-import {TITLE_STATE} from 'nativescript-bottombar/bottombar-common';
+import {TITLE_STATE} from 'nativescript-bottombar/bottombar.common';
 import {SelectedIndexChangedEventData} from 'nativescript-bottombar';
 registerElement("BottomBar", () => require("nativescript-bottombar").BottomBar);
 @Component({
