@@ -1,12 +1,12 @@
-import definition = require("nativescript-bottombar");
-import {View, AddArrayFromBuilder} from "ui/core/view";
-import {PropertyMetadataSettings, Property, PropertyChangeData} from "ui/core/dependency-observable";
-import {Bindable} from "ui/core/bindable";
-import {isAndroid} from "platform";
-import {PropertyMetadata} from "ui/core/proxy";
+import { View, AddArrayFromBuilder } from "ui/core/view";
+import { PropertyMetadataSettings, Property, PropertyChangeData } from "ui/core/dependency-observable";
+import { Bindable } from "ui/core/bindable";
+import { isAndroid } from "platform";
+import { PropertyMetadata } from "ui/core/proxy";
 import types = require("utils/types");
 import trace = require("trace");
 import color = require("color");
+import {EventData} from "data/observable";
 
 // on Android we explicitly set propertySettings to None because android will invalidate its layout (skip unnecessary native call).
 let AffectsLayout = isAndroid ? PropertyMetadataSettings.None : PropertyMetadataSettings.AffectsLayout;
@@ -24,7 +24,12 @@ var CHILD_BOTTOM_NAV_ITEM = "BottomBarItem";
 var TITLE_STATE_PROPERTY = "titleState";
 
 
-export class BottomBarItem extends Bindable implements definition.BottomBarItem {
+export interface SelectedIndexChangedEventData extends EventData {
+    oldIndex: number;
+    newIndex: number;
+}
+
+export class BottomBarItem extends Bindable {
     private _title: string = "";
     private _icon: string = "";
     private _color: string = "";
@@ -94,7 +99,7 @@ export const enum TITLE_STATE {
     ALWAYS_SHOW,
     ALWAYS_HIDE
 }
-export class BottomBar extends View implements definition.BottomBar {
+export class BottomBar extends View {
     public static itemsProperty = itemsProperty;
     public static selectedIndexProperty = selectedIndexProperty;
     public static tabSelectedEvent = "tabSelected";
@@ -133,11 +138,11 @@ export class BottomBar extends View implements definition.BottomBar {
         //
     }
 
-    get items(): Array<definition.BottomBarItem> {
+    get items(): Array<BottomBarItem> {
         return this._getValue(BottomBar.itemsProperty);
     }
 
-    set items(value: Array<definition.BottomBarItem>) {
+    set items(value: Array<BottomBarItem>) {
         this._setValue(BottomBar.itemsProperty, value);
     }
 

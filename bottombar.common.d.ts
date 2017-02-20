@@ -1,12 +1,16 @@
-import definition = require("nativescript-bottombar");
 import { View } from "ui/core/view";
 import { Property, PropertyChangeData } from "ui/core/dependency-observable";
 import { Bindable } from "ui/core/bindable";
+import { EventData } from "data/observable";
 export declare var traceCategory: string;
 export declare module knownCollections {
     var items: string;
 }
-export declare class BottomBarItem extends Bindable implements definition.BottomBarItem {
+export interface SelectedIndexChangedEventData extends EventData {
+    oldIndex: number;
+    newIndex: number;
+}
+export declare class BottomBarItem extends Bindable {
     private _title;
     private _icon;
     private _color;
@@ -21,7 +25,7 @@ export declare const enum TITLE_STATE {
     ALWAYS_SHOW = 1,
     ALWAYS_HIDE = 2,
 }
-export declare class BottomBar extends View implements definition.BottomBar {
+export declare class BottomBar extends View {
     static itemsProperty: Property;
     static selectedIndexProperty: Property;
     static tabSelectedEvent: string;
@@ -30,7 +34,7 @@ export declare class BottomBar extends View implements definition.BottomBar {
     _onBindingContextChanged(oldValue: any, newValue: any): void;
     _addChildFromBuilder(name: string, value: any): void;
     insertTab(tabItem: BottomBarItem, index?: number): void;
-    items: Array<definition.BottomBarItem>;
+    items: Array<BottomBarItem>;
     _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     selectedIndex: number;
     _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData): void;

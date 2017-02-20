@@ -1,5 +1,4 @@
-import common = require("./bottombar-common");
-import definition = require("nativescript-bottombar");
+import common = require("./bottombar.common");
 import trace = require("trace");
 import types = require("utils/types");
 import {PropertyMetadata} from "ui/core/proxy";
@@ -7,7 +6,7 @@ import {PropertyMetadataSettings, Property, PropertyChangeData} from "ui/core/de
 import {View} from "ui/core/view";
 import {Color} from "color";
 import * as imageSource from "image-source";
-import {SelectedIndexChangedEventData} from "nativescript-bottombar";
+import {SelectedIndexChangedEventData} from "./bottombar.common";
 
 
 declare var com, android: any;
@@ -58,7 +57,7 @@ export class BottomBar extends common.BottomBar {
                     bar.selectedIndex = position;
                 }
                 if (position !== oldIndex) {
-                    bar.notify(<definition.SelectedIndexChangedEventData>{
+                    bar.notify(<SelectedIndexChangedEventData>{
                         eventName: common.BottomBar.tabSelectedEvent,
                         object: bar,
                         oldIndex: oldIndex,
@@ -90,7 +89,7 @@ export class BottomBar extends common.BottomBar {
 
     public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
         this._android.removeAllItems();
-        let items = <Array<definition.BottomBarItem>>data.newValue;
+        let items = <Array<BottomBarItem>>data.newValue;
         items.forEach((item, idx, arr) => {
             let icon1 = new BitmapDrawable(imageSource.fromResource(item.icon).android);
             let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);

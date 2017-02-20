@@ -1,5 +1,5 @@
 import {Observable} from 'data/observable';
-import {TITLE_STATE} from 'nativescript-bottombar/bottombar-common';
+import {TITLE_STATE} from 'nativescript-bottombar/bottombar.common';
 
 export class HelloWorldModel extends Observable {
   public message: string;

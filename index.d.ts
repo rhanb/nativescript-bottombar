@@ -1,9 +1,10 @@
 import common = require("./bottombar.common");
 import { PropertyChangeData } from "ui/core/dependency-observable";
-export declare class BottomBarItem extends common.BottomBarItem {
+export declare module nativescriptbottombar {
+  class BottomBarItem extends common.BottomBarItem {
     _update(): void;
-}
-export declare class BottomBar extends common.BottomBar {
+  }
+  class BottomBar extends common.BottomBar {
     private _android;
     _listener: any;
     readonly android: any;
@@ -14,4 +15,6 @@ export declare class BottomBar extends common.BottomBar {
     _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
     private setTitleStateNative(newTitleState);
+  }
+
 }
