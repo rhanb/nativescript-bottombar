@@ -129,3 +129,8 @@ export class AppComponent {
     }
 }
 ```
+# Ressources
+
+Don't forget that you need your icons files to be in your ressources folder as follow:
+
+<img src="https://raw.githubusercontent.com/rhanbIT/nativescript-bottombar/master/screenshots/ressources.png" width="208" height="368" />
