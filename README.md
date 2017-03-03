@@ -104,7 +104,7 @@ export class AppComponent {
     public items: Array<any> = [
         {
             title: "Calendar", // Your title
-            icon: "ic_collaborator", // Your path to icon (App_Ressources > drawables, should be 24dp)
+            icon: "ic_collaborator", // Correspond to the name of your icon file (App_Ressources > drawables, should be 24dp)
             color: "#4CAF50" // Hexa color of the BottomBar when item active
         },
         {
@@ -133,4 +133,4 @@ export class AppComponent {
 
 Don't forget that you need your icons files to be in your ressources folder as follow:
 
-<img src="https://raw.githubusercontent.com/rhanbIT/nativescript-bottombar/master/screenshots/ressources.png" width="208" height="368" />
+<img src="https://raw.githubusercontent.com/rhanbIT/nativescript-bottombar/master/screenshots/ressources.png" width="250" height="368" />
