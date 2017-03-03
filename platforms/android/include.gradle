@@ -1,8 +1,8 @@
 //default elements
 android {
     productFlavors {
-        "nativescriptbottomnavigation" {
-            dimension "nativescriptbottomnavigation"
+        "nativescript-bottombar" {
+            dimension "nativescript-bottombar"
         }
     }
 }

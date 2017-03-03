@@ -2,7 +2,8 @@
   "name": "nativescript-bottombar",
   "version": "1.1.5",
   "description": "NativeScript plugin for AHBottomNavigation.",
-  "main": "bottombar.js",
+  "main": "bottombar",
+  "typings": "index.d.ts",
   "nativescript": {
     "platforms": {
       "android": "2.5.0"
@@ -23,13 +24,16 @@
     "NativeScript",
     "JavaScript",
     "TypeScript",
+    "Angular",
+    "BottomBar",
+    "Bottom bar",
     "Material Design",
     "bottom navigation",
     "tab navigation",
     "Android"
   ],
   "author": {
-    "name": "Jean-Baptiste Aniel",
+    "name": "rhanbIT",
     "email": "aniel.jeanbaptiste@gmail.com"
   },
   "bugs": {
