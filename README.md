@@ -92,7 +92,7 @@ export class HelloWorldModel extends Observable {
 import { Component } from "@angular/core";
 import {registerElement} from 'nativescript-angular/element-registry';
 import {TITLE_STATE} from 'nativescript-bottombar/bottombar.common';
-import {SelectedIndexChangedEventData} from 'nativescript-bottombar';
+import {SelectedIndexChangedEventData} from 'nativescript-bottombar/bottombar.common';
 registerElement("BottomBar", () => require("nativescript-bottombar").BottomBar);
 @Component({
     selector: "ns-app",
