@@ -16,6 +16,7 @@ global.moduleMerge(common, exports);
 let BitmapDrawable = android.graphics.drawable.BitmapDrawable;
 let AHBottomNavigation = com.aurelhubert.ahbottomnavigation.AHBottomNavigation; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigation.java#L1
 let AHBottomNavigationItem = com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigationItem.java#L86
+let AHNotification = com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
 export class BottomBarItem extends common.BottomBarItem {
     public _update() {
@@ -23,8 +24,15 @@ export class BottomBarItem extends common.BottomBarItem {
 
         }
     }
+    public _notificationPropertyChangedSetNativeValue(data: PropertyChangeData) {
+        console.log('_notificationPropertyChangedSetNativeValue');
+        let newNotification = data.newValue;
+        console.log(newNotification);
+        if (types.isDefined(newNotification)) {
+            this._parent.android().setNotification(newNotification.value, newNotification.index);
+        }
+    }
 }
-
 export class BottomBar extends common.BottomBar {
     private _android: any;
     public _listener: any;
@@ -42,7 +50,6 @@ export class BottomBar extends common.BottomBar {
         return this._android.getCurrentItem();
     }
 
-
     public _createUI() {
 
         this._android = new AHBottomNavigation(this._context);
@@ -55,14 +62,6 @@ export class BottomBar extends common.BottomBar {
                 let oldIndex = bar.selectedIndex;
                 if (bar && bar.selectedIndex !== position) {
                     bar.selectedIndex = position;
-                }
-                if (position !== oldIndex) {
-                    bar.notify(<SelectedIndexChangedEventData>{
-                        eventName: common.BottomBar.tabSelectedEvent,
-                        object: bar,
-                        oldIndex: oldIndex,
-                        newIndex: position
-                    })
                 }
                 return true;
             }
@@ -95,7 +94,6 @@ export class BottomBar extends common.BottomBar {
             let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);
             this._android.addItem(item1);
         });
-
         if (this.selectedIndex != null) {
             this._android.setCurrentItem(this.selectedIndex);
         }
@@ -115,6 +113,7 @@ export class BottomBar extends common.BottomBar {
     }
 
     public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
+        console.log('_titleStatePropertyChangedSetNativeValue');
         let newTitleState = data.newValue;
         let isValid = false;
         if (types.isDefined(newTitleState)) {
@@ -129,6 +128,34 @@ export class BottomBar extends common.BottomBar {
             }
         } else {
             throw new Error('Must have titleState');
+        }
+    }
+
+    public _hidePropertyChangedSetNativeValue(data: PropertyChangeData) {
+        console.log("_hidePropertyChangedSetNativeValue");
+        let newHideValue = data.newValue;
+        let isValid = false;
+        console.log(newHideValue);
+        if (types.isDefined(newHideValue)) {
+            console.log('isDefined');
+            if (types.isBoolean(newHideValue)) {
+                isValid = true;
+            }
+            if (!isValid) {
+                console.log('is not boolean');
+                throw new Error("Must be a boolean");
+
+            } else {
+                if (newHideValue) {
+                    console.log('should hideBottomNavigation');
+                    this._android.hideBottomNavigation();
+                } else {
+                    console.log('should restoreBottomNavigation');
+                    this._android.restoreBottomNavigation();
+                }
+            }
+        } else {
+            throw new Error('Must have hide');
         }
     }
 

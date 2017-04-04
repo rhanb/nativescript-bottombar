@@ -14,10 +14,13 @@ export declare class BottomBarItem extends Bindable {
     private _title;
     private _icon;
     private _color;
+    static notificationProperty: Property;
     _parent: BottomBar;
     title: string;
     icon: string;
     color: string;
+    notification: any;
+    _notificationPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     _update(): void;
 }
 export declare const enum TITLE_STATE {
@@ -30,6 +33,7 @@ export declare class BottomBar extends View {
     static selectedIndexProperty: Property;
     static tabSelectedEvent: string;
     static titleStateProperty: Property;
+    static hideProperty: Property;
     _addArrayFromBuilder(name: string, value: Array<any>): void;
     _onBindingContextChanged(oldValue: any, newValue: any): void;
     _addChildFromBuilder(name: string, value: any): void;
@@ -39,5 +43,7 @@ export declare class BottomBar extends View {
     selectedIndex: number;
     _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     titleState: TITLE_STATE;
+    hide: boolean;
     _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
 }

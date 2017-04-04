@@ -6,7 +6,7 @@ import { PropertyMetadata } from "ui/core/proxy";
 import types = require("utils/types");
 import trace = require("trace");
 import color = require("color");
-import {EventData} from "data/observable";
+import { EventData } from "data/observable";
 
 // on Android we explicitly set propertySettings to None because android will invalidate its layout (skip unnecessary native call).
 let AffectsLayout = isAndroid ? PropertyMetadataSettings.None : PropertyMetadataSettings.AffectsLayout;
@@ -22,17 +22,25 @@ var SELECTED_INDEX = "selectedIndex";
 var BOTTOM_NAV = "BottomBar";
 var CHILD_BOTTOM_NAV_ITEM = "BottomBarItem";
 var TITLE_STATE_PROPERTY = "titleState";
-
+var NOTIFICATION = "notification";
+var HIDE = "hide";
 
 export interface SelectedIndexChangedEventData extends EventData {
     oldIndex: number;
     newIndex: number;
 }
+var notificationProperty = new Property(NOTIFICATION, CHILD_BOTTOM_NAV_ITEM, new PropertyMetadata(undefined));
 
+(<PropertyMetadata>notificationProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
+    var bottomnavItem = <BottomBarItem>data.object;
+    bottomnavItem._notificationPropertyChangedSetNativeValue(data);
+};
 export class BottomBarItem extends Bindable {
     private _title: string = "";
     private _icon: string = "";
     private _color: string = "";
+    public static notificationProperty = notificationProperty;
+    //private _index: number;
     public _parent: BottomBar;
 
     get title(): string {
@@ -68,6 +76,24 @@ export class BottomBarItem extends Bindable {
         }
     }
 
+    /*get index () {
+        return this._index;
+    }
+
+    set index (newIndex: number) {
+        this._index = newIndex;
+    }*/
+
+    get notification(): any {
+        return this._getValue(BottomBarItem.notificationProperty);
+    }
+
+    set notification(value: any) {
+        this._setValue(BottomBarItem.notificationProperty, value);
+    }
+
+    public _notificationPropertyChangedSetNativeValue(data: PropertyChangeData) { }
+
     public _update() {
         //
     }
@@ -76,6 +102,7 @@ export class BottomBarItem extends Bindable {
 var itemsProperty = new Property(ITEMS, BOTTOM_NAV, new PropertyMetadata(undefined));
 var selectedIndexProperty = new Property(SELECTED_INDEX, BOTTOM_NAV, new PropertyMetadata(undefined));
 var titleStateProperty = new Property(TITLE_STATE_PROPERTY, BOTTOM_NAV, new PropertyMetadata(undefined));
+var hideProperty = new Property(HIDE, BOTTOM_NAV, new PropertyMetadata(undefined));
 
 
 (<PropertyMetadata>itemsProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
@@ -91,6 +118,10 @@ var titleStateProperty = new Property(TITLE_STATE_PROPERTY, BOTTOM_NAV, new Prop
     var bottomnav = <BottomBar>data.object;
     bottomnav._titleStatePropertyChangedSetNativeValue(data);
 };
+(<PropertyMetadata>hideProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
+    var bottomnav = <BottomBar>data.object;
+    bottomnav._hidePropertyChangedSetNativeValue(data);
+};
 export const enum TITLE_STATE {
     SHOW_WHEN_ACTIVE,
     ALWAYS_SHOW,
@@ -101,6 +132,7 @@ export class BottomBar extends View {
     public static selectedIndexProperty = selectedIndexProperty;
     public static tabSelectedEvent = "tabSelected";
     public static titleStateProperty = titleStateProperty;
+    public static hideProperty = hideProperty;
 
 
     public _addArrayFromBuilder(name: string, value: Array<any>) {
@@ -176,7 +208,15 @@ export class BottomBar extends View {
         this._setValue(BottomBar.titleStateProperty, value);
     }
 
-    public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
+   get hide(): boolean {
+        return this._getValue(BottomBar.hideProperty);
     }
 
+    set hide(hideValue: boolean) {
+        this._setValue(BottomBar.hideProperty, hideValue);
+    }
+
+    public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) { }
+
+    public _hidePropertyChangedSetNativeValue(data: PropertyChangeData) { }
 }
