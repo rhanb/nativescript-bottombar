@@ -4,8 +4,19 @@ import { EventData } from "data/observable";
 
 //export declare module nativescriptbottombar {
 export class BottomBarItem extends common.BottomBarItem {
-  _update(): void;
-  _notificationPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    private _title;
+    private _icon;
+    private _color;
+    private _notification;
+    private _index;
+    private _parent;
+    constructor(index: any, title: any, icon: any, color: any, notification?: any, parent?: any);
+    index: number;
+    title: string;
+    icon: string;
+    color: string;
+    notification: any;
+    parent: BottomBar;
 }
 export interface SelectedIndexChangedEventData extends EventData {
   oldIndex: number;

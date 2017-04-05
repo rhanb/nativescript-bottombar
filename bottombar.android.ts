@@ -1,12 +1,12 @@
 import common = require("./bottombar.common");
 import trace = require("trace");
 import types = require("utils/types");
-import {PropertyMetadata} from "ui/core/proxy";
-import {PropertyMetadataSettings, Property, PropertyChangeData} from "ui/core/dependency-observable";
-import {View} from "ui/core/view";
-import {Color} from "color";
+import { PropertyMetadata } from "ui/core/proxy";
+import { PropertyMetadataSettings, Property, PropertyChangeData } from "ui/core/dependency-observable";
+import { View } from "ui/core/view";
+import { Color } from "color";
 import * as imageSource from "image-source";
-import {SelectedIndexChangedEventData} from "./bottombar.common";
+import { SelectedIndexChangedEventData } from "./bottombar.common";
 
 
 declare var com, android: any;
@@ -19,18 +19,88 @@ let AHBottomNavigationItem = com.aurelhubert.ahbottomnavigation.AHBottomNavigati
 let AHNotification = com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
 export class BottomBarItem extends common.BottomBarItem {
-    public _update() {
-        if (this._parent && this._parent.android) {
+    private _title: string = "";
+    private _icon: string = "";
+    private _color: string = "";
+    private _notification: string = "";
+    private _index: number;
+    private _parent: BottomBar;
 
+    constructor(index, title, icon, color, notification?, parent?) {
+        super();
+        this._index = index;
+        this._title = title;
+        this._icon = icon;
+        this._color = color;
+        console.log('constructor - notification');
+        console.dir(typeof notification);
+        console.log('constructor - parent');
+        console.dir(typeof parent);
+        if (parent) {
+            this._parent = parent;
+        }
+        if (notification) {
+            this._notification = notification;
         }
     }
-    public _notificationPropertyChangedSetNativeValue(data: PropertyChangeData) {
-        console.log('_notificationPropertyChangedSetNativeValue');
-        let newNotification = data.newValue;
-        console.log(newNotification);
-        if (types.isDefined(newNotification)) {
-            this._parent.android().setNotification(newNotification.value, newNotification.index);
+
+    public get index(): number {
+        return this._index;
+    }
+
+    public set index(indexValue: number) {
+        if (indexValue !== this._index && indexValue) {
+            this._index = indexValue;
         }
+    }
+
+    public get title(): string {
+        return this._title;
+    }
+
+    public set title(value: string) {
+        if (this._title !== value && value) {
+            this._title = value;
+        }
+    }
+
+    public get icon(): string {
+        return this._icon;
+    }
+
+    public set icon(value: string) {
+        if (this._icon !== value && value) {
+            this._icon = value;
+        }
+    }
+
+    public get color(): string {
+        return this._color;
+    }
+
+    public set color(value: string) {
+        if (this._color !== value && value) {
+            this._color = value;
+        }
+    }
+
+    public get notification(): any {
+        return this._notification;
+    }
+
+    public set notification(value: any) {
+        if (this._notification !== value && value) {
+            this._notification = value;
+            this._parent.android.setNotification(this._notification, this._index);
+        }
+    }
+
+    public get parent () {
+        return this._parent;
+    }
+
+    public set parent(parent: BottomBar) {
+        this._parent = parent;
     }
 }
 export class BottomBar extends common.BottomBar {
@@ -87,12 +157,21 @@ export class BottomBar extends common.BottomBar {
     }
 
     public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
+        console.log('_onItemsPropertyChangedSetNativeValue');
         this._android.removeAllItems();
         let items = <Array<BottomBarItem>>data.newValue;
         items.forEach((item, idx, arr) => {
+            if (!item.notification) {
+                item.notification = ""
+            }
+            this.items[idx] = new BottomBarItem(item.index, item.title, item.icon, item.color, item.notification, this);
             let icon1 = new BitmapDrawable(imageSource.fromResource(item.icon).android);
             let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);
             this._android.addItem(item1);
+            let notification = item.notification;
+            if (notification) {
+                this._android.setNotification(notification, idx)
+            }
         });
         if (this.selectedIndex != null) {
             this._android.setCurrentItem(this.selectedIndex);
@@ -113,7 +192,6 @@ export class BottomBar extends common.BottomBar {
     }
 
     public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
-        console.log('_titleStatePropertyChangedSetNativeValue');
         let newTitleState = data.newValue;
         let isValid = false;
         if (types.isDefined(newTitleState)) {
@@ -132,25 +210,19 @@ export class BottomBar extends common.BottomBar {
     }
 
     public _hidePropertyChangedSetNativeValue(data: PropertyChangeData) {
-        console.log("_hidePropertyChangedSetNativeValue");
         let newHideValue = data.newValue;
         let isValid = false;
-        console.log(newHideValue);
         if (types.isDefined(newHideValue)) {
-            console.log('isDefined');
             if (types.isBoolean(newHideValue)) {
                 isValid = true;
             }
             if (!isValid) {
-                console.log('is not boolean');
                 throw new Error("Must be a boolean");
 
             } else {
                 if (newHideValue) {
-                    console.log('should hideBottomNavigation');
                     this._android.hideBottomNavigation();
                 } else {
-                    console.log('should restoreBottomNavigation');
                     this._android.restoreBottomNavigation();
                 }
             }

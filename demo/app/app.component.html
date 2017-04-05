@@ -1,1 +1,12 @@
-<BottomBar [items]="items" (tabSelected)="tabSelected($event)"></BottomBar>
+<GridLayout rows="*, auto">
+    <Label row="0" text="row1"></Label>
+    <BottomBar #bar row="1" [items]="items" (tabSelected)="tabSelected($event)" [hide]="hidden"></BottomBar>
+    <!-- <BottomBar row="1" (tabSelected)="tabSelected($event)" [hide]="hidden">
+        
+        <BottomBarItem color="#1083BF" title="Home" icon="ic_home_black_24dp" [notification]="notification"></BottomBarItem>
+        <BottomBarItem color="#1083BF" title="Calendar" icon="ic_calendar"></BottomBarItem>
+        <BottomBarItem color="#1083BF" title="Profile" icon="ic_collaborator"></BottomBarItem>
+        <BottomBarItem color="#1083BF" title="Message" icon="ic_paperplane"></BottomBarItem>
+    </BottomBar>-->
+
+</GridLayout>

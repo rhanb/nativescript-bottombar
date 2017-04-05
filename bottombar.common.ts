@@ -22,82 +22,14 @@ var SELECTED_INDEX = "selectedIndex";
 var BOTTOM_NAV = "BottomBar";
 var CHILD_BOTTOM_NAV_ITEM = "BottomBarItem";
 var TITLE_STATE_PROPERTY = "titleState";
-var NOTIFICATION = "notification";
 var HIDE = "hide";
 
 export interface SelectedIndexChangedEventData extends EventData {
     oldIndex: number;
     newIndex: number;
 }
-var notificationProperty = new Property(NOTIFICATION, CHILD_BOTTOM_NAV_ITEM, new PropertyMetadata(undefined));
 
-(<PropertyMetadata>notificationProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
-    var bottomnavItem = <BottomBarItem>data.object;
-    bottomnavItem._notificationPropertyChangedSetNativeValue(data);
-};
-export class BottomBarItem extends Bindable {
-    private _title: string = "";
-    private _icon: string = "";
-    private _color: string = "";
-    public static notificationProperty = notificationProperty;
-    //private _index: number;
-    public _parent: BottomBar;
-
-    get title(): string {
-        return this._title;
-    }
-
-    set title(value: string) {
-        if (this._title !== value) {
-            this._title = value;
-            this._update();
-        }
-    }
-
-    get icon(): string {
-        return this._icon;
-    }
-
-    set icon(value: string) {
-        if (this._icon !== value) {
-            this._icon = value;
-            this._update();
-        }
-    }
-
-    get color(): string {
-        return this._color;
-    }
-
-    set color(value: string) {
-        if (this._color !== value) {
-            this._color = value;
-            this._update();
-        }
-    }
-
-    /*get index () {
-        return this._index;
-    }
-
-    set index (newIndex: number) {
-        this._index = newIndex;
-    }*/
-
-    get notification(): any {
-        return this._getValue(BottomBarItem.notificationProperty);
-    }
-
-    set notification(value: any) {
-        this._setValue(BottomBarItem.notificationProperty, value);
-    }
-
-    public _notificationPropertyChangedSetNativeValue(data: PropertyChangeData) { }
-
-    public _update() {
-        //
-    }
-}
+export class BottomBarItem extends Bindable { }
 
 var itemsProperty = new Property(ITEMS, BOTTOM_NAV, new PropertyMetadata(undefined));
 var selectedIndexProperty = new Property(SELECTED_INDEX, BOTTOM_NAV, new PropertyMetadata(undefined));
@@ -136,6 +68,7 @@ export class BottomBar extends View {
 
 
     public _addArrayFromBuilder(name: string, value: Array<any>) {
+        console.log('_addArrayFromBuilder');
         if (name === ITEMS) {
             this._setValue(BottomBar.itemsProperty, value);
         }
@@ -143,6 +76,7 @@ export class BottomBar extends View {
 
     public _onBindingContextChanged(oldValue: any, newValue: any) {
         super._onBindingContextChanged(oldValue, newValue);
+        console.log("_onBindingContextChanged");
         if (this.items && this.items.length > 0) {
             var i = 0;
             var length = this.items.length;
@@ -153,6 +87,7 @@ export class BottomBar extends View {
     }
 
     public _addChildFromBuilder(name: string, value: any): void {
+        console.log("_addChildFromBuilder");
         if (name === CHILD_BOTTOM_NAV_ITEM) {
             if (!this.items) {
                 this.items = new Array<BottomBarItem>();
@@ -168,10 +103,12 @@ export class BottomBar extends View {
     }
 
     get items(): Array<BottomBarItem> {
+        console.log('get items');
         return this._getValue(BottomBar.itemsProperty);
     }
 
     set items(value: Array<BottomBarItem>) {
+        console.log('set items');
         this._setValue(BottomBar.itemsProperty, value);
     }
 
@@ -208,11 +145,13 @@ export class BottomBar extends View {
         this._setValue(BottomBar.titleStateProperty, value);
     }
 
-   get hide(): boolean {
+    get hide(): boolean {
+        console.log('get hidden');
         return this._getValue(BottomBar.hideProperty);
     }
 
     set hide(hideValue: boolean) {
+        console.log('set hidden');
         this._setValue(BottomBar.hideProperty, hideValue);
     }
 

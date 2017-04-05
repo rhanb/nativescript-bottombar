@@ -11,17 +11,6 @@ export interface SelectedIndexChangedEventData extends EventData {
     newIndex: number;
 }
 export declare class BottomBarItem extends Bindable {
-    private _title;
-    private _icon;
-    private _color;
-    static notificationProperty: Property;
-    _parent: BottomBar;
-    title: string;
-    icon: string;
-    color: string;
-    notification: any;
-    _notificationPropertyChangedSetNativeValue(data: PropertyChangeData): void;
-    _update(): void;
 }
 export declare const enum TITLE_STATE {
     SHOW_WHEN_ACTIVE = 0,

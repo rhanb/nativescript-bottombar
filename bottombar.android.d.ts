@@ -1,8 +1,19 @@
 import common = require("./bottombar.common");
 import { PropertyChangeData } from "ui/core/dependency-observable";
 export declare class BottomBarItem extends common.BottomBarItem {
-    _update(): void;
-    _notificationPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    private _title;
+    private _icon;
+    private _color;
+    private _notification;
+    private _index;
+    private _parent;
+    constructor(index: any, title: any, icon: any, color: any, notification?: any, parent?: any);
+    index: number;
+    title: string;
+    icon: string;
+    color: string;
+    notification: any;
+    parent: BottomBar;
 }
 export declare class BottomBar extends common.BottomBar {
     private _android;
