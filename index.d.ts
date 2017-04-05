@@ -1,9 +1,12 @@
-import common = require("./bottombar.common");
-import { PropertyChangeData } from "ui/core/dependency-observable";
+import { Property, PropertyChangeData } from "ui/core/dependency-observable";
+import { View } from "ui/core/view";
+import { Bindable } from "ui/core/bindable";
 import { EventData } from "data/observable";
-
-//export declare module nativescriptbottombar {
-export class BottomBarItem extends common.BottomBarItem {
+export interface SelectedIndexChangedEventData extends EventData {
+    oldIndex: number;
+    newIndex: number;
+}
+export declare class BottomBarItem extends Bindable {
     private _title;
     private _icon;
     private _color;
@@ -15,30 +18,37 @@ export class BottomBarItem extends common.BottomBarItem {
     title: string;
     icon: string;
     color: string;
-    notification: any;
+    notification: string;
     parent: BottomBar;
 }
-export interface SelectedIndexChangedEventData extends EventData {
-  oldIndex: number;
-  newIndex: number;
+export declare const enum TITLE_STATE {
+    SHOW_WHEN_ACTIVE = 0,
+    ALWAYS_SHOW = 1,
+    ALWAYS_HIDE = 2,
 }
-export const enum TITLE_STATE {
-  SHOW_WHEN_ACTIVE = 0,
-  ALWAYS_SHOW = 1,
-  ALWAYS_HIDE = 2,
+export declare class BottomBar extends View {
+    static itemsProperty: Property;
+    static selectedIndexProperty: Property;
+    static tabSelectedEvent: string;
+    static titleStateProperty: Property;
+    static hideProperty: Property;
+    private _android;
+    _listener: any;
+    readonly android: any;
+    readonly _nativeView: any;
+    readonly currentIndex: number;
+    _createUI(): void;
+    _addArrayFromBuilder(name: string, value: Array<any>): void;
+    _onBindingContextChanged(oldValue: any, newValue: any): void;
+    _addChildFromBuilder(name: string, value: any): void;
+    insertTab(tabItem: BottomBarItem, index?: number): void;
+    items: Array<BottomBarItem>;
+    _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    selectedIndex: number;
+    _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    titleState: TITLE_STATE;
+    _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    private setTitleStateNative(newTitleState);
+    hide: boolean;
+    _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
 }
-export class BottomBar extends common.BottomBar {
-  private _android;
-  _listener: any;
-  readonly android: any;
-  readonly _nativeView: any;
-  readonly currentIndex: number;
-  _createUI(): void;
-  _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
-  _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData): void;
-  _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
-  _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
-  private setTitleStateNative(newTitleState);
-}
-
-//}

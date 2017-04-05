@@ -1,28 +1,33 @@
-import common = require("./bottombar.common");
-import trace = require("trace");
-import types = require("utils/types");
+import { isDefined, isUndefined, isNumber, isBoolean } from "utils/types";
 import { PropertyMetadata } from "ui/core/proxy";
-import { PropertyMetadataSettings, Property, PropertyChangeData } from "ui/core/dependency-observable";
+import { Property, PropertyChangeData, PropertyMetadataSettings } from "ui/core/dependency-observable";
 import { View } from "ui/core/view";
 import { Color } from "color";
-import * as imageSource from "image-source";
-import { SelectedIndexChangedEventData } from "./bottombar.common";
+import { fromResource } from "image-source";
+import { Bindable } from "ui/core/bindable";
+import { EventData } from "data/observable";
+import { isAndroid } from "platform";
 
+
+let AffectsLayout = isAndroid ? PropertyMetadataSettings.None : PropertyMetadataSettings.AffectsLayout;
 
 declare var com, android: any;
-
-global.moduleMerge(common, exports);
 
 let BitmapDrawable = android.graphics.drawable.BitmapDrawable;
 let AHBottomNavigation = com.aurelhubert.ahbottomnavigation.AHBottomNavigation; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigation.java#L1
 let AHBottomNavigationItem = com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigationItem.java#L86
 let AHNotification = com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
-export class BottomBarItem extends common.BottomBarItem {
-    private _title: string = "";
-    private _icon: string = "";
-    private _color: string = "";
-    private _notification: string = "";
+export interface SelectedIndexChangedEventData extends EventData {
+    oldIndex: number;
+    newIndex: number;
+}
+
+export class BottomBarItem extends Bindable {
+    private _title: string;
+    private _icon: string;
+    private _color: string;
+    private _notification: string;
     private _index: number;
     private _parent: BottomBar;
 
@@ -32,10 +37,6 @@ export class BottomBarItem extends common.BottomBarItem {
         this._title = title;
         this._icon = icon;
         this._color = color;
-        console.log('constructor - notification');
-        console.dir(typeof notification);
-        console.log('constructor - parent');
-        console.dir(typeof parent);
         if (parent) {
             this._parent = parent;
         }
@@ -61,6 +62,7 @@ export class BottomBarItem extends common.BottomBarItem {
     public set title(value: string) {
         if (this._title !== value && value) {
             this._title = value;
+            this._parent.changeItemTitle(this._index, this._title);
         }
     }
 
@@ -71,6 +73,7 @@ export class BottomBarItem extends common.BottomBarItem {
     public set icon(value: string) {
         if (this._icon !== value && value) {
             this._icon = value;
+            this._parent.changeItemIcon(this._index, this._icon);
         }
     }
 
@@ -81,21 +84,22 @@ export class BottomBarItem extends common.BottomBarItem {
     public set color(value: string) {
         if (this._color !== value && value) {
             this._color = value;
+            this._parent.changeItemColor(this._index, this._color);
         }
     }
 
-    public get notification(): any {
+    public get notification(): string {
         return this._notification;
     }
 
-    public set notification(value: any) {
+    public set notification(value: string) {
         if (this._notification !== value && value) {
             this._notification = value;
             this._parent.android.setNotification(this._notification, this._index);
         }
     }
 
-    public get parent () {
+    public get parent() {
         return this._parent;
     }
 
@@ -103,7 +107,50 @@ export class BottomBarItem extends common.BottomBarItem {
         this._parent = parent;
     }
 }
-export class BottomBar extends common.BottomBar {
+
+var ITEMS = "items";
+var SELECTED_INDEX = "selectedIndex";
+var BOTTOM_NAV = "BottomBar";
+var CHILD_BOTTOM_NAV_ITEM = "BottomBarItem";
+var TITLE_STATE_PROPERTY = "titleState";
+var HIDE = "hide";
+var itemsProperty = new Property(ITEMS, BOTTOM_NAV, new PropertyMetadata(undefined));
+var selectedIndexProperty = new Property(SELECTED_INDEX, BOTTOM_NAV, new PropertyMetadata(undefined));
+var titleStateProperty = new Property(TITLE_STATE_PROPERTY, BOTTOM_NAV, new PropertyMetadata(undefined));
+var hideProperty = new Property(HIDE, BOTTOM_NAV, new PropertyMetadata(undefined));
+
+export const enum TITLE_STATE {
+    SHOW_WHEN_ACTIVE,
+    ALWAYS_SHOW,
+    ALWAYS_HIDE
+}
+
+
+(<PropertyMetadata>itemsProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
+    var bottomnav = <BottomBar>data.object;
+    bottomnav._onItemsPropertyChangedSetNativeValue(data);
+};
+
+(<PropertyMetadata>selectedIndexProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
+    var bottomnav = <BottomBar>data.object;
+    bottomnav._onSelectedIndexPropertyChangedSetNativeValue(data);
+};
+(<PropertyMetadata>titleStateProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
+    var bottomnav = <BottomBar>data.object;
+    bottomnav._titleStatePropertyChangedSetNativeValue(data);
+};
+(<PropertyMetadata>hideProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
+    var bottomnav = <BottomBar>data.object;
+    bottomnav._hidePropertyChangedSetNativeValue(data);
+};
+
+
+export class BottomBar extends View {
+    public static itemsProperty = itemsProperty;
+    public static selectedIndexProperty = selectedIndexProperty;
+    public static tabSelectedEvent = "tabSelected";
+    public static titleStateProperty = titleStateProperty;
+    public static hideProperty = hideProperty;
     private _android: any;
     public _listener: any;
 
@@ -142,7 +189,7 @@ export class BottomBar extends common.BottomBar {
 
         //always show title
         let owner = that.get();
-        if (types.isDefined(owner.titleState)) {
+        if (isDefined(owner.titleState)) {
             this.setTitleStateNative(owner.titleState);
         } else {
             this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
@@ -155,17 +202,63 @@ export class BottomBar extends common.BottomBar {
         this._android.setColored(true);
 
     }
+    public _addArrayFromBuilder(name: string, value: Array<any>) {
+        console.log('_addArrayFromBuilder');
+        if (name === ITEMS) {
+            this._setValue(BottomBar.itemsProperty, value);
+        }
+    }
 
+    public _onBindingContextChanged(oldValue: any, newValue: any) {
+        super._onBindingContextChanged(oldValue, newValue);
+        console.log("_onBindingContextChanged");
+        if (this.items && this.items.length > 0) {
+            var i = 0;
+            var length = this.items.length;
+            for (; i < length; i++) {
+                this.items[i].bindingContext = newValue;
+            }
+        }
+    }
+
+    public _addChildFromBuilder(name: string, value: any): void {
+        console.log("_addChildFromBuilder");
+        if (name === CHILD_BOTTOM_NAV_ITEM) {
+            if (!this.items) {
+                this.items = new Array<BottomBarItem>();
+            }
+            this.items.push(<BottomBarItem>value);
+            this.insertTab(<BottomBarItem>value);
+
+        }
+    }
+
+    public insertTab(tabItem: BottomBarItem, index?: number): void {
+        //
+    }
+    get items(): Array<BottomBarItem> {
+        console.log('get items');
+        return this._getValue(BottomBar.itemsProperty);
+    }
+
+    set items(value: Array<BottomBarItem>) {
+        console.log('set items');
+        this._setValue(BottomBar.itemsProperty, value);
+    }
     public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
         console.log('_onItemsPropertyChangedSetNativeValue');
-        this._android.removeAllItems();
         let items = <Array<BottomBarItem>>data.newValue;
+        this.createItems(items);
+
+    }
+    public createItems(items: Array<any>) {
+        this._android.removeAllItems();
         items.forEach((item, idx, arr) => {
             if (!item.notification) {
                 item.notification = ""
             }
             this.items[idx] = new BottomBarItem(item.index, item.title, item.icon, item.color, item.notification, this);
-            let icon1 = new BitmapDrawable(imageSource.fromResource(item.icon).android);
+            let icon1 = new BitmapDrawable(fromResource(item.icon).android);
             let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);
             this._android.addItem(item1);
             let notification = item.notification;
@@ -176,12 +269,54 @@ export class BottomBar extends common.BottomBar {
         if (this.selectedIndex != null) {
             this._android.setCurrentItem(this.selectedIndex);
         }
+    }
 
+    public changeItemTitle(index: number, title: string) {
+        let item = this.items[index];
+        if (item.title !== title) {
+            item.title = title;
+            this.items[index] = item;
+        }
+        this.createItems(this.items);
+    }
+    public changeItemColor(index: number, color: string) {
+        let item = this.items[index];
+        if (item.color !== color) {
+            item.color = color;
+            this.items[index] = item;
+        }
+        this.createItems(this.items);
+    }
+
+    public changeItemIcon(index: number, icon: string) {
+        let item = this.items[index];
+        if (item.icon !== icon) {
+            item.icon = icon;
+            this.items[index] = item;
+        }
+        this.createItems(this.items);
+    }
+
+    get selectedIndex(): number {
+        return this._getValue(BottomBar.selectedIndexProperty);
+    }
+
+    set selectedIndex(value: number) {
+        this._setValue(BottomBar.selectedIndexProperty, value);
     }
 
     public _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData) {
-        super._onSelectedIndexPropertyChangedSetNativeValue(data);
-        var index = data.newValue;
+        var index = this.selectedIndex;
+        if (isUndefined(index)) {
+            return;
+        }
+
+        if (isDefined(this.items)) {
+            if (index < 0 || index >= this.items.length) {
+                this.selectedIndex = undefined;
+                throw new Error("SelectedIndex should be between [0, items.length)");
+            }
+        }
         var args = {
             eventName: BottomBar.tabSelectedEvent,
             object: this,
@@ -191,11 +326,19 @@ export class BottomBar extends common.BottomBar {
         this.notify(args);
     }
 
+    get titleState(): TITLE_STATE {
+        return this._getValue(BottomBar.titleStateProperty);
+    }
+
+    set titleState(value: TITLE_STATE) {
+        this._setValue(BottomBar.titleStateProperty, value);
+    }
+
     public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
         let newTitleState = data.newValue;
         let isValid = false;
-        if (types.isDefined(newTitleState)) {
-            if (types.isNumber(newTitleState)) {
+        if (isDefined(newTitleState)) {
+            if (isNumber(newTitleState)) {
                 isValid = true;
             }
             if (!isValid) {
@@ -209,11 +352,33 @@ export class BottomBar extends common.BottomBar {
         }
     }
 
+    private setTitleStateNative(newTitleState: TITLE_STATE) {
+        switch (newTitleState) {
+            case TITLE_STATE.ALWAYS_SHOW:
+                this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+                break;
+            case TITLE_STATE.SHOW_WHEN_ACTIVE:
+                this._android.setTitleState(AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE);
+                break;
+            case TITLE_STATE.ALWAYS_HIDE:
+                this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
+                break;
+        }
+    }
+    get hide(): boolean {
+        console.log('get hidden');
+        return this._getValue(BottomBar.hideProperty);
+    }
+
+    set hide(hideValue: boolean) {
+        console.log('set hidden');
+        this._setValue(BottomBar.hideProperty, hideValue);
+    }
     public _hidePropertyChangedSetNativeValue(data: PropertyChangeData) {
         let newHideValue = data.newValue;
         let isValid = false;
-        if (types.isDefined(newHideValue)) {
-            if (types.isBoolean(newHideValue)) {
+        if (isDefined(newHideValue)) {
+            if (isBoolean(newHideValue)) {
                 isValid = true;
             }
             if (!isValid) {
@@ -228,20 +393,6 @@ export class BottomBar extends common.BottomBar {
             }
         } else {
             throw new Error('Must have hide');
-        }
-    }
-
-    private setTitleStateNative(newTitleState: common.TITLE_STATE) {
-        switch (newTitleState) {
-            case common.TITLE_STATE.ALWAYS_SHOW:
-                this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
-                break;
-            case common.TITLE_STATE.SHOW_WHEN_ACTIVE:
-                this._android.setTitleState(AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE);
-                break;
-            case common.TITLE_STATE.ALWAYS_HIDE:
-                this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
-                break;
         }
     }
 }
