@@ -10,7 +10,7 @@ Only for Android, why? Because TabViews are available in iOS for a BottomBar :sm
 
 ## Demo
 
-<img src="https://github.com/rhanbIT/nativescript-bottombar/blob/master/screenshots/showcase.gif" width="208" height="368" /> 
+<img src="https://github.com/rhanbIT/nativescript-bottombar/blob/master/screenshots/showcase.gif" width="416" height="736" /> 
 
 ## Install (Under active developpment)
 ```bash
