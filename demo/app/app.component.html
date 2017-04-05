@@ -8,6 +8,6 @@
         <Button class="btn btn-primary" text="Change color of current tab" (tap)="changeColor()"></Button>
         <Button class="btn btn-primary" text="Change title of current tab" (tap)="changeTitle()"></Button>
     </StackLayout>
-    
-    <BottomBar #bar row="1" [items]="items" (tabSelected)="tabSelected($event)" [hide]="hidden"></BottomBar>
+
+    <BottomBar row="1" [items]="items" (tabSelected)="tabSelected($event)" [hide]="hidden" titleState="{{titleState}}"></BottomBar>
 </GridLayout>

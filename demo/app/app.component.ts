@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { registerElement } from 'nativescript-angular';
-import { BottomBar, BottomBarItem } from 'nativescript-bottombar';
+import { BottomBar, BottomBarItem, TITLE_STATE, SelectedIndexChangedEventData } from 'nativescript-bottombar';
 
 registerElement('BottomBar', () => BottomBar);
 
@@ -12,6 +12,7 @@ export class AppComponent  {
 
     public selectedIndex: number;
     public hidden: boolean;
+    public titleState: TITLE_STATE;
 
     public items: Array<BottomBarItem> = [
         new BottomBarItem(0, "Home", "ic_home_black_24dp", "black", "lol"),
@@ -22,8 +23,10 @@ export class AppComponent  {
     constructor() {
         this.selectedIndex = 0;
         this.hidden = false;
+        this.titleState = TITLE_STATE.SHOW_WHEN_ACTIVE;
     }
-    tabSelected(args) {
+
+    tabSelected(args: SelectedIndexChangedEventData) {
         if (args.newIndex !== args.oldIndex) {
             console.log(args.newIndex);
             this.selectedIndex = args.newIndex;
