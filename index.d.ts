@@ -38,12 +38,12 @@ export declare class BottomBar extends View {
     readonly _nativeView: any;
     readonly currentIndex: number;
     _createUI(): void;
-    _addArrayFromBuilder(name: string, value: Array<any>): void;
-    _onBindingContextChanged(oldValue: any, newValue: any): void;
-    _addChildFromBuilder(name: string, value: any): void;
-    insertTab(tabItem: BottomBarItem, index?: number): void;
     items: Array<BottomBarItem>;
     _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    createItems(items: Array<any>): void;
+    changeItemTitle(index: number, title: string): void;
+    changeItemColor(index: number, color: string): void;
+    changeItemIcon(index: number, icon: string): void;
     selectedIndex: number;
     _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     titleState: TITLE_STATE;

@@ -60,7 +60,7 @@ export class BottomBarItem extends Bindable {
     }
 
     public set title(value: string) {
-        if (this._title !== value && value) {
+        if (this._title !== value && value && this._parent) {
             this._title = value;
             this._parent.changeItemTitle(this._index, this._title);
         }
@@ -71,7 +71,7 @@ export class BottomBarItem extends Bindable {
     }
 
     public set icon(value: string) {
-        if (this._icon !== value && value) {
+        if (this._icon !== value && value && this._parent) {
             this._icon = value;
             this._parent.changeItemIcon(this._index, this._icon);
         }
@@ -82,7 +82,7 @@ export class BottomBarItem extends Bindable {
     }
 
     public set color(value: string) {
-        if (this._color !== value && value) {
+        if (this._color !== value && value && this._parent) {
             this._color = value;
             this._parent.changeItemColor(this._index, this._color);
         }
@@ -93,7 +93,7 @@ export class BottomBarItem extends Bindable {
     }
 
     public set notification(value: string) {
-        if (this._notification !== value && value) {
+        if (this._notification !== value && value && this._parent) {
             this._notification = value;
             this._parent.android.setNotification(this._notification, this._index);
         }

@@ -75,6 +75,7 @@ export class HelloWorldModel extends Observable {
 ```
 ## Angular NativeScript
 
+!!! If you want to change items color, title.. you'll have to wait for the BottomBar to be loaded !!!
 
 ### XML
    
@@ -82,7 +83,7 @@ export class HelloWorldModel extends Observable {
 <GridLayout rows="*, auto">
     <Label row="0" text="test"></Label>
     <GridLayout row="1">
-        <BottomBar row="1" [items]="items" (tabSelected)="tabSelected($event)" [hide]="hidden" titleState={{titleState}} ></BottomBar>
+        <BottomBar row="1" [items]="items" (tabSelected)="tabSelected($event)" [hide]="hidden" titleState="{{titleState}}" (loaded)="bottomBarLoaded()"></BottomBar>
     </GridLayout>
 </GridLayout>
 ```
@@ -123,6 +124,9 @@ export class AppComponent  {
             this.selectedIndex = args.newIndex;
             this.items[this.selectedIndex].notification = "1";
         }
+    }
+    bottomBarLoaded() {
+        console.log('bottomBarLoaded');
     }
 }
 ```
