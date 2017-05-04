@@ -9,5 +9,10 @@
         <Button class="btn btn-primary" text="Change title of current tab" (tap)="changeTitle()"></Button>
     </StackLayout>
 
-    <BottomBar row="1" [items]="items" (tabSelected)="tabSelected($event)" [hide]="hidden" titleState="{{titleState}}"></BottomBar>
+    <android>
+        <BottomBar row="1" [items]="items" (tabSelected)="tabSelected($event)" [hide]="hidden" titleState="{{titleState}}"></BottomBar>
+    </android>
+    <ios>
+        <Tabbar row="1" width="100%"></Tabbar>
+    </ios>
 </GridLayout>

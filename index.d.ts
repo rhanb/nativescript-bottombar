@@ -52,3 +52,11 @@ export declare class BottomBar extends View {
     hide: boolean;
     _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
 }
+export declare class Tabbar extends View {
+    private _ios;
+    constructor();
+    setBadge(badgeIndex: number, badgeValue: string): void;
+    readonly ios: any;
+    readonly _nativeView: any;
+    onLoaded(): void;
+}
