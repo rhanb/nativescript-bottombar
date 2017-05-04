@@ -8,11 +8,8 @@
         <Button class="btn btn-primary" text="Change color of current tab" (tap)="changeColor()"></Button>
         <Button class="btn btn-primary" text="Change title of current tab" (tap)="changeTitle()"></Button>
     </StackLayout>
-
-    <android>
-        <BottomBar row="1" [items]="items" (tabSelected)="tabSelected($event)" [hide]="hidden" titleState="{{titleState}}"></BottomBar>
-    </android>
-    <ios>
-        <Tabbar row="1" width="100%"></Tabbar>
-    </ios>
+    <BottomBar row="1" [items]="items" (tabSelected)="tabSelected($event)"></BottomBar>
 </GridLayout>
+
+
+

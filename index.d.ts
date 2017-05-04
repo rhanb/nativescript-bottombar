@@ -6,57 +6,87 @@ export interface SelectedIndexChangedEventData extends EventData {
     oldIndex: number;
     newIndex: number;
 }
-export declare class BottomBarItem extends Bindable {
+export declare class BottomBarItemCommon extends Bindable {
     private _title;
     private _icon;
     private _color;
     private _notification;
     private _index;
+    constructor(index: number, title: string, icon: string, color: string, notification?: string);
+    index: number;
+    readonly title: string;
+    readonly icon: string;
+    readonly color: string;
+    readonly notification: string;
+}
+export declare class BottomBarItem extends BottomBarItemCommon {
     private _parent;
     constructor(index: any, title: any, icon: any, color: any, notification?: any, parent?: any);
-    index: number;
     title: string;
     icon: string;
     color: string;
     notification: string;
-    parent: BottomBar;
+    parent: WeakRef<BottomBar>;
 }
 export declare const enum TITLE_STATE {
     SHOW_WHEN_ACTIVE = 0,
     ALWAYS_SHOW = 1,
     ALWAYS_HIDE = 2,
 }
-export declare class BottomBar extends View {
+export declare class BottomBarCommon extends View {
     static itemsProperty: Property;
     static selectedIndexProperty: Property;
     static tabSelectedEvent: string;
     static titleStateProperty: Property;
     static hideProperty: Property;
-    private _android;
-    _listener: any;
-    readonly android: any;
-    readonly _nativeView: any;
-    readonly currentIndex: number;
-    _createUI(): void;
-    items: Array<BottomBarItem>;
+    items: Array<any>;
     _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
-    createItems(items: Array<any>): void;
-    changeItemTitle(index: number, title: string): void;
-    changeItemColor(index: number, color: string): void;
-    changeItemIcon(index: number, icon: string): void;
     selectedIndex: number;
     _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     titleState: TITLE_STATE;
     _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
-    private setTitleStateNative(newTitleState);
     hide: boolean;
     _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
 }
-export declare class Tabbar extends View {
+export declare class BottomBar extends BottomBarCommon {
+    /*
+    ios
+    */
     private _ios;
+    private _delegate;
     constructor();
+    createItems(items: Array<any>): void;
     setBadge(badgeIndex: number, badgeValue: string): void;
     readonly ios: any;
-    readonly _nativeView: any;
     onLoaded(): void;
+    /*
+    common
+    */
+    readonly _nativeView: any;
+    static itemsProperty: Property;
+    static selectedIndexProperty: Property;
+    static tabSelectedEvent: string;
+    static titleStateProperty: Property;
+    static hideProperty: Property;
+    items: Array<any>;
+    _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    selectedIndex: number;
+    _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    titleState: TITLE_STATE;
+    _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    hide: boolean;
+    _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    /*
+    android
+    */
+    private _android;
+    _listener: any;
+    readonly android: any;
+    readonly currentIndex: number;
+    _createUI(): void;
+    changeItemTitle(index: number, title: string): void;
+    changeItemColor(index: number, color: string): void;
+    changeItemIcon(index: number, icon: string): void;
+    private setTitleStateNative(newTitleState);
 }
+

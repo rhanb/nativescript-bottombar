@@ -1,28 +1,61 @@
 import { Component } from "@angular/core";
-import {Tabbar} from 'nativescript-bottombar';
 import { registerElement } from 'nativescript-angular';
+import { BottomBar, BottomBarItem, TITLE_STATE, SelectedIndexChangedEventData } from 'nativescript-bottombar';
 
-registerElement('Tabbar', () => Tabbar);
+registerElement('BottomBar', () => BottomBar);
 
 @Component({
-    selector: "ns-app",
+    selector: "nsapp",
     templateUrl: "app.component.html",
 })
-export class AppComponent {
-        _tabbar: Tabbar; 
-        currentInc: number = 0;
 
+export class AppComponent {
+    currentInc: number = 0;
+
+ public hidden: boolean;
+    public titleState: TITLE_STATE;
+
+    public items: Array<BottomBarItem> = [
+        new BottomBarItem(0, "Home", "ic_home_black_24dp", "black", "lol"),
+        new BottomBarItem(1, "Calendar", "ic_calendar", "#1083BF", "mdr"),
+        new BottomBarItem(2, "Profile", "ic_collaborator", "pink", "lmao"),
+        new BottomBarItem(3, "Message", "ic_paperplane", "green", "xD")
+    ];
+    constructor() {
+        this.hidden = false;
+        this.titleState = TITLE_STATE.SHOW_WHEN_ACTIVE;
+    }
+
+    tabSelected(args: SelectedIndexChangedEventData) {
+        if (args.newIndex !== args.oldIndex) {
+            console.log(args.newIndex);
+            this.items[args.newIndex].notification = "1";
+        }
+    }
+    hideBottombar() {
+        this.hidden = true;
+    }
+
+    showBottombar() {
+        this.hidden = false;
+    }
     tabLoaded(event) {
-        this._tabbar = <Tabbar>event.object;
+
         console.log("tabLoaded");
     }
 
-    changeBadge() {
-        this._tabbar.setBadge(this.currentInc, "5");
-        this.currentInc++;
+    changeIcon() {
+    /*    console.log(this.selectedIndex);
+        this.items[this.selectedIndex].icon = "ic_paperplane";*/
     }
-    hideBadge() {
-        this._tabbar.setBadge(0, "");
+
+
+    changeColor() {
+        // console.log(this.selectedIndex);
+        // this.items[this.selectedIndex].color = "black";
+    }
+
+    changeTitle() {
+        // this.items[this.selectedIndex].title = "Test";
     }
 }
-

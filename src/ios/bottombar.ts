@@ -2,39 +2,129 @@ import { View } from 'ui/core/view';
 import { Image } from 'ui/image';
 import { Color } from "color";
 import { Button } from "ui/button";
+import { Bindable } from "ui/core/bindable";
+import { Property, PropertyChangeData, PropertyMetadataSettings } from "ui/core/dependency-observable";
+import { PropertyMetadata } from "ui/core/proxy";
+import { isUndefined, isDefined } from "utils/types";
+import { BottomBarItemInterface, BottomBarCommon } from "../common";
+
 var imageSource = require("image-source");
 
 //declare const MiniTabBarItem;
 declare const MiniTabBarItem, MiniTabBar, MiniTabBarBadge, MiniTabBarDelegate;
 
 
+export class BottomBarItem implements BottomBarItemInterface {
+    private _index: number;
+    private _title: string;
+    private _icon: string;
+    private _color: string;
+    private _notification?: string;
+    private _parent?: WeakRef<BottomBar>;
+    constructor(index: number, title: string, icon: string, color: string, notification?: string, parent?: WeakRef<BottomBar>) {
+        this._index = index;
+        this._title = title;
+        this._icon = icon;
+        this._color = color;
+        if (notification) {
+            this._notification = notification;
+        }
+        if (parent) {
+            this._parent = parent;
+        }
+    }
+    public get index(): number {
+        return this._index;
+    }
 
-export class TabbarDelegate extends NSObject {
+    public set index(indexValue: number) {
+        this._index = indexValue;
+    }
+    public get title(): string {
+        return this._title;
+    }
+
+    public set title(value: string) {
+        if (this._title !== value && value && this._parent) {
+            this._title = value;
+            //this._parent.changeItemTitle(this._index, this._title);
+        }
+    }
+
+    public get icon(): string {
+        return this._icon;
+    }
+
+    public set icon(value: string) {
+        if (this._icon !== value && value && this._parent) {
+            this._icon = value;
+            //this._parent.changeItemIcon(this._index, this._icon);
+        }
+    }
+
+    public get color(): string {
+        return this.color;
+    }
+
+    public set color(value: string) {
+        if (this._color !== value && value && this._parent) {
+            this._color = value;
+            //this._parent.changeItemColor(this._index, this._color);
+        }
+    }
+
+    public get notification(): string {
+        return this._notification;
+    }
+
+    public set notification(value: string) {
+        if (this._notification !== value && value && this._parent) {
+            this._notification = value;
+            this._parent.get().ios.changeBadgeItem(this._index, this._notification);
+        }
+    }
+
+    public get parent(): WeakRef<BottomBar> {
+        return this._parent;
+    }
+
+    public set parent(parentValue: WeakRef<BottomBar>) {
+        this._parent = parentValue;
+    }
+}
+
+
+export class BottomBarDelegate extends NSObject {
     public static ObjCProtocols = [MiniTabBarDelegate];
-    private _owner: WeakRef<Tabbar>;
+    private _owner: WeakRef<BottomBar>;
 
-    public static initWithOwner(owner: WeakRef<Tabbar>): TabbarDelegate {
-        let delegate = <TabbarDelegate>TabbarDelegate.new();
+    public static initWithOwner(owner: WeakRef<BottomBar>): BottomBarDelegate {
+        let delegate = <BottomBarDelegate>BottomBarDelegate.new();
         delegate._owner = owner;
         return delegate;
     }
 
     public tabSelected(index: number) {
-        console.log("Selected tab: ", index);
+        console.log('tabSelected');
+        let bar = this._owner.get();
+        if (index !== bar.selectedIndex) {
+            bar.selectedIndex = index;
+        }
     }
 }
-
-export class TabbarItem extends View {
-
-}
-export class Tabbar extends View {
-
+export class BottomBar extends BottomBarCommon {
     private _ios: any;
+    private _delegate: BottomBarDelegate;
 
     constructor() {
         super();
         let items = new Array<any>();
-        var image = new Image();
+        this._ios = new MiniTabBar({
+            items: items
+        });
+        this._delegate = BottomBarDelegate.initWithOwner(new WeakRef(this));
+        this._ios.frame = CGRectMake(0, 400, 400, 44);
+        /*var image = new Image();
         var imageSourceValue = imageSource.fromResource('ic_calendar');
         //image.imageSource = imageSourceValue;
         items.push(new MiniTabBarItem({
@@ -73,28 +163,62 @@ export class Tabbar extends View {
         console.dir(offset);
         customItem = new MiniTabBarItem({ customView: customButton, offset });
         items.push(customItem);*/
-        this._ios = new MiniTabBar({
-            items: items
-        });
         /*let badge = new GIBadgeView();
         badge.badgeValue = 0;*/
-        this._ios.delegate = TabbarDelegate.initWithOwner(new WeakRef(this));
+
         //this._ios.frame = CGRectMake(0, this._ios.view.frame.height - 44, this._ios.view.frame.width, 44);
-        this._ios.frame = CGRectMake(0, 400, 400, 44);
+
         this._ios.tintColor = new Color("red").ios;
 
         // Change the font of the title label:
         this._ios.font = UIFont.systemFontOfSize(10);
 
-        // Select an item programmatically: 
-        this._ios.selectItemAnimated(2, true);
-
         // Change the background & key line of the tab bar:
         this._ios.backgroundColor = new Color('black').ios;
         this._ios.backgroundBlurEnabled = true;
         this._ios.keyLine.isHidden = false;
+    }
 
-        //this._ios.addSubview(badge);
+    public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
+        super._onItemsPropertyChangedSetNativeValue(data);
+        let items = <Array<BottomBarItem>>data.newValue;
+        this.createItems(items);
+
+    }
+    public createItems(items: Array<BottomBarItem>) {
+        ///this._ios.removeAllItems();
+        let itemsMiniTabBar = new Array<BottomBarItem>();
+        items.forEach((item) => {
+            if (!item.notification) {
+                item.notification = ""
+            }
+            item.parent = new WeakRef(this);
+            var image = new Image();
+            var imageSourceValue = imageSource.fromResource(item.icon);
+            let item1 = new MiniTabBarItem({
+                title: item.title,
+                icon: imageSourceValue.ios,
+                badge: new MiniTabBarBadge(new Color('red').ios, new Color('white').ios, item.notification)
+            })
+            itemsMiniTabBar.push(item1);
+        });
+        this._ios.setItems(itemsMiniTabBar);
+    }
+
+    public _hidePropertyChangedSetNativeValue(data: PropertyChangeData) {
+        let newHideValue = data.newValue;
+        super._hidePropertyChangedSetNativeValue(data);
+        if (newHideValue) {
+            //hide
+        } else {
+            //show
+        }
+    }
+
+    public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
+        super._titleStatePropertyChangedSetNativeValue(data);
+        let newTitleState = data.newValue;
+        //change title state
     }
 
     public setBadge(badgeIndex: number, badgeValue: string) {
@@ -111,5 +235,6 @@ export class Tabbar extends View {
 
     onLoaded() {
         super.onLoaded();
+        this._ios.delegate = this._delegate;
     }
 }

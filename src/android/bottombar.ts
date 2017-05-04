@@ -8,6 +8,7 @@ import { fromResource } from "image-source";
 import { Bindable } from "ui/core/bindable";
 import { EventData } from "data/observable";
 import { isAndroid } from "platform";
+import { TITLE_STATE, BottomBarCommon, BottomBarItemInterface } from "../common";
 
 
 let AffectsLayout = isAndroid ? PropertyMetadataSettings.None : PropertyMetadataSettings.AffectsLayout;
@@ -19,30 +20,24 @@ let AHBottomNavigation = com.aurelhubert.ahbottomnavigation.AHBottomNavigation; 
 let AHBottomNavigationItem = com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigationItem.java#L86
 let AHNotification = com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
-export interface SelectedIndexChangedEventData extends EventData {
-    oldIndex: number;
-    newIndex: number;
-}
 
-export class BottomBarItem extends Bindable {
+export class BottomBarItem implements BottomBarItemInterface {
+    private _index: number;
     private _title: string;
     private _icon: string;
     private _color: string;
-    private _notification: string;
-    private _index: number;
-    private _parent: BottomBar;
-
-    constructor(index, title, icon, color, notification?, parent?) {
-        super();
+    private _notification?: string;
+    private _parent?: WeakRef<BottomBar>;
+    constructor(index: number, title: string, icon: string, color: string, notification?: string, parent?: WeakRef<BottomBar>) {
         this._index = index;
         this._title = title;
         this._icon = icon;
         this._color = color;
-        if (parent) {
-            this._parent = parent;
-        }
         if (notification) {
             this._notification = notification;
+        }
+        if (parent) {
+            this._parent = parent;
         }
     }
 
@@ -51,9 +46,7 @@ export class BottomBarItem extends Bindable {
     }
 
     public set index(indexValue: number) {
-        if (indexValue !== this._index && indexValue) {
-            this._index = indexValue;
-        }
+        this._index = indexValue;
     }
 
     public get title(): string {
@@ -63,7 +56,7 @@ export class BottomBarItem extends Bindable {
     public set title(value: string) {
         if (this._title !== value && value && this._parent) {
             this._title = value;
-            this._parent.changeItemTitle(this._index, this._title);
+            this._parent.get().changeItemTitle(this._index, this._title);
         }
     }
 
@@ -74,18 +67,18 @@ export class BottomBarItem extends Bindable {
     public set icon(value: string) {
         if (this._icon !== value && value && this._parent) {
             this._icon = value;
-            this._parent.changeItemIcon(this._index, this._icon);
+            this._parent.get().changeItemIcon(this._index, this._icon);
         }
     }
 
-    public get color(): string {
-        return this._color;
+    public get color(): string { 
+        return this._color 
     }
 
     public set color(value: string) {
         if (this._color !== value && value && this._parent) {
             this._color = value;
-            this._parent.changeItemColor(this._index, this._color);
+            this._parent.get().changeItemColor(this._index, this._color);
         }
     }
 
@@ -96,63 +89,21 @@ export class BottomBarItem extends Bindable {
     public set notification(value: string) {
         if (this._notification !== value && value && this._parent) {
             this._notification = value;
-            this._parent.android.setNotification(this._notification, this._index);
+            this._parent.get().android.setNotification(this._notification, this._index);
         }
     }
 
-    public get parent() {
+    public get parent(): WeakRef<BottomBar> {
         return this._parent;
     }
 
-    public set parent(parent: BottomBar) {
+    public set parent(parent: WeakRef<BottomBar>) {
         this._parent = parent;
     }
 }
 
-let ITEMS = "items"
-    , SELECTED_INDEX = "selectedIndex"
-    , BOTTOM_NAV = "BottomBar"
-    , CHILD_BOTTOM_NAV_ITEM = "BottomBarItem"
-    , TITLE_STATE_PROPERTY = "titleState"
-    , HIDE = "hide";
 
-let itemsProperty = new Property(ITEMS, BOTTOM_NAV, new PropertyMetadata(undefined))
-    , selectedIndexProperty = new Property(SELECTED_INDEX, BOTTOM_NAV, new PropertyMetadata(undefined))
-    , titleStateProperty = new Property(TITLE_STATE_PROPERTY, BOTTOM_NAV, new PropertyMetadata(undefined))
-    , hideProperty = new Property(HIDE, BOTTOM_NAV, new PropertyMetadata(undefined));
-
-export const enum TITLE_STATE {
-    SHOW_WHEN_ACTIVE,
-    ALWAYS_SHOW,
-    ALWAYS_HIDE
-}
-
-
-(<PropertyMetadata>itemsProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
-    let bottomnav = <BottomBar>data.object;
-    bottomnav._onItemsPropertyChangedSetNativeValue(data);
-};
-
-(<PropertyMetadata>selectedIndexProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
-    let bottomnav = <BottomBar>data.object;
-    bottomnav._onSelectedIndexPropertyChangedSetNativeValue(data);
-};
-(<PropertyMetadata>titleStateProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
-    let bottomnav = <BottomBar>data.object;
-    bottomnav._titleStatePropertyChangedSetNativeValue(data);
-};
-(<PropertyMetadata>hideProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
-    let bottomnav = <BottomBar>data.object;
-    bottomnav._hidePropertyChangedSetNativeValue(data);
-};
-
-
-export class BottomBar extends View {
-    public static itemsProperty = itemsProperty;
-    public static selectedIndexProperty = selectedIndexProperty;
-    public static tabSelectedEvent = "tabSelected";
-    public static titleStateProperty = titleStateProperty;
-    public static hideProperty = hideProperty;
+export class BottomBar extends BottomBarCommon {
     private _android: any;
     public _listener: any;
 
@@ -205,13 +156,6 @@ export class BottomBar extends View {
 
     }
 
-    get items(): Array<BottomBarItem> {
-        return this._getValue(BottomBar.itemsProperty);
-    }
-
-    set items(value: Array<BottomBarItem>) {
-        this._setValue(BottomBar.itemsProperty, value);
-    }
     public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
         let items = <Array<BottomBarItem>>data.newValue;
         this.createItems(items);
@@ -223,7 +167,7 @@ export class BottomBar extends View {
             if (!item.notification) {
                 item.notification = ""
             }
-            this.items[idx] = new BottomBarItem(item.index, item.title, item.icon, item.color, item.notification, this);
+            this.items[idx] = new BottomBarItem(item.index, item.title, item.icon, item.color, item.notification, new WeakRef(this));
             let icon1 = new BitmapDrawable(fromResource(item.icon).android);
             let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);
             this._android.addItem(item1);
@@ -240,7 +184,6 @@ export class BottomBar extends View {
     public changeItemTitle(index: number, title: string) {
         let item = this.items[index];
         if (item.title !== title) {
-            item.title = title;
             this.items[index] = item;
         }
         this.createItems(this.items);
@@ -248,7 +191,6 @@ export class BottomBar extends View {
     public changeItemColor(index: number, color: string) {
         let item = this.items[index];
         if (item.color !== color) {
-            item.color = color;
             this.items[index] = item;
         }
         this.createItems(this.items);
@@ -257,65 +199,16 @@ export class BottomBar extends View {
     public changeItemIcon(index: number, icon: string) {
         let item = this.items[index];
         if (item.icon !== icon) {
-            item.icon = icon;
             this.items[index] = item;
         }
         this.createItems(this.items);
     }
 
-    get selectedIndex(): number {
-        return this._getValue(BottomBar.selectedIndexProperty);
-    }
-
-    set selectedIndex(value: number) {
-        this._setValue(BottomBar.selectedIndexProperty, value);
-    }
-
-    public _onSelectedIndexPropertyChangedSetNativeValue(data: PropertyChangeData) {
-        let index = this.selectedIndex;
-        if (isUndefined(index)) {
-            return;
-        }
-
-        if (isDefined(this.items)) {
-            if (index < 0 || index >= this.items.length) {
-                this.selectedIndex = undefined;
-                throw new Error("SelectedIndex should be between [0, items.length)");
-            }
-        }
-        let args = {
-            eventName: BottomBar.tabSelectedEvent,
-            object: this,
-            oldIndex: data.oldValue,
-            newIndex: data.newValue
-        };
-        this.notify(args);
-    }
-
-    get titleState(): TITLE_STATE {
-        return this._getValue(BottomBar.titleStateProperty);
-    }
-
-    set titleState(value: TITLE_STATE) {
-        this._setValue(BottomBar.titleStateProperty, value);
-    }
 
     public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
+        super._titleStatePropertyChangedSetNativeValue(data);
         let newTitleState = data.newValue;
-        let isValid = false;
-        if (isDefined(newTitleState)) {
-            if (isNumber(newTitleState)) {
-                isValid = true;
-            }
-            if (!isValid) {
-                throw new Error("Must be an enum");
-
-            } else {
-                this.setTitleStateNative(newTitleState);
-            }
-        } else {
-            throw new Error('Must have titleState');
-        }
+        this.setTitleStateNative(newTitleState);
     }
 
     private setTitleStateNative(newTitleState: TITLE_STATE) {
@@ -331,32 +224,14 @@ export class BottomBar extends View {
                 break;
         }
     }
-    get hide(): boolean {
-        return this._getValue(BottomBar.hideProperty);
-    }
 
-    set hide(hideValue: boolean) {
-        this._setValue(BottomBar.hideProperty, hideValue);
-    }
     public _hidePropertyChangedSetNativeValue(data: PropertyChangeData) {
+        super._hidePropertyChangedSetNativeValue(data);
         let newHideValue = data.newValue;
-        let isValid = false;
-        if (isDefined(newHideValue)) {
-            if (isBoolean(newHideValue)) {
-                isValid = true;
-            }
-            if (!isValid) {
-                throw new Error("Must be a boolean");
-
-            } else {
-                if (newHideValue) {
-                    this._android.hideBottomNavigation();
-                } else {
-                    this._android.restoreBottomNavigation();
-                }
-            }
+        if (newHideValue) {
+            this._android.hideBottomNavigation();
         } else {
-            throw new Error('Must have hide');
+            this._android.restoreBottomNavigation();
         }
     }
 }
