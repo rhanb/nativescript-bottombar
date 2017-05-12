@@ -220,7 +220,9 @@ export class BottomBar extends BottomBarCommon {
         super._titleStatePropertyChangedSetNativeValue(data);
         let newTitleState = data.newValue;
         //change title state
-        this._ios.setTitleState(newTitleState)
+        console.log('_titleStatePropertyChangedSetNativeValue');
+        this._ios.titleState = newTitleState;
+        console.dir(this._ios.titleState);
     }
 
     public setBadge(badgeIndex: number, badgeValue: string) {
