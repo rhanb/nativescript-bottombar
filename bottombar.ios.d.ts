@@ -1,2 +1,2 @@
-export * from './src/common';
-export * from './src/ios/bottombar';
+export declare class NativescriptBottombar {
+}
