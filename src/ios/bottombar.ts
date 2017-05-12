@@ -120,8 +120,9 @@ export class BottomBar extends BottomBarCommon {
         super();
         let items = new Array<any>();
         this._ios = new MiniTabBar({
-            items: items
-        }, TITLE_STATE.SHOW_WHEN_ACTIVE);
+            items: items,
+            titleState: TITLE_STATE.SHOW_WHEN_ACTIVE
+        });
         this._delegate = BottomBarDelegate.initWithOwner(new WeakRef(this));
         this._ios.frame = CGRectMake(0, 400, 400, 44);
         /*var image = new Image();
@@ -219,7 +220,7 @@ export class BottomBar extends BottomBarCommon {
         super._titleStatePropertyChangedSetNativeValue(data);
         let newTitleState = data.newValue;
         //change title state
-        
+        this._ios.setTitleState(newTitleState)
     }
 
     public setBadge(badgeIndex: number, badgeValue: string) {
