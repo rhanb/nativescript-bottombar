@@ -6,7 +6,21 @@
 NativeScript plugin for AHBottomNavigation.
 https://github.com/aurelhubert/ahbottomnavigation
 
-Only for Android, why? Because TabViews are available in iOS for a BottomBar :smile:
+Only for Android, for now? :smile:
+
+iOS support is currently under developpment:
+
+### TODO
+
+- [ ] Hide/Show animation
+- [x] Badges system
+- [ ] Badge color customisation
+- [ ] Badge font size
+- [x] Title state implementation
+- [ ] title font color customisation
+- [ ] inactive icon color customisation
+- [ ] Change tab color when selected tab item color is different 
+
 
 ## Demo
 
