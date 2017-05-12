@@ -6,7 +6,7 @@ import { Bindable } from "ui/core/bindable";
 import { Property, PropertyChangeData, PropertyMetadataSettings } from "ui/core/dependency-observable";
 import { PropertyMetadata } from "ui/core/proxy";
 import { isUndefined, isDefined } from "utils/types";
-import { BottomBarItemInterface, BottomBarCommon } from "../common";
+import { TITLE_STATE, BottomBarItemInterface, BottomBarCommon } from "../common";
 
 var imageSource = require("image-source");
 
@@ -121,7 +121,7 @@ export class BottomBar extends BottomBarCommon {
         let items = new Array<any>();
         this._ios = new MiniTabBar({
             items: items
-        });
+        }, TITLE_STATE.SHOW_WHEN_ACTIVE);
         this._delegate = BottomBarDelegate.initWithOwner(new WeakRef(this));
         this._ios.frame = CGRectMake(0, 400, 400, 44);
         /*var image = new Image();
@@ -219,6 +219,7 @@ export class BottomBar extends BottomBarCommon {
         super._titleStatePropertyChangedSetNativeValue(data);
         let newTitleState = data.newValue;
         //change title state
+        
     }
 
     public setBadge(badgeIndex: number, badgeValue: string) {
