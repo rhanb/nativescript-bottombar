@@ -3,23 +3,12 @@
 
 # NativeScript BottomBar
 
-NativeScript plugin for AHBottomNavigation.
-https://github.com/aurelhubert/ahbottomnavigation
+NativeScript plugin for [AHBottomNavigation](https://github.com/aurelhubert/ahbottomnavigation) and [MiniTabBar](https://github.com/D-32/MiniTabBar)
 
-Only for Android, for now? :smile:
+# Under active development 
 
-iOS support is currently under developpment:
-
-### TODO
-
-- [x] Hide/Show animation
-- [x] Badges system
-- [x] Badge color customisation
-- [x] Badge font size
-- [x] Title state implementation
-- [x] title font color customisation
-- [x] inactive icon color customisation
-- [ ] Change tab color when selected tab item color is different 
+```The documentation will be updated asap, a lot of brend new features on top of the iOS support``` :beers: :smile:
+```NS 3.0 Support coming with the v3.0 of nativescript-bottombar package``` 
 
 
 ## Demo
