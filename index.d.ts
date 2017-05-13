@@ -1,2 +1,3 @@
-export * from './bottombar.common';
-export * from './bottombar.android';
+export * from './src/common';
+export * from './src/android/bottombar';
+export * from './src/ios/bottombar';

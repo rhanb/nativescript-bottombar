@@ -1,3 +1,2 @@
-export class NativescriptBottombar {
-    // TODO Implementation
-}
+export * from './src/common';
+export * from './src/ios/bottombar';
