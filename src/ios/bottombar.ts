@@ -105,7 +105,6 @@ export class BottomBarDelegate extends NSObject {
     }
 
     public tabSelected(index: number) {
-        console.log('tabSelected');
         let bar = this._owner.get();
         if (index !== bar.selectedIndex) {
             bar.selectedIndex = index;
@@ -164,10 +163,6 @@ export class BottomBar extends BottomBarCommon {
         console.dir(offset);
         customItem = new MiniTabBarItem({ customView: customButton, offset });
         items.push(customItem);*/
-        /*let badge = new GIBadgeView();
-        badge.badgeValue = 0;*/
-
-        //this._ios.frame = CGRectMake(0, this._ios.view.frame.height - 44, this._ios.view.frame.width, 44);
 
         this._ios.tintColor = new Color("red").ios;
 
@@ -211,18 +206,20 @@ export class BottomBar extends BottomBarCommon {
         super._hidePropertyChangedSetNativeValue(data);
         if (newHideValue) {
             //hide
+            console.log("should hide view");
+            this._ios.hide();
         } else {
             //show
+            console.log("should show view");
+            this._ios.show();
         }
     }
+
 
     public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
         super._titleStatePropertyChangedSetNativeValue(data);
         let newTitleState = data.newValue;
-        //change title state
-        console.log('_titleStatePropertyChangedSetNativeValue');
         this._ios.titleState = newTitleState;
-        console.dir(this._ios.titleState);
     }
 
     public setBadge(badgeIndex: number, badgeValue: string) {

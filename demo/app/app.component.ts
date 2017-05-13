@@ -12,8 +12,9 @@ registerElement('BottomBar', () => BottomBar);
 export class AppComponent {
     currentInc: number = 0;
 
- public hidden: boolean;
+    public hidden: boolean;
     public titleState: TITLE_STATE;
+    public _bar: BottomBar;
 
     public items: Array<BottomBarItem> = [
         new BottomBarItem(0, "Home", "ic_home_black_24dp", "black", "1"),
@@ -23,7 +24,7 @@ export class AppComponent {
     ];
     constructor() {
         this.hidden = false;
-        this.titleState = TITLE_STATE.SHOW_WHEN_ACTIVE;
+        this.titleState = TITLE_STATE.ALWAYS_SHOW;
     }
 
     tabSelected(args: SelectedIndexChangedEventData) {
@@ -40,13 +41,12 @@ export class AppComponent {
         this.hidden = false;
     }
     tabLoaded(event) {
-
-        console.log("tabLoaded");
+        this._bar = <BottomBar>event.object
     }
 
     changeIcon() {
-    /*    console.log(this.selectedIndex);
-        this.items[this.selectedIndex].icon = "ic_paperplane";*/
+        /*    console.log(this.selectedIndex);
+            this.items[this.selectedIndex].icon = "ic_paperplane";*/
     }
 
 

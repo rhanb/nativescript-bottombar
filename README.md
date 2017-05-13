@@ -12,7 +12,7 @@ iOS support is currently under developpment:
 
 ### TODO
 
-- [ ] Hide/Show animation
+- [x] Hide/Show animation
 - [x] Badges system
 - [ ] Badge color customisation
 - [ ] Badge font size
