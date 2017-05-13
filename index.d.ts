@@ -12,20 +12,20 @@ export declare class BottomBarItemCommon extends Bindable {
     private _color;
     private _notification;
     private _index;
-    constructor(index: number, title: string, icon: string, color: string, notification?: string);
+    constructor(index: number, title: string, icon: string, color: string, notification?: Notification);
     index: number;
     readonly title: string;
     readonly icon: string;
     readonly color: string;
-    readonly notification: string;
+    readonly notification: Notification;
 }
 export declare class BottomBarItem extends BottomBarItemCommon {
     private _parent;
-    constructor(index: any, title: any, icon: any, color: any, notification?: any, parent?: any);
+    constructor(index: any, title: any, icon: any, color: any, notification?: Notification, parent?: any);
     title: string;
     icon: string;
     color: string;
-    notification: string;
+    notification: Notification;
     parent: WeakRef<BottomBar>;
 }
 export declare const enum TITLE_STATE {
@@ -71,6 +71,7 @@ export declare class BottomBar extends BottomBarCommon {
     /*
     common
     */
+    setNotification(value: string, index: number): void;
     readonly _nativeView: any;
     static itemsProperty: Property;
     static selectedIndexProperty: Property;

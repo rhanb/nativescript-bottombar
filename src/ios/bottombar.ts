@@ -63,11 +63,14 @@ export class BottomBarItem implements BottomBarItemInterface {
     }
 
     public get color(): string {
-        return this.color;
+        console.log('get color');
+        return this._color;
     }
 
     public set color(value: string) {
-        if (this._color !== value && value && this._parent) {
+        console.log('set color');
+        console.log(value);
+        if (this._color !== value && value) {
             this._color = value;
             //this._parent.changeItemColor(this._index, this._color);
         }
@@ -124,32 +127,6 @@ export class BottomBar extends BottomBarCommon {
         });
         this._delegate = BottomBarDelegate.initWithOwner(new WeakRef(this));
         this._ios.frame = CGRectMake(0, 400, 400, 44);
-        /*var image = new Image();
-        var imageSourceValue = imageSource.fromResource('ic_calendar');
-        //image.imageSource = imageSourceValue;
-        items.push(new MiniTabBarItem({
-            title: "Calendar",
-            icon: imageSourceValue.ios,
-            badge: new MiniTabBarBadge(new Color('blue').ios, new Color('pink').ios, "1")
-        }));
-        imageSourceValue = imageSource.fromResource('ic_collaborator');
-        items.push(new MiniTabBarItem({
-            title: "Profile",
-            icon: imageSourceValue.ios,
-            badge: new MiniTabBarBadge(new Color('blue').ios, new Color('pink').ios, "2")
-        }));
-        imageSourceValue = imageSource.fromResource('ic_home_black_24dp');
-        items.push(new MiniTabBarItem({
-            title: "Home",
-            icon: imageSourceValue.ios,
-            badge: new MiniTabBarBadge(new Color('blue').ios, new Color('pink').ios, "3")
-        }));
-        imageSourceValue = imageSource.fromResource('ic_paperplane');
-        items.push(new MiniTabBarItem({
-            title: "Messages",
-            icon: imageSourceValue.ios,
-            badge: new MiniTabBarBadge(new Color('blue').ios, new Color('pink').ios, "3")
-        }));
         /*let customItem;
         var imageProfile = new Image();
         var imageProfileSourceValue = imageSource.fromResource('profile');
@@ -194,7 +171,8 @@ export class BottomBar extends BottomBarCommon {
             let item1 = new MiniTabBarItem({
                 title: item.title,
                 icon: imageSourceValue.ios,
-                badge: new MiniTabBarBadge(new Color(item.notification.backgroundColor).ios, new Color(item.notification.textColor).ios, item.notification.value)
+                badge: new MiniTabBarBadge(new Color(item.notification.backgroundColor).ios, new Color(item.notification.textColor).ios, item.notification.value),
+                color: new Color(item.color).ios
             })
             itemsMiniTabBar.push(item1);
         });
@@ -230,6 +208,14 @@ export class BottomBar extends BottomBarCommon {
         this._ios.inactiveColor = new Color(newInactiveColorValue).ios;
     }
 
+    public _coloredPropertyChangedSetNativeValue(data: PropertyChangeData): void {
+        super._coloredPropertyChangedSetNativeValue(data);
+        let newColoredValue: boolean = data.newValue;
+        this._ios.colored = newColoredValue;
+    }
+    public setNotification(value: string, index: number) {
+        this._ios.changeBadgeItem(index, value);
+    }
     public setBadge(badgeIndex: number, badgeValue: string) {
         this._ios.changeBadgeItem(badgeIndex, badgeValue);
     }

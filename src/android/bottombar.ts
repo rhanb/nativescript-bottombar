@@ -89,12 +89,16 @@ export class BottomBarItem implements BottomBarItemInterface {
     public set notification(value: Notification) {
         if (this._notification !== value && value && this._parent) {
             this._notification = value;
-            let newNotification = new AHNotification.Builder()
-                .setText(this._notification.value)
-                .setBackgroundColor(new Color(this._notification.backgroundColor).android)
-                .setTextColor(new Color(this._notification.textColor).android)
-                .build();
-            this._parent.get().android.setNotification(newNotification, this._index);
+            if (this._notification.value !== "") {
+                let newNotification = new AHNotification.Builder()
+                    .setText(this._notification.value)
+                    .setBackgroundColor(new Color(this._notification.backgroundColor).android)
+                    .setTextColor(new Color(this._notification.textColor).android)
+                    .build();
+                this._parent.get().android.setNotification(newNotification, this._index);
+            } else {
+                this._parent.get().android.setNotification("", this._index);
+            }
         }
     }
 
@@ -154,7 +158,7 @@ export class BottomBar extends BottomBarCommon {
         }
 
         // Set background color
-        this._android.setDefaultBackgroundColor(new Color('#333').android);
+        this._android.setDefaultBackgroundColor(new Color('#FFFCFF').android);
 
         // Use colored navigation with circle reveal effect
         this._android.setColored(true);
@@ -242,6 +246,10 @@ export class BottomBar extends BottomBarCommon {
         }
     }
 
+    public setNotification(value: string, index: number) {
+        this._android.setNotification(value, index);
+    }
+
     public _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
         super._accentColorPropertyChangedSetNativeValue(data);
         let newAccentColorValue = data.newValue;
@@ -252,5 +260,11 @@ export class BottomBar extends BottomBarCommon {
         super._inactiveColorPropertyChangedSetNativeValue(data);
         let newInactiveColorValue = data.newValue;
         this._android.setInactiveColor(new Color(newInactiveColorValue).android);
+    }
+
+    public _coloredPropertyChangedSetNativeValue(data: PropertyChangeData): void {
+        super._coloredPropertyChangedSetNativeValue(data);
+        let newColoredValue: boolean = data.newValue;
+        this._android.setColored(newColoredValue);
     }
 }

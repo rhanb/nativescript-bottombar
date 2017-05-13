@@ -35,6 +35,7 @@ export declare class BottomBarCommon extends View {
     static hideProperty: Property;
     static accentColorProperty: Property;
     static inactiveColorProperty: Property;
+    static coloredProperty: Property;
     items: Array<any>;
     _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     selectedIndex: number;
@@ -43,8 +44,11 @@ export declare class BottomBarCommon extends View {
     _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
     hide: boolean;
     _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    setNotification(value: string, index: number): void;
     accentColor: string;
-    inactiveColor: string;
     _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    inactiveColor: string;
     _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    colored: boolean;
+    _coloredPropertyChangedSetNativeValue(data: PropertyChangeData): void;
 }

@@ -66,14 +66,16 @@ let ITEMS = "items"
     , TITLE_STATE_PROPERTY = "titleState"
     , HIDE = "hide"
     , INACTIVE_COLOR = "inactiveColor"
-    , ACCENT_COLOR = "accentColor";
+    , ACCENT_COLOR = "accentColor"
+    , COLORED = "colored";
 
 let itemsProperty = new Property(ITEMS, BOTTOM_NAV, new PropertyMetadata(undefined))
     , selectedIndexProperty = new Property(SELECTED_INDEX, BOTTOM_NAV, new PropertyMetadata(undefined))
     , titleStateProperty = new Property(TITLE_STATE_PROPERTY, BOTTOM_NAV, new PropertyMetadata(undefined))
     , hideProperty = new Property(HIDE, BOTTOM_NAV, new PropertyMetadata(undefined))
     , inactiveColorProperty = new Property(INACTIVE_COLOR, BOTTOM_NAV, new PropertyMetadata(undefined))
-    , accentColorProperty = new Property(ACCENT_COLOR, BOTTOM_NAV, new PropertyMetadata(undefined));;
+    , accentColorProperty = new Property(ACCENT_COLOR, BOTTOM_NAV, new PropertyMetadata(undefined))
+    , coloredProperty = new Property(COLORED, BOTTOM_NAV, new PropertyMetadata(undefined));
 
 
 
@@ -103,6 +105,10 @@ let itemsProperty = new Property(ITEMS, BOTTOM_NAV, new PropertyMetadata(undefin
     let bottomnav = <BottomBarCommon>data.object;
     bottomnav._inactiveColorPropertyChangedSetNativeValue(data);
 };
+(<PropertyMetadata>coloredProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
+    let bottomnav = <BottomBarCommon>data.object;
+    bottomnav._coloredPropertyChangedSetNativeValue(data);
+};
 
 export class BottomBarCommon extends View {
 
@@ -113,6 +119,7 @@ export class BottomBarCommon extends View {
     public static hideProperty = hideProperty;
     public static accentColorProperty = accentColorProperty;
     public static inactiveColorProperty = inactiveColorProperty;
+    public static coloredProperty = coloredProperty;
 
     get items(): Array<any> {
         return this._getValue(BottomBarCommon.itemsProperty);
@@ -191,6 +198,7 @@ export class BottomBarCommon extends View {
             throw new Error('Must have hide');
         }
     }
+    public setNotification(value: string, index: number) {}
 
     public get accentColor(): string {
         return this._getValue(BottomBarCommon.accentColorProperty);
@@ -198,14 +206,6 @@ export class BottomBarCommon extends View {
 
     public set accentColor(accentColorValue: string) {
         this._setValue(BottomBarCommon.accentColorProperty, accentColorValue);
-    }
-
-    public get inactiveColor(): string {
-        return this._getValue(BottomBarCommon.inactiveColorProperty);
-    }
-
-    public set inactiveColor(inactiveColorValue: string) {
-        this._setValue(BottomBarCommon.inactiveColorProperty, inactiveColorValue);
     }
 
     public _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
@@ -218,6 +218,13 @@ export class BottomBarCommon extends View {
             throw new Error('Must have accent color');
         }
     }
+    public get inactiveColor(): string {
+        return this._getValue(BottomBarCommon.inactiveColorProperty);
+    }
+
+    public set inactiveColor(inactiveColorValue: string) {
+        this._setValue(BottomBarCommon.inactiveColorProperty, inactiveColorValue);
+    }
 
     public _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
         let newInactiveColorValue = data.newValue;
@@ -229,4 +236,25 @@ export class BottomBarCommon extends View {
             throw new Error('Must have accent color');
         }
     }
+
+    public get colored(): boolean {
+        return this._getValue(BottomBarCommon.coloredProperty);
+    }
+
+    public set colored(coloredValued: boolean) {
+        this._setValue(BottomBarCommon.coloredProperty, coloredValued);
+    }
+
+    public _coloredPropertyChangedSetNativeValue(data: PropertyChangeData): void {
+        let newHideValue = data.newValue;
+        if (isDefined(newHideValue)) {
+            if (!isBoolean(newHideValue)) {
+                throw new Error("Must be a boolean");
+            }
+        } else {
+            throw new Error('Must have colored');
+        }
+    }
+
+
 }

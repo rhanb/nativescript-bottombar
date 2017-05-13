@@ -17,24 +17,30 @@ export class AppComponent {
     public _bar: BottomBar;
     public inactiveColor: string;
     public accentColor: string;
+    public selectedIndex: number;
 
     public items: Array<BottomBarItem> = [
         new BottomBarItem(0, "Home", "ic_home_black_24dp", "black", new Notification("blue", "white", "1")),
         new BottomBarItem(1, "Calendar", "ic_calendar", "#1083BF", new Notification("green", "blue", "1")),
         new BottomBarItem(2, "Profile", "ic_collaborator", "pink", new Notification("pink", "yellow", "1")),
-        new BottomBarItem(3, "Message", "ic_paperplane", "green", new Notification("green", "red", ""))
+        new BottomBarItem(3, "Message", "ic_paperplane", "green", new Notification("green", "red", "1"))
     ];
     constructor() {
+
+        this.selectedIndex = 0;
         this.hidden = false;
-        this.titleState = TITLE_STATE.ALWAYS_SHOW;
-        this.inactiveColor = "blue";
-        this.accentColor = "green";
+        this.titleState = TITLE_STATE.SHOW_WHEN_ACTIVE;
+        this.inactiveColor = "#737173";
+        this.accentColor = "blue";
     }
 
     tabSelected(args: SelectedIndexChangedEventData) {
         if (args.newIndex !== args.oldIndex) {
             console.log(args.newIndex);
-            this.items[args.newIndex].notification = "";
+            this._bar.setNotification("", args.newIndex);
+        } else {
+            console.log(args.newIndex);
+            this._bar.setNotification("1", args.newIndex);
         }
     }
     hideBottombar() {
@@ -46,6 +52,7 @@ export class AppComponent {
     }
     tabLoaded(event) {
         this._bar = <BottomBar>event.object
+        console.log('tabLoaded');
     }
 
     changeIcon() {

@@ -8,7 +8,8 @@
         <Button class="btn btn-primary" text="Change color of current tab" (tap)="changeColor()"></Button>
         <Button class="btn btn-primary" text="Change title of current tab" (tap)="changeTitle()"></Button>
     </StackLayout>
-    <BottomBar row="1" [items]="items" (tabSelected)="tabSelected($event)" [titleState]="titleState" [hide]="hidden" [accentColor]="accentColor" [inactiveColor]="inactiveColor"></BottomBar>
+    <BottomBar row="1" backgroundColor="#FFFCFF" [items]="items" (tabSelected)="tabSelected($event)" (loaded)="tabLoaded($event)" [titleState]="titleState" [hide]="hidden" [accentColor]="accentColor" [inactiveColor]="inactiveColor" colored="true"></BottomBar>
+    
     
 </GridLayout>
 
