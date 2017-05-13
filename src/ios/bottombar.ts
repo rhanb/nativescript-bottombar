@@ -6,7 +6,7 @@ import { Bindable } from "ui/core/bindable";
 import { Property, PropertyChangeData, PropertyMetadataSettings } from "ui/core/dependency-observable";
 import { PropertyMetadata } from "ui/core/proxy";
 import { isUndefined, isDefined } from "utils/types";
-import { TITLE_STATE, BottomBarItemInterface, BottomBarCommon } from "../common";
+import { TITLE_STATE, BottomBarItemInterface, BottomBarCommon, Notification } from "../common";
 
 var imageSource = require("image-source");
 
@@ -19,9 +19,9 @@ export class BottomBarItem implements BottomBarItemInterface {
     private _title: string;
     private _icon: string;
     private _color: string;
-    private _notification?: string;
+    private _notification?: Notification;
     private _parent?: WeakRef<BottomBar>;
-    constructor(index: number, title: string, icon: string, color: string, notification?: string, parent?: WeakRef<BottomBar>) {
+    constructor(index: number, title: string, icon: string, color: string, notification?: Notification, parent?: WeakRef<BottomBar>) {
         this._index = index;
         this._title = title;
         this._icon = icon;
@@ -73,14 +73,14 @@ export class BottomBarItem implements BottomBarItemInterface {
         }
     }
 
-    public get notification(): string {
+    public get notification(): Notification {
         return this._notification;
     }
 
-    public set notification(value: string) {
+    public set notification(value: Notification) {
         if (this._notification !== value && value && this._parent) {
             this._notification = value;
-            this._parent.get().ios.changeBadgeItem(this._index, this._notification);
+            this._parent.get().ios.changeBadgeItem(this._index, this._notification.value);
         }
     }
 
@@ -186,7 +186,7 @@ export class BottomBar extends BottomBarCommon {
         let itemsMiniTabBar = new Array<BottomBarItem>();
         items.forEach((item) => {
             if (!item.notification) {
-                item.notification = ""
+                item.notification = new Notification("white", "red", "");
             }
             item.parent = new WeakRef(this);
             var image = new Image();
@@ -194,7 +194,7 @@ export class BottomBar extends BottomBarCommon {
             let item1 = new MiniTabBarItem({
                 title: item.title,
                 icon: imageSourceValue.ios,
-                badge: new MiniTabBarBadge(new Color('red').ios, new Color('white').ios, item.notification)
+                badge: new MiniTabBarBadge(new Color(item.notification.backgroundColor).ios, new Color(item.notification.textColor).ios, item.notification.value)
             })
             itemsMiniTabBar.push(item1);
         });
@@ -205,12 +205,8 @@ export class BottomBar extends BottomBarCommon {
         let newHideValue = data.newValue;
         super._hidePropertyChangedSetNativeValue(data);
         if (newHideValue) {
-            //hide
-            console.log("should hide view");
             this._ios.hide();
         } else {
-            //show
-            console.log("should show view");
             this._ios.show();
         }
     }

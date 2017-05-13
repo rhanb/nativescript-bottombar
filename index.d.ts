@@ -48,6 +48,15 @@ export declare class BottomBarCommon extends View {
     hide: boolean;
     _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
 }
+export declare class Notification {
+    private _textColor;
+    private _backgroundColor;
+    private _value;
+    constructor(textColorValue: string, backgroundColorValue: string, valueValue: string);
+    textColor: string;
+    backgroundColor: string;
+    value: string;
+}
 export declare class BottomBar extends BottomBarCommon {
     /*
     ios

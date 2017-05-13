@@ -8,7 +8,7 @@ import { fromResource } from "image-source";
 import { Bindable } from "ui/core/bindable";
 import { EventData } from "data/observable";
 import { isAndroid } from "platform";
-import { TITLE_STATE, BottomBarCommon, BottomBarItemInterface } from "../common";
+import { TITLE_STATE, BottomBarCommon, BottomBarItemInterface, Notification } from "../common";
 
 
 let AffectsLayout = isAndroid ? PropertyMetadataSettings.None : PropertyMetadataSettings.AffectsLayout;
@@ -26,9 +26,9 @@ export class BottomBarItem implements BottomBarItemInterface {
     private _title: string;
     private _icon: string;
     private _color: string;
-    private _notification?: string;
+    private _notification?: Notification;
     private _parent?: WeakRef<BottomBar>;
-    constructor(index: number, title: string, icon: string, color: string, notification?: string, parent?: WeakRef<BottomBar>) {
+    constructor(index: number, title: string, icon: string, color: string, notification?: Notification, parent?: WeakRef<BottomBar>) {
         this._index = index;
         this._title = title;
         this._icon = icon;
@@ -71,8 +71,8 @@ export class BottomBarItem implements BottomBarItemInterface {
         }
     }
 
-    public get color(): string { 
-        return this._color 
+    public get color(): string {
+        return this._color
     }
 
     public set color(value: string) {
@@ -82,14 +82,19 @@ export class BottomBarItem implements BottomBarItemInterface {
         }
     }
 
-    public get notification(): string {
+    public get notification(): Notification {
         return this._notification;
     }
 
-    public set notification(value: string) {
+    public set notification(value: Notification) {
         if (this._notification !== value && value && this._parent) {
             this._notification = value;
-            this._parent.get().android.setNotification(this._notification, this._index);
+            let newNotification = new AHNotification.Builder()
+                .setText(this._notification.value)
+                .setBackgroundColor(new Color(this._notification.backgroundColor).android)
+                .setTextColor(new Color(this._notification.textColor).android)
+                .build();
+            this._parent.get().android.setNotification(newNotification, this._index);
         }
     }
 
@@ -171,10 +176,12 @@ export class BottomBar extends BottomBarCommon {
             let icon1 = new BitmapDrawable(fromResource(item.icon).android);
             let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);
             this._android.addItem(item1);
-            let notification = item.notification;
-            if (notification) {
-                this._android.setNotification(notification, idx)
-            }
+            let newNotification = new AHNotification.Builder()
+                .setText(item.notification.value)
+                .setBackgroundColor(new Color(item.notification.backgroundColor).android)
+                .setTextColor(new Color(item.notification.textColor).android)
+                .build();
+            this._android.setNotification(newNotification, idx)
         });
         if (this.selectedIndex != null) {
             this._android.setCurrentItem(this.selectedIndex);

@@ -14,7 +14,7 @@ iOS support is currently under developpment:
 
 - [x] Hide/Show animation
 - [x] Badges system
-- [ ] Badge color customisation
+- [x] Badge color customisation
 - [ ] Badge font size
 - [x] Title state implementation
 - [ ] title font color customisation

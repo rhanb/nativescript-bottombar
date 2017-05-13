@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { registerElement } from 'nativescript-angular';
-import { BottomBar, BottomBarItem, TITLE_STATE, SelectedIndexChangedEventData } from 'nativescript-bottombar';
+import { BottomBar, BottomBarItem, TITLE_STATE, SelectedIndexChangedEventData, Notification } from 'nativescript-bottombar';
 
 registerElement('BottomBar', () => BottomBar);
 
@@ -17,10 +17,10 @@ export class AppComponent {
     public _bar: BottomBar;
 
     public items: Array<BottomBarItem> = [
-        new BottomBarItem(0, "Home", "ic_home_black_24dp", "black", "1"),
-        new BottomBarItem(1, "Calendar", "ic_calendar", "#1083BF", "2"),
-        new BottomBarItem(2, "Profile", "ic_collaborator", "pink", "3"),
-        new BottomBarItem(3, "Message", "ic_paperplane", "green", "4")
+        new BottomBarItem(0, "Home", "ic_home_black_24dp", "black", new Notification("blue", "white", "1")),
+        new BottomBarItem(1, "Calendar", "ic_calendar", "#1083BF", new Notification("green", "blue", "1")),
+        new BottomBarItem(2, "Profile", "ic_collaborator", "pink", new Notification("pink", "yellow", "1")),
+        new BottomBarItem(3, "Message", "ic_paperplane", "green", new Notification("green", "red", ""))
     ];
     constructor() {
         this.hidden = false;

@@ -1,5 +1,5 @@
 import { PropertyChangeData } from "ui/core/dependency-observable";
-import { BottomBarCommon, BottomBarItemInterface } from "../common";
+import { BottomBarCommon, BottomBarItemInterface, Notification } from "../common";
 export declare class BottomBarItem implements BottomBarItemInterface {
     private _index;
     private _title;
@@ -7,12 +7,12 @@ export declare class BottomBarItem implements BottomBarItemInterface {
     private _color;
     private _notification?;
     private _parent?;
-    constructor(index: number, title: string, icon: string, color: string, notification?: string, parent?: WeakRef<BottomBar>);
+    constructor(index: number, title: string, icon: string, color: string, notification?: Notification, parent?: WeakRef<BottomBar>);
     index: number;
     title: string;
     icon: string;
     color: string;
-    notification: string;
+    notification: Notification;
     parent: WeakRef<BottomBar>;
 }
 export declare class BottomBar extends BottomBarCommon {

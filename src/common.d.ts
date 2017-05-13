@@ -15,8 +15,17 @@ export interface BottomBarItemInterface {
     icon: string;
     color: string;
     index: number;
-    notification?: string;
+    notification?: Notification;
     parent?: WeakRef<any>;
+}
+export declare class Notification {
+    private _textColor;
+    private _backgroundColor;
+    private _value;
+    constructor(textColorValue: string, backgroundColorValue: string, valueValue: string);
+    textColor: string;
+    backgroundColor: string;
+    value: string;
 }
 export declare class BottomBarCommon extends View {
     static itemsProperty: Property;
