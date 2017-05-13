@@ -16,10 +16,10 @@ export class AppComponent {
     public titleState: TITLE_STATE;
 
     public items: Array<BottomBarItem> = [
-        new BottomBarItem(0, "Home", "ic_home_black_24dp", "black", "lol"),
-        new BottomBarItem(1, "Calendar", "ic_calendar", "#1083BF", "mdr"),
-        new BottomBarItem(2, "Profile", "ic_collaborator", "pink", "lmao"),
-        new BottomBarItem(3, "Message", "ic_paperplane", "green", "xD")
+        new BottomBarItem(0, "Home", "ic_home_black_24dp", "black", "1"),
+        new BottomBarItem(1, "Calendar", "ic_calendar", "#1083BF", "2"),
+        new BottomBarItem(2, "Profile", "ic_collaborator", "pink", "3"),
+        new BottomBarItem(3, "Message", "ic_paperplane", "green", "4")
     ];
     constructor() {
         this.hidden = false;
@@ -29,7 +29,7 @@ export class AppComponent {
     tabSelected(args: SelectedIndexChangedEventData) {
         if (args.newIndex !== args.oldIndex) {
             console.log(args.newIndex);
-            this.items[args.newIndex].notification = "1";
+            this.items[args.newIndex].notification = "";
         }
     }
     hideBottombar() {
