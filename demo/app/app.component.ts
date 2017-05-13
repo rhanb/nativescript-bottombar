@@ -15,6 +15,8 @@ export class AppComponent {
     public hidden: boolean;
     public titleState: TITLE_STATE;
     public _bar: BottomBar;
+    public inactiveColor: string;
+    public accentColor: string;
 
     public items: Array<BottomBarItem> = [
         new BottomBarItem(0, "Home", "ic_home_black_24dp", "black", new Notification("blue", "white", "1")),
@@ -25,6 +27,8 @@ export class AppComponent {
     constructor() {
         this.hidden = false;
         this.titleState = TITLE_STATE.ALWAYS_SHOW;
+        this.inactiveColor = "blue";
+        this.accentColor = "green";
     }
 
     tabSelected(args: SelectedIndexChangedEventData) {

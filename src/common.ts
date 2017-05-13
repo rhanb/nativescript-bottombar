@@ -3,7 +3,7 @@ import { Bindable } from "ui/core/bindable";
 import { Property, PropertyChangeData, PropertyMetadataSettings } from "ui/core/dependency-observable";
 import { PropertyMetadata } from "ui/core/proxy";
 import { View } from "ui/core/view";
-import { isUndefined, isDefined, isBoolean, isNumber } from "utils/types";
+import { isUndefined, isDefined, isBoolean, isNumber, isString } from "utils/types";
 import { BottomBarItem } from "../index";
 
 export interface SelectedIndexChangedEventData extends EventData {
@@ -16,7 +16,7 @@ export const enum TITLE_STATE {
     ALWAYS_SHOW,
     ALWAYS_HIDE
 }
-export interface BottomBarItemInterface  {
+export interface BottomBarItemInterface {
     title: string;
     icon: string;
     color: string;
@@ -64,12 +64,16 @@ let ITEMS = "items"
     , BOTTOM_NAV = "BottomBarCommon"
     , CHILD_BOTTOM_NAV_ITEM = "BottomBarItemCommon"
     , TITLE_STATE_PROPERTY = "titleState"
-    , HIDE = "hide";
+    , HIDE = "hide"
+    , INACTIVE_COLOR = "inactiveColor"
+    , ACCENT_COLOR = "accentColor";
 
 let itemsProperty = new Property(ITEMS, BOTTOM_NAV, new PropertyMetadata(undefined))
     , selectedIndexProperty = new Property(SELECTED_INDEX, BOTTOM_NAV, new PropertyMetadata(undefined))
     , titleStateProperty = new Property(TITLE_STATE_PROPERTY, BOTTOM_NAV, new PropertyMetadata(undefined))
-    , hideProperty = new Property(HIDE, BOTTOM_NAV, new PropertyMetadata(undefined));
+    , hideProperty = new Property(HIDE, BOTTOM_NAV, new PropertyMetadata(undefined))
+    , inactiveColorProperty = new Property(INACTIVE_COLOR, BOTTOM_NAV, new PropertyMetadata(undefined))
+    , accentColorProperty = new Property(ACCENT_COLOR, BOTTOM_NAV, new PropertyMetadata(undefined));;
 
 
 
@@ -91,6 +95,14 @@ let itemsProperty = new Property(ITEMS, BOTTOM_NAV, new PropertyMetadata(undefin
     let bottomnav = <BottomBarCommon>data.object;
     bottomnav._hidePropertyChangedSetNativeValue(data);
 };
+(<PropertyMetadata>accentColorProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
+    let bottomnav = <BottomBarCommon>data.object;
+    bottomnav._accentColorPropertyChangedSetNativeValue(data);
+};
+(<PropertyMetadata>inactiveColorProperty.metadata).onSetNativeValue = function (data: PropertyChangeData) {
+    let bottomnav = <BottomBarCommon>data.object;
+    bottomnav._inactiveColorPropertyChangedSetNativeValue(data);
+};
 
 export class BottomBarCommon extends View {
 
@@ -99,6 +111,8 @@ export class BottomBarCommon extends View {
     public static tabSelectedEvent = "tabSelected";
     public static titleStateProperty = titleStateProperty;
     public static hideProperty = hideProperty;
+    public static accentColorProperty = accentColorProperty;
+    public static inactiveColorProperty = inactiveColorProperty;
 
     get items(): Array<any> {
         return this._getValue(BottomBarCommon.itemsProperty);
@@ -108,7 +122,6 @@ export class BottomBarCommon extends View {
         this._setValue(BottomBarCommon.itemsProperty, value);
     }
     public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
-        console.log('_onItemsPropertyChanged');
 
     }
 
@@ -176,6 +189,44 @@ export class BottomBarCommon extends View {
             }
         } else {
             throw new Error('Must have hide');
+        }
+    }
+
+    public get accentColor(): string {
+        return this._getValue(BottomBarCommon.accentColorProperty);
+    }
+
+    public set accentColor(accentColorValue: string) {
+        this._setValue(BottomBarCommon.accentColorProperty, accentColorValue);
+    }
+
+    public get inactiveColor(): string {
+        return this._getValue(BottomBarCommon.inactiveColorProperty);
+    }
+
+    public set inactiveColor(inactiveColorValue: string) {
+        this._setValue(BottomBarCommon.inactiveColorProperty, inactiveColorValue);
+    }
+
+    public _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
+        let newAccentColorValue = data.newValue;
+        if (isDefined(newAccentColorValue)) {
+            if (!isString(newAccentColorValue)) {
+                throw new Error("Must be a string");
+            }
+        } else {
+            throw new Error('Must have accent color');
+        }
+    }
+
+    public _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
+        let newInactiveColorValue = data.newValue;
+        if (isDefined(newInactiveColorValue)) {
+            if (!isString(newInactiveColorValue)) {
+                throw new Error("Must be a string");
+            }
+        } else {
+            throw new Error('Must have accent color');
         }
     }
 }

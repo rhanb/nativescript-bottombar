@@ -29,6 +29,8 @@ export declare class BottomBar extends BottomBarCommon {
     createItems(items: Array<BottomBarItem>): void;
     _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
     _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     setBadge(badgeIndex: number, badgeValue: string): void;
     readonly ios: any;
     readonly _nativeView: any;

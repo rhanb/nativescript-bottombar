@@ -218,6 +218,18 @@ export class BottomBar extends BottomBarCommon {
         this._ios.titleState = newTitleState;
     }
 
+    public _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
+        super._accentColorPropertyChangedSetNativeValue(data);
+        let newAccentColorValue = data.newValue;
+        this._ios.tintColor = new Color(newAccentColorValue).ios;
+    }
+
+    public _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
+        super._inactiveColorPropertyChangedSetNativeValue(data);
+        let newInactiveColorValue = data.newValue;
+        this._ios.inactiveColor = new Color(newInactiveColorValue).ios;
+    }
+
     public setBadge(badgeIndex: number, badgeValue: string) {
         this._ios.changeBadgeItem(badgeIndex, badgeValue);
     }

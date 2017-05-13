@@ -33,6 +33,8 @@ export declare class BottomBarCommon extends View {
     static tabSelectedEvent: string;
     static titleStateProperty: Property;
     static hideProperty: Property;
+    static accentColorProperty: Property;
+    static inactiveColorProperty: Property;
     items: Array<any>;
     _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     selectedIndex: number;
@@ -41,4 +43,8 @@ export declare class BottomBarCommon extends View {
     _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
     hide: boolean;
     _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    accentColor: string;
+    inactiveColor: string;
+    _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
 }

@@ -30,4 +30,6 @@ export declare class BottomBar extends BottomBarCommon {
     _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
     private setTitleStateNative(newTitleState);
     _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
 }

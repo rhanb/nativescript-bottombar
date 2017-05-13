@@ -241,4 +241,16 @@ export class BottomBar extends BottomBarCommon {
             this._android.restoreBottomNavigation();
         }
     }
+
+    public _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
+        super._accentColorPropertyChangedSetNativeValue(data);
+        let newAccentColorValue = data.newValue;
+        this._android.setAccentColor(new Color(newAccentColorValue).android);
+    }
+
+    public _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
+        super._inactiveColorPropertyChangedSetNativeValue(data);
+        let newInactiveColorValue = data.newValue;
+        this._android.setInactiveColor(new Color(newInactiveColorValue).android);
+    }
 }

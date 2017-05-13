@@ -15,10 +15,10 @@ iOS support is currently under developpment:
 - [x] Hide/Show animation
 - [x] Badges system
 - [x] Badge color customisation
-- [ ] Badge font size
+- [x] Badge font size
 - [x] Title state implementation
-- [ ] title font color customisation
-- [ ] inactive icon color customisation
+- [x] title font color customisation
+- [x] inactive icon color customisation
 - [ ] Change tab color when selected tab item color is different 
 
 
