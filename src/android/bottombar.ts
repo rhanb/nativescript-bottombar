@@ -1,207 +1,121 @@
+import {
+    BottomBarBase,
+    hideProperty,
+    itemsProperty,
+    SelectedIndexChangedEventData,
+    selectedIndexProperty,
+    TITLE_STATE,
+    titleStateProperty,
+    accentColorProperty,
+    inactiveColorProperty,
+    coloredProperty,
+    Notification
+} from "../common";
+import { BottomBarItem } from "./bottombar-item";
+import { Color } from "tns-core-modules/color";
+import { fromResource } from "tns-core-modules/image-source";
 
-import { isDefined, isUndefined, isNumber, isBoolean } from "utils/types";
-import { PropertyMetadata } from "ui/core/proxy";
-import { Property, PropertyChangeData, PropertyMetadataSettings } from "ui/core/dependency-observable";
-import { View } from "ui/core/view";
-import { Color } from "color";
-import { fromResource } from "image-source";
-import { Bindable } from "ui/core/bindable";
-import { EventData } from "data/observable";
-import { isAndroid } from "platform";
-import { TITLE_STATE, BottomBarCommon, BottomBarItemInterface, Notification } from "../common";
-
-
-let AffectsLayout = isAndroid ? PropertyMetadataSettings.None : PropertyMetadataSettings.AffectsLayout;
 
 declare let com, android: any;
 
+
 let BitmapDrawable = android.graphics.drawable.BitmapDrawable;
-let AHBottomNavigation = com.aurelhubert.ahbottomnavigation.AHBottomNavigation; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigation.java#L1
-let AHBottomNavigationItem = com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem; /// https://github.com/aurelhubert/ahbottomnavigation/blob/master/ahbottomnavigation/src/main/java/com/aurelhubert/ahbottomnavigation/AHBottomNavigationItem.java#L86
+let AHBottomNavigation = com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+let AHBottomNavigationItem = com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 let AHNotification = com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
+export class BottomBar extends BottomBarBase {
 
-export class BottomBarItem implements BottomBarItemInterface {
-    private _index: number;
-    private _title: string;
-    private _icon: string;
-    private _color: string;
-    private _notification?: Notification;
-    private _parent?: WeakRef<BottomBar>;
-    constructor(index: number, title: string, icon: string, color: string, notification?: Notification, parent?: WeakRef<BottomBar>) {
-        this._index = index;
-        this._title = title;
-        this._icon = icon;
-        this._color = color;
-        if (notification) {
-            this._notification = notification;
-        }
-        if (parent) {
-            this._parent = parent;
-        }
-    }
-
-    public get index(): number {
-        return this._index;
-    }
-
-    public set index(indexValue: number) {
-        this._index = indexValue;
-    }
-
-    public get title(): string {
-        return this._title;
-    }
-
-    public set title(value: string) {
-        if (this._title !== value && value && this._parent) {
-            this._title = value;
-            this._parent.get().changeItemTitle(this._index, this._title);
-        }
-    }
-
-    public get icon(): string {
-        return this._icon;
-    }
-
-    public set icon(value: string) {
-        if (this._icon !== value && value && this._parent) {
-            this._icon = value;
-            this._parent.get().changeItemIcon(this._index, this._icon);
-        }
-    }
-
-    public get color(): string {
-        return this._color
-    }
-
-    public set color(value: string) {
-        if (this._color !== value && value && this._parent) {
-            this._color = value;
-            this._parent.get().changeItemColor(this._index, this._color);
-        }
-    }
-
-    public get notification(): Notification {
-        return this._notification;
-    }
-
-    public set notification(value: Notification) {
-        if (this._notification !== value && value && this._parent) {
-            this._notification = value;
-            if (this._notification.value !== "") {
-                let newNotification = new AHNotification.Builder()
-                    .setText(this._notification.value)
-                    .setBackgroundColor(new Color(this._notification.backgroundColor).android)
-                    .setTextColor(new Color(this._notification.textColor).android)
-                    .build();
-                this._parent.get().android.setNotification(newNotification, this._index);
-            } else {
-                this._parent.get().android.setNotification("", this._index);
-            }
-        }
-    }
-
-    public get parent(): WeakRef<BottomBar> {
-        return this._parent;
-    }
-
-    public set parent(parent: WeakRef<BottomBar>) {
-        this._parent = parent;
-    }
-}
-
-
-export class BottomBar extends BottomBarCommon {
-    private _android: any;
-    public _listener: any;
+    _index: number = 0;
 
     get android(): any {
-        return this._android;
+        return this.nativeView;
     }
 
-    get _nativeView(): any {
-        return this._android;
-    }
+    public createNativeView() {
 
-
-    get currentIndex(): number {
-        return this._android.getCurrentItem();
-    }
-
-    public _createUI() {
-
-        this._android = new AHBottomNavigation(this._context);
+        let nativeView = new AHBottomNavigation(this._context);
 
         let that = new WeakRef(this);
 
-        this._listener = new AHBottomNavigation.OnTabSelectedListener({
+        nativeView.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener({
+
+            get owner(): BottomBar {
+                return that.get();
+            },
             onTabSelected: function (position: number, wasSelected: boolean): boolean {
-                let bar = that.get();
-                let oldIndex = bar.selectedIndex;
-                if (bar && bar.selectedIndex !== position) {
-                    bar.selectedIndex = position;
+
+                if (this.owner && !wasSelected && this.owner._index !== position) {
+
+                    var eventData: SelectedIndexChangedEventData = {
+                        eventName: "tabSelected",
+                        object: this,
+                        oldIndex: this.owner._index,
+                        newIndex: position
+                    }
+
+                    this.owner._index = position;
+                    this.owner.notify(eventData);
                 }
+
                 return true;
             }
-        });
+        }));
 
-        this._android.setOnTabSelectedListener(null);
-        this._android.setOnTabSelectedListener(this._listener);
+        nativeView.setDefaultBackgroundColor(new Color('#333').android);
+        nativeView.setColored(true);
 
-        //always show title
-        let owner = that.get();
-        if (isDefined(owner.titleState)) {
-            this.setTitleStateNative(owner.titleState);
-        } else {
-            this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
-        }
-
-        // Set background color
-        this._android.setDefaultBackgroundColor(new Color('#FFFCFF').android);
-
-        // Use colored navigation with circle reveal effect
-        this._android.setColored(true);
-
+        return nativeView;
     }
 
-    public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
-        let items = <Array<BottomBarItem>>data.newValue;
+    [itemsProperty.setNative](value: BottomBarItem[]) {
+        let items: BottomBarItem[] = <BottomBarItem[]>value;
         this.createItems(items);
-
     }
-    public createItems(items: Array<any>) {
-        this._android.removeAllItems();
-        items.forEach((item, idx, arr) => {
-            if (!item.notification) {
-                item.notification = ""
-            }
-            this.items[idx] = new BottomBarItem(item.index, item.title, item.icon, item.color, item.notification, new WeakRef(this));
-            let icon1 = new BitmapDrawable(fromResource(item.icon).android);
-            let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);
-            this._android.addItem(item1);
-            let newNotification = new AHNotification.Builder()
-                .setText(item.notification.value)
-                .setBackgroundColor(new Color(item.notification.backgroundColor).android)
-                .setTextColor(new Color(item.notification.textColor).android)
-                .build();
-            this._android.setNotification(newNotification, idx)
-        });
-        if (this.selectedIndex != null) {
-            this._android.setCurrentItem(this.selectedIndex);
+
+    [selectedIndexProperty.setNative](selectedIndex: number) {
+        this._index = selectedIndex;
+        this.nativeView.setCurrentItem(selectedIndex);
+    }
+
+    [titleStateProperty.setNative](titleState: TITLE_STATE) {
+
+        switch (titleState) {
+            case TITLE_STATE.ALWAYS_SHOW:
+                this.nativeView.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+                break;
+            case TITLE_STATE.SHOW_WHEN_ACTIVE:
+                this.nativeView.setTitleState(AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE);
+                break;
+            case TITLE_STATE.ALWAYS_HIDE:
+                this.nativeView.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
+                break;
         }
+    }
+
+    [hideProperty.setNative](hide: boolean) {
+        if (hide) {
+            this.nativeView.hideBottomNavigation();
+        } else {
+            this.nativeView.restoreBottomNavigation();
+        }
+    }
+
+    [accentColorProperty.setNative](accentColor: string) {
+        this.nativeView.setAccentColor(new Color(accentColor).android);
+    }
+
+    [inactiveColorProperty.setNative](inactiveColor: string) {
+        this.nativeView.setInactiveColor(new Color(inactiveColor).android);
+    }
+
+    [coloredProperty.setNative](colored: boolean) {
+        this.nativeView.setColored(colored);
     }
 
     public changeItemTitle(index: number, title: string) {
         let item = this.items[index];
         if (item.title !== title) {
-            this.items[index] = item;
-        }
-        this.createItems(this.items);
-    }
-    public changeItemColor(index: number, color: string) {
-        let item = this.items[index];
-        if (item.color !== color) {
             this.items[index] = item;
         }
         this.createItems(this.items);
@@ -215,56 +129,38 @@ export class BottomBar extends BottomBarCommon {
         this.createItems(this.items);
     }
 
-
-    public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
-        super._titleStatePropertyChangedSetNativeValue(data);
-        let newTitleState = data.newValue;
-        this.setTitleStateNative(newTitleState);
-    }
-
-    private setTitleStateNative(newTitleState: TITLE_STATE) {
-        switch (newTitleState) {
-            case TITLE_STATE.ALWAYS_SHOW:
-                this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
-                break;
-            case TITLE_STATE.SHOW_WHEN_ACTIVE:
-                this._android.setTitleState(AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE);
-                break;
-            case TITLE_STATE.ALWAYS_HIDE:
-                this._android.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
-                break;
+    public changeItemColor(index: number, color: string) {
+        let item = this.items[index];
+        if (item.color !== color) {
+            this.items[index] = item;
         }
+        this.createItems(this.items);
     }
 
-    public _hidePropertyChangedSetNativeValue(data: PropertyChangeData) {
-        super._hidePropertyChangedSetNativeValue(data);
-        let newHideValue = data.newValue;
-        if (newHideValue) {
-            this._android.hideBottomNavigation();
-        } else {
-            this._android.restoreBottomNavigation();
-        }
+    private createItems(items: BottomBarItem[]) {
+
+        this.nativeView.removeAllItems();
+        items.forEach((item, idx, aar) => {
+            this.items[idx] = new BottomBarItem(item.index, item.title, item.icon, item.color, item.notification, new WeakRef(this));
+            let icon1 = new BitmapDrawable(fromResource(item.icon).android);
+            let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);
+            this.nativeView.addItem(item1);
+            let newNotification = new AHNotification.Builder()
+                .setText(item.notification.value)
+                .setBackgroundColor(new Color(item.notification.backgroundColor).android)
+                .setTextColor(new Color(item.notification.textColor).android)
+                .build();
+            this.nativeView.setNotification(newNotification, idx)
+        });
+
+        this.nativeView.setCurrentItem(this._index);
     }
 
-    public setNotification(value: string, index: number) {
-        this._android.setNotification(value, index);
+    public setNotification(value: string, index: number): void {
+        this.nativeView.setNotification(value, index);
     }
 
-    public _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
-        super._accentColorPropertyChangedSetNativeValue(data);
-        let newAccentColorValue = data.newValue;
-        this._android.setAccentColor(new Color(newAccentColorValue).android);
-    }
 
-    public _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
-        super._inactiveColorPropertyChangedSetNativeValue(data);
-        let newInactiveColorValue = data.newValue;
-        this._android.setInactiveColor(new Color(newInactiveColorValue).android);
-    }
 
-    public _coloredPropertyChangedSetNativeValue(data: PropertyChangeData): void {
-        super._coloredPropertyChangedSetNativeValue(data);
-        let newColoredValue: boolean = data.newValue;
-        this._android.setColored(newColoredValue);
-    }
 }
+
