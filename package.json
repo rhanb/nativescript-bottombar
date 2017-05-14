@@ -21,6 +21,12 @@
     "type": "git",
     "url": "https://github.com/rhanbIT/nativescript-bottombar.git"
   },
+  "plugin": {
+    "nan": "true",
+    "pan": "true",
+    "core3": "true",
+    "category": "Interface"
+  },
   "keywords": [
     "NativeScript",
     "JavaScript",
@@ -43,10 +49,7 @@
   "homepage": "https://github.com/rhanbIT/nativescript-bottombar",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "typescript": "^2.1.5",
-    "tns-core-modules": "^2.5.0",
-    "tns-platform-declarations": "^2.5.0",
-    "prompt": "^1.0.0",
-    "rimraf": "^2.5.0"
+    "tns-core-modules": "^3.0.0",
+    "tns-platform-declarations": "^2.5.0"
   }
 }
