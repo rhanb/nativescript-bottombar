@@ -1,40 +1,19 @@
-import { PropertyChangeData } from "ui/core/dependency-observable";
-import { BottomBarItemInterface, BottomBarCommon, Notification } from "../common";
-export declare class BottomBarItem implements BottomBarItemInterface {
-    private _index;
-    private _title;
-    private _icon;
-    private _color;
-    private _notification?;
-    private _parent?;
-    constructor(index: number, title: string, icon: string, color: string, notification?: Notification, parent?: WeakRef<BottomBar>);
-    index: number;
-    title: string;
-    icon: string;
-    color: string;
-    notification: Notification;
-    parent: WeakRef<BottomBar>;
-}
+import { BottomBarBase } from "../common";
+import { BottomBarItem } from "./bottombar-item";
 export declare class BottomBarDelegate extends NSObject {
     static ObjCProtocols: any[];
     private _owner;
     static initWithOwner(owner: WeakRef<BottomBar>): BottomBarDelegate;
     tabSelected(index: number): void;
 }
-export declare class BottomBar extends BottomBarCommon {
-    private _ios;
+export declare class BottomBar extends BottomBarBase {
     private _delegate;
     constructor();
-    _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    readonly ios: any;
+    onLoaded(): void;
+    onUnloaded(): void;
+    disposeNativeView(): void;
     createItems(items: Array<BottomBarItem>): void;
-    _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
-    _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
-    _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
-    _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
-    _coloredPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     setNotification(value: string, index: number): void;
     setBadge(badgeIndex: number, badgeValue: string): void;
-    readonly ios: any;
-    readonly _nativeView: any;
-    onLoaded(): void;
 }

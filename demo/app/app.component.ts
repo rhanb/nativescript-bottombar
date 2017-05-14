@@ -30,7 +30,7 @@ export class AppComponent {
         this.selectedIndex = 0;
         this.hidden = false;
         this.titleState = TITLE_STATE.SHOW_WHEN_ACTIVE;
-        this.inactiveColor = "#737173";
+        this.inactiveColor = "white";
         this.accentColor = "blue";
     }
 

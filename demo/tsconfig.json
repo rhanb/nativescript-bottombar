@@ -2,14 +2,16 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es5",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "declaration": false,
+        "noLib": false,
         "noEmitHelpers": true,
-        "noEmitOnError": true,
+        "experimentalDecorators": true,
         "lib": [
             "es6",
-            "dom",
-            "es2015.iterable"
+            "dom"
         ],
         "baseUrl": ".",
         "paths": {

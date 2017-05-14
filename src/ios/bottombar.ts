@@ -1,100 +1,21 @@
-import { View } from 'ui/core/view';
-import { Image } from 'ui/image';
-import { Color } from "color";
-import { Button } from "ui/button";
-import { Bindable } from "ui/core/bindable";
-import { Property, PropertyChangeData, PropertyMetadataSettings } from "ui/core/dependency-observable";
-import { PropertyMetadata } from "ui/core/proxy";
-import { isUndefined, isDefined } from "utils/types";
-import { TITLE_STATE, BottomBarItemInterface, BottomBarCommon, Notification } from "../common";
+import {
+    BottomBarBase,
+    hideProperty,
+    itemsProperty,
+    SelectedIndexChangedEventData,
+    selectedIndexProperty,
+    TITLE_STATE,
+    titleStateProperty,
+    accentColorProperty,
+    inactiveColorProperty,
+    coloredProperty,
+    Notification
+} from "../common";
+import { Color } from "tns-core-modules/color";
+import { fromResource } from "tns-core-modules/image-source";
+import { BottomBarItem } from "./bottombar-item";
 
-var imageSource = require("image-source");
-
-//declare const MiniTabBarItem;
 declare const MiniTabBarItem, MiniTabBar, MiniTabBarBadge, MiniTabBarDelegate;
-
-
-export class BottomBarItem implements BottomBarItemInterface {
-    private _index: number;
-    private _title: string;
-    private _icon: string;
-    private _color: string;
-    private _notification?: Notification;
-    private _parent?: WeakRef<BottomBar>;
-    constructor(index: number, title: string, icon: string, color: string, notification?: Notification, parent?: WeakRef<BottomBar>) {
-        this._index = index;
-        this._title = title;
-        this._icon = icon;
-        this._color = color;
-        if (notification) {
-            this._notification = notification;
-        }
-        if (parent) {
-            this._parent = parent;
-        }
-    }
-    public get index(): number {
-        return this._index;
-    }
-
-    public set index(indexValue: number) {
-        this._index = indexValue;
-    }
-    public get title(): string {
-        return this._title;
-    }
-
-    public set title(value: string) {
-        if (this._title !== value && value && this._parent) {
-            this._title = value;
-            //this._parent.changeItemTitle(this._index, this._title);
-        }
-    }
-
-    public get icon(): string {
-        return this._icon;
-    }
-
-    public set icon(value: string) {
-        if (this._icon !== value && value && this._parent) {
-            this._icon = value;
-            //this._parent.changeItemIcon(this._index, this._icon);
-        }
-    }
-
-    public get color(): string {
-        console.log('get color');
-        return this._color;
-    }
-
-    public set color(value: string) {
-        console.log('set color');
-        console.log(value);
-        if (this._color !== value && value) {
-            this._color = value;
-            //this._parent.changeItemColor(this._index, this._color);
-        }
-    }
-
-    public get notification(): Notification {
-        return this._notification;
-    }
-
-    public set notification(value: Notification) {
-        if (this._notification !== value && value && this._parent) {
-            this._notification = value;
-            this._parent.get().ios.changeBadgeItem(this._index, this._notification.value);
-        }
-    }
-
-    public get parent(): WeakRef<BottomBar> {
-        return this._parent;
-    }
-
-    public set parent(parentValue: WeakRef<BottomBar>) {
-        this._parent = parentValue;
-    }
-}
 
 
 export class BottomBarDelegate extends NSObject {
@@ -102,7 +23,7 @@ export class BottomBarDelegate extends NSObject {
     private _owner: WeakRef<BottomBar>;
 
     public static initWithOwner(owner: WeakRef<BottomBar>): BottomBarDelegate {
-        let delegate = <BottomBarDelegate>BottomBarDelegate.new();
+        let delegate = <BottomBarDelegate>BottomBarDelegate.new() as BottomBarDelegate;
         delegate._owner = owner;
         return delegate;
     }
@@ -114,19 +35,19 @@ export class BottomBarDelegate extends NSObject {
         }
     }
 }
-export class BottomBar extends BottomBarCommon {
-    private _ios: any;
+
+export class BottomBar extends BottomBarBase {
     private _delegate: BottomBarDelegate;
 
     constructor() {
         super();
         let items = new Array<any>();
-        this._ios = new MiniTabBar({
+        this.nativeView = new MiniTabBar({
             items: items,
             titleState: TITLE_STATE.SHOW_WHEN_ACTIVE
         });
         this._delegate = BottomBarDelegate.initWithOwner(new WeakRef(this));
-        this._ios.frame = CGRectMake(0, 400, 400, 44);
+        this.nativeView.frame = CGRectMake(0, 400, 400, 44);
         /*let customItem;
         var imageProfile = new Image();
         var imageProfileSourceValue = imageSource.fromResource('profile');
@@ -141,33 +62,53 @@ export class BottomBar extends BottomBarCommon {
         customItem = new MiniTabBarItem({ customView: customButton, offset });
         items.push(customItem);*/
 
-        this._ios.tintColor = new Color("red").ios;
+        this.nativeView.tintColor = new Color("red").ios;
 
         // Change the font of the title label:
-        this._ios.font = UIFont.systemFontOfSize(10);
+        this.nativeView.font = UIFont.systemFontOfSize(10);
 
         // Change the background & key line of the tab bar:
-        this._ios.backgroundColor = new Color('black').ios;
-        this._ios.backgroundBlurEnabled = true;
-        this._ios.keyLine.isHidden = false;
+        this.nativeView.backgroundColor = new Color('black').ios;
+        this.nativeView.backgroundBlurEnabled = true;
+        this.nativeView.keyLine.isHidden = false;
     }
 
-    public _onItemsPropertyChangedSetNativeValue(data: PropertyChangeData) {
-        super._onItemsPropertyChangedSetNativeValue(data);
-        let items = <Array<BottomBarItem>>data.newValue;
+    get ios(): any {
+        return this.nativeView
+    }
+
+    public onLoaded() {
+        super.onLoaded();
+        console.log('onLoaded');
+        this.nativeView.delegate = this._delegate;
+    }
+
+    public onUnloaded() {
+        this.nativeView.delegate = null;
+        super.onUnloaded();
+    }
+
+    public disposeNativeView() {
+        this._delegate = null;
+    }
+
+    [itemsProperty.setNative](value: BottomBarItem[]) {
+        let items: BottomBarItem[] = <BottomBarItem[]>value;
         this.createItems(items);
-
     }
+
     public createItems(items: Array<BottomBarItem>) {
-        ///this._ios.removeAllItems();
+        ///this.nativeView.removeAllItems();
         let itemsMiniTabBar = new Array<BottomBarItem>();
         items.forEach((item) => {
             if (!item.notification) {
                 item.notification = new Notification("white", "red", "");
             }
             item.parent = new WeakRef(this);
-            var image = new Image();
-            var imageSourceValue = imageSource.fromResource(item.icon);
+            console.log(item.title);
+            console.dir(item.notification);
+            console.log(item.color);
+            var imageSourceValue = fromResource(item.icon);
             let item1 = new MiniTabBarItem({
                 title: item.title,
                 icon: imageSourceValue.ios,
@@ -176,60 +117,38 @@ export class BottomBar extends BottomBarCommon {
             })
             itemsMiniTabBar.push(item1);
         });
-        this._ios.setItems(itemsMiniTabBar);
+        this.nativeView.setItems(itemsMiniTabBar);
     }
 
-    public _hidePropertyChangedSetNativeValue(data: PropertyChangeData) {
-        let newHideValue = data.newValue;
-        super._hidePropertyChangedSetNativeValue(data);
-        if (newHideValue) {
-            this._ios.hide();
+    [hideProperty.setNative](hide: boolean) {
+        if (hide) {
+            this.nativeView.hide();
         } else {
-            this._ios.show();
+            this.nativeView.show();
         }
     }
 
-
-    public _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData) {
-        super._titleStatePropertyChangedSetNativeValue(data);
-        let newTitleState = data.newValue;
-        this._ios.titleState = newTitleState;
+    [titleStateProperty.setNative](titleState: TITLE_STATE) {
+        this.nativeView.titleState = titleState;
     }
 
-    public _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
-        super._accentColorPropertyChangedSetNativeValue(data);
-        let newAccentColorValue = data.newValue;
-        this._ios.tintColor = new Color(newAccentColorValue).ios;
+
+    [accentColorProperty.setNative](accentColor: string) {
+        this.nativeView.tintColor = new Color(accentColor).android;
     }
 
-    public _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void {
-        super._inactiveColorPropertyChangedSetNativeValue(data);
-        let newInactiveColorValue = data.newValue;
-        this._ios.inactiveColor = new Color(newInactiveColorValue).ios;
+    [inactiveColorProperty.setNative](inactiveColor: string) {
+        this.nativeView.inactiveColor = new Color(inactiveColor).android;
     }
 
-    public _coloredPropertyChangedSetNativeValue(data: PropertyChangeData): void {
-        super._coloredPropertyChangedSetNativeValue(data);
-        let newColoredValue: boolean = data.newValue;
-        this._ios.colored = newColoredValue;
+    [coloredProperty.setNative](colored: boolean) {
+        this.nativeView.colored = colored;
     }
+
     public setNotification(value: string, index: number) {
-        this._ios.changeBadgeItem(index, value);
+        this.nativeView.changeBadgeItem(index, value);
     }
     public setBadge(badgeIndex: number, badgeValue: string) {
-        this._ios.changeBadgeItem(badgeIndex, badgeValue);
-    }
-
-    public get ios() {
-        return this._ios;
-    }
-
-    public get _nativeView() {
-        return this._ios;
-    }
-
-    onLoaded() {
-        super.onLoaded();
-        this._ios.delegate = this._delegate;
+        this.nativeView.changeBadgeItem(badgeIndex, badgeValue);
     }
 }
