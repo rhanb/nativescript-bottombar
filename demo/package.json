@@ -12,6 +12,9 @@
       "version": "3.0.0"
     }
   },
+  "scripts": {
+    "typingz": "TNS_TYPESCRIPT_DECLARATIONS_PATH='$(pwd)/typingz' tns build ios"
+  },
   "dependencies": {
     "@angular/animations": "4.1.2",
     "@angular/common": "4.1.2",

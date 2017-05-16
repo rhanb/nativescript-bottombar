@@ -16,4 +16,7 @@ export declare class BottomBar extends BottomBarBase {
     createItems(items: Array<BottomBarItem>): void;
     setNotification(value: string, index: number): void;
     setBadge(badgeIndex: number, badgeValue: string): void;
+    tabSelected(index: number): void;
+    selectItemNative(index: number): void;
+    createCustomView(): void;
 }

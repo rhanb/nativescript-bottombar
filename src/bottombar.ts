@@ -14,9 +14,24 @@ export interface SelectedIndexChangedEventData extends EventData {
     newIndex: number;
 }
 
-export class BottomBarBase extends View {
+export abstract class BottomBarBase extends View {
     public items: any[];
-    public selectedIndex: number;
+    private _selectedIndex: number = 0;
+    public get selectedIndex (): number {
+        return this._selectedIndex;
+    }
+    public set selectedIndex (index: number) {
+        if (index !== this._selectedIndex) {
+            this._selectedIndex = index;
+        }
+    }
+    public selectItem(index: number): void {
+        if (index !== this._selectedIndex) {
+            this._selectedIndex = index;
+            this.selectItemNative(index);
+        }
+    }
+    public abstract selectItemNative(index: number): void;
     public titleState: TITLE_STATE;
     public hide: boolean;
     public accentColor: string;
@@ -30,18 +45,6 @@ export const itemsProperty = new Property<BottomBarBase, any[]>({
 });
 
 itemsProperty.register(BottomBarBase);
-
-
-
-export const selectedIndexProperty = new Property<BottomBarBase, number>({
-    name: "selectedIndex",
-    defaultValue: 0,
-    valueConverter: value => +value
-});
-
-selectedIndexProperty.register(BottomBarBase);
-
-
 
 export const titleStateProperty = new Property<BottomBarBase, TITLE_STATE>({
     name: "titleState"

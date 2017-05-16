@@ -18,9 +18,12 @@ export interface BottomBarItemInterface {
     notification?: Notification;
     parent?: WeakRef<any>;
 }
-export declare class BottomBarBase extends View {
+export declare abstract class BottomBarBase extends View {
     items: any[];
+    private _selectedIndex;
     selectedIndex: number;
+    selectItem(index: number): void;
+    abstract selectItemNative(index: number): void;
     titleState: TITLE_STATE;
     hide: boolean;
     accentColor: string;
@@ -79,6 +82,7 @@ export declare class BottomBar extends BottomBarBase {
     createItems(items: Array<any>): void;
     setNotification(value: string, index: number): void;
     setBadge(badgeIndex: number, badgeValue: string): void;
+    selectItemNative(index: number): void;
 }
 
 

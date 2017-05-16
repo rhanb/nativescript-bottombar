@@ -3,7 +3,6 @@ import {
     hideProperty,
     itemsProperty,
     SelectedIndexChangedEventData,
-    selectedIndexProperty,
     TITLE_STATE,
     titleStateProperty,
     accentColorProperty,
@@ -26,8 +25,6 @@ let AHNotification = com.aurelhubert.ahbottomnavigation.notification.AHNotificat
 
 export class BottomBar extends BottomBarBase {
 
-    _index: number = 0;
-
     get android(): any {
         return this.nativeView;
     }
@@ -38,6 +35,8 @@ export class BottomBar extends BottomBarBase {
 
         let that = new WeakRef(this);
 
+        this.selectedIndex = 0;
+
         nativeView.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener({
 
             get owner(): BottomBar {
@@ -45,16 +44,16 @@ export class BottomBar extends BottomBarBase {
             },
             onTabSelected: function (position: number, wasSelected: boolean): boolean {
 
-                if (this.owner && !wasSelected && this.owner._index !== position) {
+                if (this.owner && !wasSelected && this.owner.selectedIndex !== position) {
 
                     var eventData: SelectedIndexChangedEventData = {
                         eventName: "tabSelected",
                         object: this,
-                        oldIndex: this.owner._index,
+                        oldIndex: this.owner.selectedIndex,
                         newIndex: position
                     }
 
-                    this.owner._index = position;
+                    this.owner.selectedIndex = position;
                     this.owner.notify(eventData);
                 }
 
@@ -71,11 +70,6 @@ export class BottomBar extends BottomBarBase {
     [itemsProperty.setNative](value: BottomBarItem[]) {
         let items: BottomBarItem[] = <BottomBarItem[]>value;
         this.createItems(items);
-    }
-
-    [selectedIndexProperty.setNative](selectedIndex: number) {
-        this._index = selectedIndex;
-        this.nativeView.setCurrentItem(selectedIndex);
     }
 
     [titleStateProperty.setNative](titleState: TITLE_STATE) {
@@ -137,6 +131,10 @@ export class BottomBar extends BottomBarBase {
         this.createItems(this.items);
     }
 
+    public selectItemNative(index: number) {
+        this.nativeView.setCurrentItem(this.selectedIndex);
+    }
+
     private createItems(items: BottomBarItem[]) {
 
         this.nativeView.removeAllItems();
@@ -153,7 +151,7 @@ export class BottomBar extends BottomBarBase {
             this.nativeView.setNotification(newNotification, idx)
         });
 
-        this.nativeView.setCurrentItem(this._index);
+        this.nativeView.setCurrentItem(this.selectedIndex);
     }
 
     public setNotification(value: string, index: number): void {

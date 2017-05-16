@@ -10,9 +10,12 @@ export interface SelectedIndexChangedEventData extends EventData {
     oldIndex: number;
     newIndex: number;
 }
-export declare class BottomBarBase extends View {
+export declare abstract class BottomBarBase extends View {
     items: any[];
+    private _selectedIndex;
     selectedIndex: number;
+    selectItem(index: number): void;
+    abstract selectItemNative(index: number): void;
     titleState: TITLE_STATE;
     hide: boolean;
     accentColor: string;
@@ -20,7 +23,6 @@ export declare class BottomBarBase extends View {
     colored: boolean;
 }
 export declare const itemsProperty: Property<BottomBarBase, any[]>;
-export declare const selectedIndexProperty: Property<BottomBarBase, number>;
 export declare const titleStateProperty: Property<BottomBarBase, TITLE_STATE>;
 export declare const hideProperty: Property<BottomBarBase, boolean>;
 export declare const accentColorProperty: Property<BottomBarBase, string>;

@@ -3,7 +3,6 @@ import {
     hideProperty,
     itemsProperty,
     SelectedIndexChangedEventData,
-    selectedIndexProperty,
     TITLE_STATE,
     titleStateProperty,
     accentColorProperty,
@@ -30,9 +29,7 @@ export class BottomBarDelegate extends NSObject {
 
     public tabSelected(index: number) {
         let bar = this._owner.get();
-        if (index !== bar.selectedIndex) {
-            bar.selectedIndex = index;
-        }
+        bar.tabSelected(index);
     }
 }
 
@@ -46,21 +43,9 @@ export class BottomBar extends BottomBarBase {
             items: items,
             titleState: TITLE_STATE.SHOW_WHEN_ACTIVE
         });
+        this.selectedIndex = 0;
         this._delegate = BottomBarDelegate.initWithOwner(new WeakRef(this));
         this.nativeView.frame = CGRectMake(0, 400, 400, 44);
-        /*let customItem;
-        var imageProfile = new Image();
-        var imageProfileSourceValue = imageSource.fromResource('profile');
-        let customButton = new Button().ios;
-        customButton.backgroundColor = new Color("#FD7F24").ios;
-        customButton.frame.size = new CGSize({ width: 50, height: 50 });
-        customButton.layer.cornerRadius = 25;
-        customButton.setBackgroundImageForState(imageProfileSourceValue.ios, 0);
-        let offset = new UIOffset({ horizontal: 0, vertical: -10.0 });
-        //console.dir(customButton);
-        console.dir(offset);
-        customItem = new MiniTabBarItem({ customView: customButton, offset });
-        items.push(customItem);*/
 
         this.nativeView.tintColor = new Color("red").ios;
 
@@ -79,7 +64,6 @@ export class BottomBar extends BottomBarBase {
 
     public onLoaded() {
         super.onLoaded();
-        console.log('onLoaded');
         this.nativeView.delegate = this._delegate;
     }
 
@@ -98,16 +82,12 @@ export class BottomBar extends BottomBarBase {
     }
 
     public createItems(items: Array<BottomBarItem>) {
-        ///this.nativeView.removeAllItems();
         let itemsMiniTabBar = new Array<BottomBarItem>();
         items.forEach((item) => {
             if (!item.notification) {
                 item.notification = new Notification("white", "red", "");
             }
             item.parent = new WeakRef(this);
-            console.log(item.title);
-            console.dir(item.notification);
-            console.log(item.color);
             var imageSourceValue = fromResource(item.icon);
             let item1 = new MiniTabBarItem({
                 title: item.title,
@@ -134,11 +114,11 @@ export class BottomBar extends BottomBarBase {
 
 
     [accentColorProperty.setNative](accentColor: string) {
-        this.nativeView.tintColor = new Color(accentColor).android;
+        this.nativeView.tintColor = new Color(accentColor).ios;
     }
 
     [inactiveColorProperty.setNative](inactiveColor: string) {
-        this.nativeView.inactiveColor = new Color(inactiveColor).android;
+        this.nativeView.inactiveColor = new Color(inactiveColor).ios;
     }
 
     [coloredProperty.setNative](colored: boolean) {
@@ -150,5 +130,38 @@ export class BottomBar extends BottomBarBase {
     }
     public setBadge(badgeIndex: number, badgeValue: string) {
         this.nativeView.changeBadgeItem(badgeIndex, badgeValue);
+    }
+
+    public tabSelected(index: number) {
+        if (index !== this.selectedIndex) {
+            var eventData: SelectedIndexChangedEventData = {
+                eventName: "tabSelected",
+                object: this,
+                oldIndex: this.selectedIndex,
+                newIndex: index
+            }
+            this.selectedIndex = index;
+            this.notify(eventData);
+        }
+    }
+
+    public selectItemNative(index: number) {
+        this.nativeView.selectItemAnimated(index, true);
+    }
+
+    public createCustomView() {
+        /*let customItem;
+        var imageProfile = new Image();
+        var imageProfileSourceValue = fromResource('profile');
+        let customButton = new Button().ios;
+        customButton.backgroundColor = new Color("#FD7F24").ios;
+        customButton.frame.size = new CGSize({ width: 50, height: 50 });
+        customButton.layer.cornerRadius = 25;
+        customButton.setBackgroundImageForState(imageProfileSourceValue.ios, 0);
+        let offset = new UIOffset({ horizontal: 0, vertical: -10.0 });
+        //console.dir(customButton);
+        console.dir(offset);
+        customItem = new MiniTabBarItem({ customView: customButton, offset });
+       this.items.push(customItem);*/
     }
 }

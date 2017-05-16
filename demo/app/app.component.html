@@ -4,13 +4,12 @@
     <StackLayout orientation="vertical">
         <Button class="btn btn-primary" text="Hide BottomBar" (tap)="hideBottombar()"></Button>
         <Button class="btn btn-primary" text="Show BottomBar" (tap)="showBottombar()"></Button>
-        <Button class="btn btn-primary" text="Change icon of current tab" (tap)="changeIcon()"></Button>
-        <Button class="btn btn-primary" text="Change color of current tab" (tap)="changeColor()"></Button>
-        <Button class="btn btn-primary" text="Change title of current tab" (tap)="changeTitle()"></Button>
+        <Button class="btn btn-primary" text="Select first item" (tap)="selectItem()"></Button>
+        <Button class="btn btn-primary" text="Log current index" (tap)="getCurrentIndex()"></Button>
     </StackLayout>
     <BottomBar row="1" [items]="items" [hide]="hidden" [titleState]="titleState" (loaded)="tabLoaded($event)" (tabSelected)="tabSelected($event)" [inactiveColor]="inactiveColor" [accentColor]="accentColor" colored="true"></BottomBar>
-
 </GridLayout>
+
 
 
 
