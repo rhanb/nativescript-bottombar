@@ -5,7 +5,7 @@
 
 NativeScript plugin for [AHBottomNavigation](https://github.com/aurelhubert/ahbottomnavigation) and [MiniTabBar](https://github.com/D-32/MiniTabBar).
 
-Checkout [demo]().
+Checkout [demo](https://github.com/rhanbIT/nativescript-bottombar/blob/master/DEMO.md).
 
 ## Installation
 
@@ -15,62 +15,9 @@ Checkout [demo]().
 
 # Usage
 
+[API documentation](https://github.com/rhanbIT/nativescript-bottombar/blob/master/API.md)
 
-## Vanilla NativeScript
-
-
-
-### XML
-
-IMPORTANT: Make sure you include ``xmlns:btn:"nativescript-bottombar"`` on the Page element
-
-```xml
-...
-xmlns:btn="nativescript-bottombar"
-...
-
-<btn:BottomBar tabSelected="tabSelected" titleState="{{ titleStateValue }}" hide="{{ hidden}}" > 
-  <btn:BottomBar.items>
-    <btn:BottomBarItem title="Cake" icon="ic_cake_white_24dp" color="#4CAF50" />
-    <btn:BottomBarItem title="Favorites" icon="ic_favorite_white_24dp" color="#2196F3" />
-    <btn:BottomBarItem title="Settings" icon="ic_settings_white_24dp" color="#FF4081" />
-  </btn:BottomBar.items>
-</btn:BottomBar>
-```
-
-### TypeScript 
-
-```typescript
-export function pageLoaded(args: EventData) {
-    // Get the event sender
-    page = <Page>args.object;
-    page.bindingContext = new HelloWorldModel();
-}
-
-export function tabSelected(args) {
-    console.log(args.eventName + ' ' + args.oldIndex + ' ' + args.newIndex)
-    page.bindingContext.set('message', `Tab ${args.newIndex} selected`)
-}
-```
-
-```typescript
-import {Observable} from 'data/observable';
-import {TITLE_STATE} from 'nativescript-bottombar/bottombar.common';
-
-export class HelloWorldModel extends Observable {
-  public message: string;
-  public titleStateValue: TITLE_STATE
-  public hidden: boolean;
-  constructor() {
-    super();
-    this.titleStateValue = TITLE_STATE.SHOW_WHEN_ACTIVE;
-    this.hidden = false;
-  }
-}
-```
 ## Angular NativeScript
-
-!!! If you want to change items color, title.. you'll have to wait for the BottomBar to be loaded !!!
 
 ### XML
    
@@ -130,3 +77,5 @@ export class AppComponent  {
 Don't forget that you need your icons files to be in your ressources folder as follow:
 
 <img src="https://raw.githubusercontent.com/rhanbIT/nativescript-bottombar/master/screenshots/ressources.png" width="250" height="368" />
+
+[API documentation](https://github.com/rhanbIT/nativescript-bottombar/blob/master/API.md)
