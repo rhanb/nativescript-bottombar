@@ -1,27 +1,19 @@
 [![npm](https://img.shields.io/npm/v/nativescript-bottombar.svg)](https://www.npmjs.com/package/nativescript-bottombar)
 [![npm](https://img.shields.io/npm/dt/nativescript-bottombar.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-bottombar)
 
-# NativeScript BottomBar
+# NativeScript BottomBar :beers::fire::fr:
 
-NativeScript plugin for [AHBottomNavigation](https://github.com/aurelhubert/ahbottomnavigation) and [MiniTabBar](https://github.com/D-32/MiniTabBar)
+NativeScript plugin for [AHBottomNavigation](https://github.com/aurelhubert/ahbottomnavigation) and [MiniTabBar](https://github.com/D-32/MiniTabBar).
 
-# Under active development 
+Checkout [demo]().
 
-```The documentation will be updated asap, a lot of brend new features on top of the iOS support``` :beers: :smile:
-```NS 3.0 Support coming with the v3.0 of nativescript-bottombar package``` 
+## Installation
 
+- 2.x: `tns plugin add nativescript-bottombar@^2.1`
 
-## Demo
-
-<img src="https://github.com/rhanbIT/nativescript-bottombar/blob/master/screenshots/showcase.gif" width="416" height="736" /> 
-
-## Install (Under active developpment)
-```bash
-tns plugin add nativescript-bottombar
-```
+- 3.x: `tns plugin add nativescript-bottombar`
 
 # Usage
-
 
 
 ## Vanilla NativeScript
