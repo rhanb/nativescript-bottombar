@@ -1,6 +1,8 @@
 import { BottomBarBase } from "./common";
 import { Notification } from "./notification";
-
+/*
+* Contains the BottomBarItem class, which represents a tab of the BottomBar
+*/
 export class BottomBarItemBase {
     private _index: number;
     private _title: string;
