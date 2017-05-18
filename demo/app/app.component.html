@@ -2,13 +2,12 @@
 </ActionBar>
 <GridLayout rows="*, auto">
     <StackLayout orientation="vertical">
-        <Button class="btn btn-primary" text="Hide BottomBar" (tap)="hideBottombar()"></Button>
-        <Button class="btn btn-primary" text="Show BottomBar" (tap)="showBottombar()"></Button>
-        <Button class="btn btn-primary" text="Select first item" (tap)="selectItem()"></Button>
-        <Button class="btn btn-primary" text="Log current index" (tap)="getCurrentIndex()"></Button>
+        <Button class="btn btn-primary"  #CB1 text="Hide" (tap)="toggleHide()"></Button>
+        <Button class="btn btn-primary"  #CB2 text="Colored" (tap)="toggleColored()"></Button>
     </StackLayout>
-    <BottomBar row="1" [items]="items" [hide]="hidden" [titleState]="titleState" (loaded)="tabLoaded($event)" (tabSelected)="tabSelected($event)" [inactiveColor]="inactiveColor" [accentColor]="accentColor" colored="true"></BottomBar>
+    <BottomBar row="1" [items]="items" [hide]="hidden" [titleState]="titleState" (loaded)="tabLoaded($event)" (tabSelected)="tabSelected($event)" [inactiveColor]="inactiveColor" [accentColor]="accentColor" [colored]="colored"></BottomBar>
 </GridLayout>
+
 
 
 
