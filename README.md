@@ -75,6 +75,9 @@ export class AppComponent {
 
 Don't forget that you need your icons files to be in your ressources folder as follow:
 
-<img src="https://raw.githubusercontent.com/rhanbIT/nativescript-bottombar/master/screenshots/ressources.png" width="250" height="368" />
+
+  iOS    |  Android
+-------- | ---------
+![iOS](screenshots/ressources.ios.png) | ![Android](screenshots/ressources.android.png)
 
 [API documentation](https://github.com/rhanbIT/nativescript-bottombar/blob/master/API.md)
