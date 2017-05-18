@@ -5,6 +5,10 @@
 3. [BottomBarItem](#bottombaritem)
 3. [Notification](#notification)
 
+
+* *properties (bindable) = properties settable threw XML*
+* *properties (internal) = properties settable threw JS/TS instance*
+
 # BottomBar
 
   ## Properties (bindables)
@@ -19,7 +23,7 @@
 | colored       	| *Boolean allowing to set the BottomBar colored or not.*                       	| `false`  	| `Boolean`              	| `true`                   	| `true`  	| `true` 	|
     
     
- ## Attributes
+ ## Properties (internal)
  
  | Name          	| Description                                                                 	| Required 	| Type                   	| Default                  	| Android 	| iOS    	|
 |---------------	|-----------------------------------------------------------------------------	|----------	|------------------------	|--------------------------	|---------	|--------	|
@@ -33,6 +37,33 @@
 
 # TitleState
 
+### Enum
 
+| Name | Value |
+| ---- | ----- |
+| SHOW_WHEN_ACTIVE | 0 |
+| ALWAYS_SHOW | 1 |
+| ALWAYS_HIDE | 2 |
+
+ 
 # BottomBarItem
+
+ ## Properties (internal)
+
+ | Name          	| Description                                                                 	| Required 	| Type                   	| Default                  	| Android 	| iOS    	|
+|---------------	|-----------------------------------------------------------------------------	|----------	|------------------------	|--------------------------	|---------	|--------	|
+| index         	| *Number representing the index of the tab.*                                	| `true`   	| `Number` 	|  	| `true`  	| `true` 	|
+| title         	| *String representing the title of the tab.*                                	| `true`   	| `String` 	| "" 	| `true`  	| `true` 	|
+| icon         	| *String representing the name of the icon of the tab. (must match the name of the icon file in the resources)*                                	| `true`   	| `String` 	| "" 	| `true`  	| `true` 	|
+| color         	| *String representing the color of the BottomBar when this tab is selected.*                                	| `true`   	| `String` 	| "" 	| `true`  	| `true` 	|
+| notification         	| *Notification/Badge of the tab*                                	| `false`   	| `Notification` 	|  	| `true`  	| `true` 	|
+
 # Notification
+
+ ## Properties (internal)
+
+ | Name          	| Description                                                                 	| Required 	| Type                   	| Default                  	| Android 	| iOS    	|
+|---------------	|-----------------------------------------------------------------------------	|----------	|------------------------	|--------------------------	|---------	|--------	|
+| textColor         	| *String representing the color of the notification's text*                                	| `true`   	| `String` 	|  	| `false`  	| `true` 	|
+| backgroundColor         	| *String representing the background color of the notification*                                	| `true`   	| `String` 	| "" 	| `false`  	| `true` 	|
+| value         	| *String representing the text to display inside the Notification/Badge*                                	| `true`   	| `String` 	| "" 	| `true`  	| `true` 	|
