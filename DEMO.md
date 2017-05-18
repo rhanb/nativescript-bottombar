@@ -4,4 +4,4 @@ If you want to show off your BottomBar feel free to make a PR and add a screensh
 
   iOS    |  Android
 -------- | ---------
-![iOS](screenshots/showcase-ios.mp4) | ![Android](screenshots/showcase-android.mp4)
+![iOS](screenshots/showcase-ios.gif) | ![Android](screenshots/showcase-android.gif)
