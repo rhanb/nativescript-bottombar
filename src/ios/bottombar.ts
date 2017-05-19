@@ -85,15 +85,16 @@ export class BottomBar extends BottomBarBase {
     public createItems(items: Array<BottomBarItem>) {
         let itemsMiniTabBar = new Array<BottomBarItem>();
         items.forEach((item) => {
-            if (!item.notification) {
-                item.notification = new Notification("white", "red", "");
+            let notif = item.notification;
+            if (!notif) {
+                notif = new Notification("white", "red", "");
             }
             item.parent = new WeakRef(this);
             var imageSourceValue = fromResource(item.icon);
             let item1 = new MiniTabBarItem({
                 title: item.title,
                 icon: imageSourceValue.ios,
-                badge: new MiniTabBarBadge(new Color(item.notification.backgroundColor).ios, new Color(item.notification.textColor).ios, item.notification.value),
+                badge: new MiniTabBarBadge(new Color(notif.backgroundColor).ios, new Color(notif.textColor).ios, notif.value),
                 color: new Color(item.color).ios
             })
             itemsMiniTabBar.push(item1);
