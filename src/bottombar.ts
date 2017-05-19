@@ -72,6 +72,10 @@ export abstract class BottomBarBase extends View {
     */
     public inactiveColor: string;
     /*
+    * Get or set the backgroundColor of the BottomBar when colored is false
+    */
+    public uncoloredBackgroundColor: string;
+    /*
     * Get or set the colored property allowing to have a colored or non colored BottomBar
     */
     public colored: boolean;
@@ -108,6 +112,12 @@ export const inactiveColorProperty = new Property<BottomBarBase, string>({
 });
 
 inactiveColorProperty.register(BottomBarBase);
+
+export const uncoloredBackgroundColorProperty = new Property<BottomBarBase, string>({
+    name: "uncoloredBackgroundColor"
+});
+
+uncoloredBackgroundColorProperty.register(BottomBarBase);
 
 export const coloredProperty = new Property<BottomBarBase, boolean>({
     name: "colored",

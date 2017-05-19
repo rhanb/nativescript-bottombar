@@ -62,13 +62,6 @@ export declare class BottomBarItem implements BottomBarItemInterface {
     notification: Notification;
     parent: WeakRef<BottomBar>;
 }
-export declare class BottomBarDelegate extends NSObject {
-    static ObjCProtocols: any[];
-    private _owner;
-    static initWithOwner(owner: WeakRef<BottomBar>): BottomBarDelegate;
-    tabSelected(index: number): void;
-}
-
 export declare class BottomBar extends BottomBarBase {
     private _delegate;
     constructor();

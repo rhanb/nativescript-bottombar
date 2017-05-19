@@ -20,6 +20,7 @@ export declare abstract class BottomBarBase extends View {
     hide: boolean;
     accentColor: string;
     inactiveColor: string;
+    uncoloredBackgroundColor: string;
     colored: boolean;
 }
 export declare const itemsProperty: Property<BottomBarBase, any[]>;
@@ -27,4 +28,5 @@ export declare const titleStateProperty: Property<BottomBarBase, TITLE_STATE>;
 export declare const hideProperty: Property<BottomBarBase, boolean>;
 export declare const accentColorProperty: Property<BottomBarBase, string>;
 export declare const inactiveColorProperty: Property<BottomBarBase, string>;
+export declare const uncoloredBackgroundColorProperty: Property<BottomBarBase, string>;
 export declare const coloredProperty: Property<BottomBarBase, boolean>;

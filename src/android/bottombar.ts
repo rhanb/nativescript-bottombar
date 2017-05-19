@@ -8,7 +8,8 @@ import {
     accentColorProperty,
     inactiveColorProperty,
     coloredProperty,
-    Notification
+    Notification,
+    uncoloredBackgroundColorProperty
 } from "../common";
 import { BottomBarItem } from "./bottombar-item";
 import { Color } from "tns-core-modules/color";
@@ -73,7 +74,6 @@ export class BottomBar extends BottomBarBase {
     }
 
     [titleStateProperty.setNative](titleState: TITLE_STATE) {
-
         switch (titleState) {
             case TITLE_STATE.ALWAYS_SHOW:
                 this.nativeView.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
@@ -105,6 +105,10 @@ export class BottomBar extends BottomBarBase {
 
     [coloredProperty.setNative](colored: boolean) {
         this.nativeView.setColored(colored);
+    }
+
+    [uncoloredBackgroundColorProperty.setNative](uncoloredBackgroundColor: string) {
+        this.nativeView.setDefaultBackgroundColor(new Color(uncoloredBackgroundColor).ios);
     }
 
     public changeItemTitle(index: number, title: string) {
@@ -139,14 +143,18 @@ export class BottomBar extends BottomBarBase {
 
         this.nativeView.removeAllItems();
         items.forEach((item, idx, aar) => {
-            this.items[idx] = new BottomBarItem(item.index, item.title, item.icon, item.color, item.notification, new WeakRef(this));
+            let notif = item.notification;
+            if (!notif) {
+                notif = new Notification("white", "red", "");
+            }
+            this.items[idx] = new BottomBarItem(item.index, item.title, item.icon, item.color, notif, new WeakRef(this));
             let icon1 = new BitmapDrawable(fromResource(item.icon).android);
             let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);
             this.nativeView.addItem(item1);
             let newNotification = new AHNotification.Builder()
-                .setText(item.notification.value)
-                .setBackgroundColor(new Color(item.notification.backgroundColor).android)
-                .setTextColor(new Color(item.notification.textColor).android)
+                .setText(notif.value)
+                .setBackgroundColor(new Color(notif.backgroundColor).android)
+                .setTextColor(new Color(notif.textColor).android)
                 .build();
             this.nativeView.setNotification(newNotification, idx)
         });

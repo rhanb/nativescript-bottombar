@@ -5,8 +5,9 @@
         <Button class="btn btn-primary"  #CB1 text="Hide" (tap)="toggleHide()"></Button>
         <Button class="btn btn-primary"  #CB2 text="Colored" (tap)="toggleColored()"></Button>
     </StackLayout>
-    <BottomBar row="1" [items]="items" [hide]="hidden" [titleState]="titleState" (loaded)="tabLoaded($event)" (tabSelected)="tabSelected($event)" [inactiveColor]="inactiveColor" [accentColor]="accentColor" [colored]="colored"></BottomBar>
+    <BottomBar row="1" [items]="items" [hide]="hidden" [titleState]="titleState" (loaded)="tabLoaded($event)" (tabSelected)="tabSelected($event)" [inactiveColor]="inactiveColor" [accentColor]="accentColor" [colored]="colored" uncoloredBackgroundColor="red"></BottomBar>
 </GridLayout>
+
 
 
 

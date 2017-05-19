@@ -8,6 +8,7 @@ import {
     accentColorProperty,
     inactiveColorProperty,
     coloredProperty,
+    uncoloredBackgroundColorProperty,
     Notification
 } from "../common";
 import { Color } from "tns-core-modules/color";
@@ -54,8 +55,8 @@ export class BottomBar extends BottomBarBase {
 
         // Change the background & key line of the tab bar:
         this.nativeView.backgroundColor = new Color('black').ios;
-        this.nativeView.backgroundBlurEnabled = true;
-        this.nativeView.keyLine.isHidden = false;
+        this.nativeView.backgroundBlurEnabled = false;
+        this.nativeView.keyLine.isHidden = true;
     }
 
     get ios(): any {
@@ -119,6 +120,10 @@ export class BottomBar extends BottomBarBase {
 
     [inactiveColorProperty.setNative](inactiveColor: string) {
         this.nativeView.inactiveColor = new Color(inactiveColor).ios;
+    }
+
+    [uncoloredBackgroundColorProperty.setNative](uncoloredBackgroundColor: string) {
+        this.nativeView.uncoloredBackgroundColor = new Color(uncoloredBackgroundColor).ios;
     }
 
     [coloredProperty.setNative](colored: boolean) {

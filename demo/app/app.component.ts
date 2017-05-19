@@ -18,7 +18,7 @@ export class AppComponent {
     public accentColor: string;
 
     public items: Array<BottomBarItem> = [
-        new BottomBarItem(0, "Home", "ic_home_black_24dp", "black", new Notification("blue", "white", "")),
+        new BottomBarItem(0, "Home", "ic_home_black_24dp", "black"),
         new BottomBarItem(1, "Calendar", "ic_calendar", "#1083BF", new Notification("green", "blue", "")),
         new BottomBarItem(2, "Profile", "ic_collaborator", "pink", new Notification("pink", "yellow", "")),
         new BottomBarItem(3, "Message", "ic_paperplane", "green", new Notification("white", "red", "1"))
