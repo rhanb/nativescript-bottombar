@@ -173,17 +173,18 @@ export class BottomBar extends BottomBarCommon {
     public createItems(items: Array<any>) {
         this._android.removeAllItems();
         items.forEach((item, idx, arr) => {
-            if (!item.notification) {
-                item.notification = ""
+            let notif = item.notification;
+            if (!notif) {
+                notif = new Notification("white", "red", "");
             }
-            this.items[idx] = new BottomBarItem(item.index, item.title, item.icon, item.color, item.notification, new WeakRef(this));
+            this.items[idx] = new BottomBarItem(item.index, item.title, item.icon, item.color, notif, new WeakRef(this));
             let icon1 = new BitmapDrawable(fromResource(item.icon).android);
             let item1 = new AHBottomNavigationItem(item.title, icon1, new Color(item.color).android);
             this._android.addItem(item1);
             let newNotification = new AHNotification.Builder()
-                .setText(item.notification.value)
-                .setBackgroundColor(new Color(item.notification.backgroundColor).android)
-                .setTextColor(new Color(item.notification.textColor).android)
+                .setText(notif.value)
+                .setBackgroundColor(new Color(notif.backgroundColor).android)
+                .setTextColor(new Color(notif.textColor).android)
                 .build();
             this._android.setNotification(newNotification, idx)
         });
