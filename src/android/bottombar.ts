@@ -108,7 +108,7 @@ export class BottomBar extends BottomBarBase {
     }
 
     [uncoloredBackgroundColorProperty.setNative](uncoloredBackgroundColor: string) {
-        this.nativeView.setDefaultBackgroundColor(new Color(uncoloredBackgroundColor).ios);
+        this.nativeView.setDefaultBackgroundColor(new Color(uncoloredBackgroundColor).android);
     }
 
     public changeItemTitle(index: number, title: string) {

@@ -23,7 +23,6 @@
 | colored       	| *Boolean allowing to set the BottomBar colored or not.*                       	| `false`  	| `Boolean`              	| `true`                   	| `true`  	| `true` 	|
 | uncoloredBackgroundColor       	| *String allowing to set the BottomBar's background color when colored is `false`.*                       	| `false`  	| `String`              	| `"black"`                   	| `true`  	| `true` 	|
     
-    
  ## Properties (internal)
  
  | Name          	| Description                                                                 	| Required 	| Type                   	| Default                  	| Android 	| iOS    	|
