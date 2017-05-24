@@ -52,9 +52,7 @@
   "homepage": "https://github.com/rhanbIT/nativescript-bottombar",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "prompt": "^1.0.0",
-    "rimraf": "^2.5.0",
-    "tns-core-modules": "^3.0.0",
+    "tns-core-modules": "^3.0.1",
     "tns-platform-declarations": "^3.0.1",
     "typescript": "^2.3.2"
   }
