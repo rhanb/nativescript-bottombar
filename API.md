@@ -21,6 +21,7 @@
 | accentColor   	| *String allowing to set the color of a BottomBarItem when it's selected.*    	| `false`  	| `String`               	| `"red"`                  	| `true`  	| `true` 	|
 | inactiveColor 	| *String allowing to set the color of a BottomBarItem when it's not selected.* 	| `false`  	| `String`               	| `"black"`                	| `true`  	| `true` 	|
 | colored       	| *Boolean allowing to set the BottomBar colored or not.*                       	| `false`  	| `Boolean`              	| `true`                   	| `true`  	| `true` 	|
+| uncoloredBackgroundColor       	| *String allowing to set the BottomBar's background color when colored is `false`.*                       	| `false`  	| `String`              	| `"black"`                   	| `true`  	| `true` 	|
     
     
  ## Properties (internal)
