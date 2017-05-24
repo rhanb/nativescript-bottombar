@@ -1,6 +1,6 @@
 {
   "name": "nativescript-bottombar",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "NativeScript plugin for AHBottomNavigation.",
   "main": "bottombar",
   "typings": "index.d.ts",
