@@ -256,5 +256,19 @@ export class BottomBarCommon extends View {
         }
     }
 
+        /*
+    * Method allowing to manually selected a tab
+    */
+    public selectItem(index: number): void {
+        if (index !== this.selectedIndex) {
+            this.selectedIndex = index;
+            this.selectItemNative(index);
+        }
+    }
+    /*
+    * Method allowing to selected a tab natively
+    */
+    public selectItemNative(index: number): void {}
+
 
 }

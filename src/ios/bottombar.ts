@@ -221,6 +221,10 @@ export class BottomBar extends BottomBarCommon {
         this._ios.changeBadgeItem(badgeIndex, badgeValue);
     }
 
+     public selectItemNative(index: number) {
+        this._ios.selectItemAnimated(index, true);
+    }
+
     public get ios() {
         return this._ios;
     }

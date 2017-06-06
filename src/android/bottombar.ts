@@ -268,4 +268,8 @@ export class BottomBar extends BottomBarCommon {
         let newColoredValue: boolean = data.newValue;
         this._android.setColored(newColoredValue);
     }
+
+     public selectItemNative(index: number) {
+        this._android.setCurrentItem(this.selectedIndex);
+    }
 }
