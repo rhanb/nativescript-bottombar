@@ -86,6 +86,8 @@ export declare class BottomBar extends BottomBarCommon {
     _titleStatePropertyChangedSetNativeValue(data: PropertyChangeData): void;
     hide: boolean;
     _hidePropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    selectItem(index: number): void;
+    selectItemNative(index: number): void;
     /*
     android
     */

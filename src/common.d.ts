@@ -51,4 +51,6 @@ export declare class BottomBarCommon extends View {
     _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     colored: boolean;
     _coloredPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    selectItem(index: number): void;
+    selectItemNative(index: number): void;
 }

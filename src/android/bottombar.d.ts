@@ -34,4 +34,5 @@ export declare class BottomBar extends BottomBarCommon {
     _accentColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     _inactiveColorPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     _coloredPropertyChangedSetNativeValue(data: PropertyChangeData): void;
+    selectItemNative(index: number): void;
 }

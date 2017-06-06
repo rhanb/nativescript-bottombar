@@ -34,6 +34,7 @@ export declare class BottomBar extends BottomBarCommon {
     _coloredPropertyChangedSetNativeValue(data: PropertyChangeData): void;
     setNotification(value: string, index: number): void;
     setBadge(badgeIndex: number, badgeValue: string): void;
+    selectItemNative(index: number): void;
     readonly ios: any;
     readonly _nativeView: any;
     onLoaded(): void;
