@@ -1,5 +1,8 @@
 [![npm](https://img.shields.io/npm/v/nativescript-bottombar.svg)](https://www.npmjs.com/package/nativescript-bottombar)
 [![npm](https://img.shields.io/npm/dt/nativescript-bottombar.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-bottombar)
+[![twitter: @_rhanb](https://img.shields.io/badge/twitter-%40rhanb-2F98C1.svg)](https://twitter.com/_rhanb)
+
+[![NPM](https://nodei.co/npm/nativescript-bottombar.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/nativescript-bottombar/)
 
 # NativeScript BottomBar :beers::fire::fr:
 
