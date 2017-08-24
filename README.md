@@ -9,7 +9,7 @@ Checkout [demo](https://github.com/rhanbIT/nativescript-bottombar/blob/master/DE
 
 ## Installation
 
-- 2.x: `tns plugin add nativescript-bottombar@2.1.2`
+- 2.x: `tns plugin add nativescript-bottombar@2.1.4`
 
 - 3.x: `tns plugin add nativescript-bottombar`
 
