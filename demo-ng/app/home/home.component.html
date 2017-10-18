@@ -1,0 +1,9 @@
+<ActionBar class="action-bar">
+    <Label class="action-bar-title" text="NativeScript Bottombar"></Label>
+</ActionBar>
+<GridLayout rows="*, auto" class="page">
+    <StackLayout row="0" orientation="vertical">
+       <Label text="demo"></Label>
+    </StackLayout>
+    <BottomBar row="1" [items]="items" [hide]="hidden" [titleState]="titleState" (loaded)="tabLoaded($event)" (tabSelected)="tabSelected($event)" [inactiveColor]="inactiveColor" [accentColor]="accentColor" colored="true"></BottomBar>
+</GridLayout>

@@ -6,17 +6,25 @@
   "typings": "index.d.ts",
   "nativescript": {
     "platforms": {
-      "android": "3.0.0",
-      "ios": "3.0.0"
+      "android": "3.2.0",
+      "ios": "3.2.0"
+    },
+    "plugin": {
+      "nan": "true",
+      "pan": "true",
+      "core3": "true",
+      "vue": "true",
+      "webpack": "false",
+      "category": "Developer"
     }
   },
   "scripts": {
     "build": "tsc",
-    "demo.ios": "npm run preparedemo && cd demo && tns emulate ios",
-    "demo.android": "npm run preparedemo && cd demo && tns run android",
-    "preparedemo": "npm run build && cd demo && tns plugin remove nativescript-bottombar && tns plugin add .. && tns install",
-    "setup": "cd demo && npm install && cd .. && npm run build && cd demo && tns plugin add .. && cd ..",
-    "typingz": "cd demo && TNS_TYPESCRIPT_DECLARATIONS_PATH='$(pwd)/typingz' tns build ios"
+    "demo.ios": "npm run preparedemo && cd demo-ng && tns emulate ios",
+    "demo.android": "npm run preparedemo && cd demo-ng && tns run android",
+    "preparedemo": "npm run build && cd demo-ng && tns plugin remove nativescript-bottombar && tns plugin add .. && tns install",
+    "setup": "cd demo-ng && npm install && cd .. && npm run build && cd demo-ng && tns plugin add .. && cd ..",
+    "typingz": "cd demo-ng && TNS_TYPESCRIPT_DECLARATIONS_PATH='$(pwd)/typingz' tns build ios"
   },
   "repository": {
     "type": "git",
@@ -52,8 +60,8 @@
   "homepage": "https://github.com/rhanbIT/nativescript-bottombar",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "tns-core-modules": "^3.0.1",
-    "tns-platform-declarations": "^3.0.1",
+    "tns-core-modules": "^3.2.0",
+    "tns-platform-declarations": "^3.2.0",
     "typescript": "^2.3.2"
   }
 }

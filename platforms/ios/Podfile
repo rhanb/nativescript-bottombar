@@ -1,5 +1,4 @@
 use_frameworks!
-platform :ios, '8.0'
 pod 'MiniTabBar', :git => 'https://github.com/rhanbIT/MiniTabBar.git'
 post_install do |installer|
     installer.pods_project.targets.each do |target|
