@@ -1,0 +1,15 @@
+<Page class="page"
+    navigatingTo="onNavigatingTo" 
+    xmlns="http://www.nativescript.org/tns.xsd"
+    xmlns:btb="nativescript-bottombar">
+    
+    <ActionBar class="action-bar">
+        <Label class="action-bar-title" text="Home"></Label>
+    </ActionBar>
+
+    <GridLayout rows="*, auto">
+        <Label row="0" text="row 1"/>
+        <btb:BottomBar row="1" items="{{ items }}" loaded="{{ tabLoaded($event) }}" hide="{{ hidden }}" titleState="{{ titleState }}" tabSelected="{{ tabSelected($event) }}" inactiveColor="{{ inactiveColor }}" accentColor="{{ accentColor }}" colored="true"> 
+        </btb:BottomBar>
+    </GridLayout>
+</Page>

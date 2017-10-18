@@ -2,6 +2,8 @@
 *.js.map
 *.log
 !scripts/*.js
+
+# demo-ng
 demo-ng/app/*.js
 !demo-ng/karma.conf.js
 !demo-ng/app/tests/*.js
@@ -10,6 +12,17 @@ demo-ng/*.d.ts
 demo-ng/lib
 demo-ng/platforms
 demo-ng/node_modules
+demo-ng/hooks
+
+#demo
+demo/app/*.js
+demo/*.d.ts
+!demo/references.d.ts
+demo/lib
+demo/platforms
+demo/node_modules
+demo/hooks
+
 node_modules
 .idea
 *.iml
