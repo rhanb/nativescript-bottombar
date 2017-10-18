@@ -1,6 +1,9 @@
 .idea/
+.vscode/
 demo-ng/
+demo/
 screenshots/
+node_modules/
 *.gif
 *.png
 *.log
