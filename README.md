@@ -12,9 +12,12 @@ Checkout [demo](https://github.com/rhanbIT/nativescript-bottombar/blob/master/DE
 
 ## Installation
 
+#### I published the version 3.0.6, but it does not work. Please install 3.0.5 for NS3 and 2.1.4 for NS2.
+Will fix this mid-september.
+
 - 2.x: `tns plugin add nativescript-bottombar@2.1.4`
 
-- 3.x: `tns plugin add nativescript-bottombar`
+- 3.x: `tns plugin add nativescript-bottombar@3.0.5`
 
 # Usage
 
