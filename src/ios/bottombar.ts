@@ -139,16 +139,14 @@ export class BottomBar extends BottomBarBase {
     }
 
     public tabSelected(index: number) {
-        if (index !== this.selectedIndex) {
-            var eventData: SelectedIndexChangedEventData = {
-                eventName: "tabSelected",
-                object: this,
-                oldIndex: this.selectedIndex,
-                newIndex: index
-            }
-            this.selectedIndex = index;
-            this.notify(eventData);
+        var eventData: SelectedIndexChangedEventData = {
+            eventName: "tabSelected",
+            object: this,
+            oldIndex: this.selectedIndex,
+            newIndex: index
         }
+        this.selectedIndex = index;
+        this.notify(eventData);
     }
 
     public selectItemNative(index: number) {

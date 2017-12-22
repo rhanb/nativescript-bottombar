@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "demo.ios": "npm run preparedemo && cd demo-ng && tns emulate ios",
+    "demo.ios": "npm run preparedemo && cd demo-ng && tns run ios",
     "demo.android": "npm run preparedemo && cd demo-ng && tns run android",
     "preparedemo": "npm run build && cd demo-ng && tns plugin remove nativescript-bottombar && tns plugin add .. && tns install",
     "setup": "cd demo-ng && npm install && cd .. && npm run build && cd demo-ng && tns plugin add .. && cd ..",

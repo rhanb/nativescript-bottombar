@@ -45,7 +45,7 @@ export class BottomBar extends BottomBarBase {
             },
             onTabSelected: function (position: number, wasSelected: boolean): boolean {
 
-                if (this.owner && !wasSelected && this.owner.selectedIndex !== position) {
+                if (this.owner && !wasSelected) {
 
                     var eventData: SelectedIndexChangedEventData = {
                         eventName: "tabSelected",

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { registerElement } from 'nativescript-angular';
-import { BottomBar, BottomBarItem, TITLE_STATE, SelectedIndexChangedEventData, Notification } from 'nativescript-bottombar';
+import { BottomBar, BottomBarItem, TITLE_STATE, SelectedIndexChangedEventData, Notification } from '../tmp';
 
 registerElement('BottomBar', () => BottomBar);
 
@@ -22,16 +22,15 @@ export class HomeComponent {
         new BottomBarItem(3, "Message", "ic_paperplane", "green", new Notification("green", "red", "1"))
     ];
 
-    constructor() {
-        console.log('lol');
-    }
+    constructor() {}
+
     tabLoaded(event) {
         console.log("barLoaded");
         this._bar = <BottomBar>event.object;
         this.hidden = false;
         this.titleState = TITLE_STATE.SHOW_WHEN_ACTIVE;
-        this.inactiveColor = "white";
-        this.accentColor = "blue";
+        this.inactiveColor = "red";
+        this.accentColor = "deepskyblue";
     }
 
     tabSelected(args: SelectedIndexChangedEventData) {

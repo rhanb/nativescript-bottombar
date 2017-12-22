@@ -25,6 +25,7 @@
     "exclude": [
         "node_modules",
         "platforms",
-        "demo"
+        "demo",
+        "demo-ng"
     ]
 }

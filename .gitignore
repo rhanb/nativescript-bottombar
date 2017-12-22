@@ -5,6 +5,7 @@
 
 # demo-ng
 demo-ng/app/*.js
+demo-ng/app/tmp
 !demo-ng/karma.conf.js
 !demo-ng/app/tests/*.js
 demo-ng/*.d.ts
