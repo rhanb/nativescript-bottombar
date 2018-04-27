@@ -6,8 +6,8 @@
   "typings": "index.d.ts",
   "nativescript": {
     "platforms": {
-      "android": "3.2.0",
-      "ios": "3.2.0"
+      "android": "4.0.1",
+      "ios": "4.0.1"
     },
     "plugin": {
       "nan": "true",
@@ -60,8 +60,8 @@
   "homepage": "https://github.com/rhanbIT/nativescript-bottombar",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "tns-core-modules": "^3.2.0",
-    "tns-platform-declarations": "^3.2.0",
-    "typescript": "^2.3.2"
+    "tns-core-modules": "^4.0.0",
+    "tns-platform-declarations": "^4.0.0",
+    "typescript": "2.6.2"
   }
 }
