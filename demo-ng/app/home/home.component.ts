@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { registerElement } from 'nativescript-angular';
-import { BottomBar, BottomBarItem, TITLE_STATE, SelectedIndexChangedEventData, Notification } from '../tmp';
+import { BottomBar, BottomBarItem, TITLE_STATE, SelectedIndexChangedEventData, Notification } from 'nativescript-bottombar';
 
 registerElement('BottomBar', () => BottomBar);
 

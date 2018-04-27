@@ -20,11 +20,11 @@
   },
   "scripts": {
     "build": "tsc",
-    "demo.ios": "npm run preparedemo && cd demo-ng && tns run ios",
-    "demo.android": "npm run preparedemo && cd demo-ng && tns run android",
-    "preparedemo": "npm run build && cd demo-ng && tns plugin remove nativescript-bottombar && tns plugin add .. && tns install",
-    "setup": "cd demo-ng && npm install && cd .. && npm run build && cd demo-ng && tns plugin add .. && cd ..",
-    "typingz": "cd demo-ng && TNS_TYPESCRIPT_DECLARATIONS_PATH='$(pwd)/typingz' tns build ios"
+    "demo.ios": "npm run preparedemo && cd ../demo-ng && tns run ios",
+    "demo.android": "npm run preparedemo && cd ../demo-ng && tns run android",
+    "preparedemo": "npm run build && cd ../demo-ng && tns plugin remove nativescript-bottombar && tns plugin add ../src && tns install",
+    "setup": "cd ../demo-ng && npm install && cd ../src && npm run build && cd ../demo-ng && tns plugin add ../src && cd ../src",
+    "typingz": "cd ../demo-ng && TNS_TYPESCRIPT_DECLARATIONS_PATH='$(pwd)/typingz' tns build ios"
   },
   "repository": {
     "type": "git",
