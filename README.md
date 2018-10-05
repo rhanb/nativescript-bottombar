@@ -69,7 +69,6 @@ export class AppComponent {
     }
     
      tabSelected(args: SelectedIndexChangedEventData) {
-         // only triggered when a different tab is tapped
          console.log(args.newIndex);
      }
 }
@@ -129,7 +128,6 @@ export class HomeViewModel extends Observable {
     }
 
     tabSelected(args: SelectedIndexChangedEventData) {
-        // only triggered when a different tab is tapped
         console.log(args.newIndex);
     }
 }
