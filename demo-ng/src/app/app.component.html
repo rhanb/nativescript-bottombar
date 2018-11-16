@@ -2,5 +2,13 @@
     <StackLayout row="0" orientation="vertical">
         <Label text="demo"></Label>
     </StackLayout>
-    <BottomBar row="1"></BottomBar>
+    <BottomBar row="1" (tabSelected)="tabSelected($event)"
+        [items]="bottomBarItems" [labelVisibility]="labelVisibility">
+        <!-- [inactiveTintColor]="inactiveTintColor"
+        [barBackgroundColor]="barBackgroundColor"
+        [activeTintColor]="activeTintColor" -->
+        <BottomBarItem icon="ic_home_24_dp" title="Home 1"></BottomBarItem>
+        <BottomBarItem icon="ic_home_24_dp" title="Home 2"></BottomBarItem>
+        <BottomBarItem icon="ic_home_24_dp" title="Home 3"></BottomBarItem>
+    </BottomBar>
 </GridLayout>

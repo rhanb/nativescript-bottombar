@@ -1,6 +1,7 @@
-import { BottomBarBase, inactiveTintColor, activeTintColor, barBackgroundColor } from './bottombar.common';
-import { fromResource } from 'tns-core-modules/image-source/image-source';
+import { BottomBarBase, inactiveTintColor, activeTintColor, barBackgroundColor } from './bottombar.base';
+import { fromResource, ImageSource } from 'tns-core-modules/image-source/image-source';
 import { Color } from 'tns-core-modules/color/color';
+import { BottomBarItemBase } from './bottombar-item.base';
 
 export class BottomBarControllerDelegate extends NSObject implements UITabBarControllerDelegate {
     public static ObjCProtocols = [UITabBarControllerDelegate];
@@ -15,7 +16,7 @@ export class BottomBarControllerDelegate extends NSObject implements UITabBarCon
 
     tabBarControllerDidSelectViewController(tabBarController: UITabBarController, viewController: UIViewController) {
         const owner = this._owner.get();
-        owner.tabSelected(tabBarController.selectedIndex);
+        owner.onTabSelected(tabBarController.selectedIndex);
     }
 }
 
@@ -28,38 +29,46 @@ export class BottomBar extends BottomBarBase {
         return this.nativeView;
     }
 
+
+    public createNativeView(): UITabBar {
+        this._tabBarController = UITabBarController.new();
+        this._tabBarController.viewControllers = NSArray.arrayWithArray([]);
+        return this._tabBarController.tabBar;
+    }
+
     public initNativeView(): void {
         super.initNativeView();
         this._delegate = BottomBarControllerDelegate.initWithOwner(new WeakRef(this));
     }
 
-    public createNativeView(): UITabBar {
+    protected createItems() {
+        const controllers = [];
 
-        const tabBarController: UITabBarController = UITabBarController.new();
+        if (this._tabBarController.viewControllers
+            && this._tabBarController.viewControllers.count > 0) {
+                this._tabBarController.viewControllers = null;
+        }
 
-        const firstVc = UIViewController.new();
-        firstVc.tabBarItem = UITabBarItem
-            .new()
-            .initWithTitleImageTag(
-                'Home',
-                fromResource('ic_home_black_24dp').ios,
-                0
-            );
+        this.items.forEach((item: BottomBarItemBase, index: number) => {
+            if (item.icon && item.title) {
 
-        const secondVc = UIViewController.new();
-        secondVc.tabBarItem = UITabBarItem
-            .new()
-            .initWithTitleImageTag(
-                'Home',
-                fromResource('ic_home_black_24dp').ios,
-                1
-            );
-        
-        tabBarController.viewControllers = NSArray.arrayWithArray([firstVc, secondVc]);
+                const icon: ImageSource = fromResource(item.icon);
 
-        this._tabBarController = tabBarController;
+                if (!icon) {
+                    throw new Error(`Enable to find resource: ${item.icon}`);
+                }
 
-        return tabBarController.tabBar;
+                const itemVc = UIViewController.new();
+                itemVc.tabBarItem = UITabBarItem.new().initWithTitleImageTag(
+                    item.title,
+                    icon.ios,
+                    index
+                )
+                
+                controllers.push(itemVc);
+            }
+        });
+        this._tabBarController.viewControllers = NSArray.arrayWithArray(controllers);
     }
 
     public onLoaded(): void {
@@ -71,11 +80,7 @@ export class BottomBar extends BottomBarBase {
         this.setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
     }
 
-    public tabSelected(tabIndex: number) {
-        console.dir(tabIndex);
-    }
-
-    [inactiveTintColor.getDefault](): string {
+    [inactiveTintColor.getDefault](): UIColor {
         return this.nativeView.unselectedItemTintColor;
     }
 
@@ -83,7 +88,7 @@ export class BottomBar extends BottomBarBase {
         this.nativeView.unselectedItemTintColor = new Color(color).ios;
     }
 
-    [activeTintColor.getDefault](): string {
+    [activeTintColor.getDefault](): UIColor {
         return this.nativeView.tintColor;
     }
 
@@ -91,7 +96,7 @@ export class BottomBar extends BottomBarBase {
         this.nativeView.tintColor = new Color(color).ios;
     }
 
-    [barBackgroundColor.getDefault](): string {
+    [barBackgroundColor.getDefault](): UIColor {
         return this.nativeView.barTintColor;
     }
 
