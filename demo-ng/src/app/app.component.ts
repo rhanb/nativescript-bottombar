@@ -1,8 +1,9 @@
 import { Component } from "@angular/core";
 import { registerElement } from 'nativescript-angular';
-import { BottomBar, BottomBarItemBase } from 'nativescript-bottombar';
+import { BottomBar, BottomBarItem } from 'nativescript-bottombar';
 
 registerElement('BottomBar', () => BottomBar);
+registerElement('BottomBarItem', () => BottomBarItem);
 
 @Component({
     selector: "ns-app",
@@ -10,37 +11,46 @@ registerElement('BottomBar', () => BottomBar);
     templateUrl: "./app.component.html",
     styles: [`
         BottomBar {
-            inactive-tint-color: #5CB85C;
-            active-tint-color: #022733;
-            bar-background-color: #F8FAFD;
+            inactive-tint-color: #C34491;
+            active-tint-color: #FFFFFF;
+            bar-background-color: #9F489B;
+            badge-background-color: #222222;
+        }
+
+        BottomBarItem {
+            badge-background-color: #222222;
         }
     `]
 })
 export class AppComponent {
+    private bottomBar: BottomBar;
 
-    labelVisibility: number = 2;
-    bottomBarItems: BottomBarItemBase[];
-    // inactiveTintColor = '#5CB85C';
-    // activeTintColor = '#022733';
-    // barBackgroundColor = '#F8FAFD';
+    home: string = 'Home bis';
 
-    constructor() {
-        this.bottomBarItems = [{
-            icon: 'ic_home_black_24dp',
-            title: 'Home 1'
-        }, {
-            icon: 'ic_home_black_24dp',
-            title: 'Home 1'
-        }, {
-            icon: 'ic_home_black_24dp',
-            title: 'Home 1'
-        }, {
-            icon: 'ic_home_black_24dp',
-            title: 'Home 1'
-        }];
-    }
+    badgeValue: string = '1';
 
     tabSelected(event) {
         console.dir(event);
+    }
+
+    barLoaded(event) {
+        this.bottomBar = event.object;
+        // this.home = 'Home ter';
+        setTimeout(() => {
+                this.badgeValue = '';
+                console.log('title changed');
+                setTimeout(() => {
+                    this.badgeValue = '6';
+                    console.log('title changed');
+            }, 1000);
+        }, 1000);
+        // // setTimeout(() => {
+        // //     console.log('hidding');
+        // //     this.bottomBar.hide();
+        // //     setTimeout(() => {
+        // //         console.log('showing');
+        // //         this.bottomBar.show();
+        // //     }, 1000)
+        // // }, 1000);
     }
 }

@@ -2,12 +2,12 @@
     "name": "nativescript-bottombar",
     "version": "1.0.0",
     "description": "Your awesome NativeScript plugin.",
-    "main": "bottombar",
     "typings": "index.d.ts",
+    "main": "bottombar",
     "nativescript": {
         "platforms": {
-            "android": "5.0.0",
-            "ios": "5.0.0"
+            "android": "4.0.0",
+            "ios": "4.0.0"
         }
     },
     "scripts": {
@@ -21,13 +21,18 @@
         "plugin.tscwatch": "npm run tsc -- -w",
         "demo.ios": "npm run tsc && cd ../demo && tns run ios --syncAllFiles --emulator",
         "demo.ng.ios": "npm run tsc && cd ../demo-ng && tns run ios --syncAllFiles --emulator",
+        "demo.vue.ios": "npm run tsc && cd ../demo-vue && tns run ios --syncAllFiles --emulator --bundle",
         "demo.android": "npm run tsc && cd ../demo && tns run android --syncAllFiles --emulator",
         "demo.ng.android": "npm run tsc && cd ../demo-ng && tns run android --syncAllFiles --emulator",
+        "demo.vue.android": "npm run tsc && cd ../demo-ng && tns run android --syncAllFiles --emulator --bundle",
         "demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
         "demo.ng.reset": "cd ../demo-ng && npx rimraf -- hooks node_modules platforms package-lock.json",
+        "demo.vue.reset": "cd ../demo-vue && npx rimraf -- hooks node_modules platforms package-lock.json",
         "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-bottombar && tns plugin add ../src",
         "plugin.ng.prepare": "npm run build && cd ../demo-ng && tns plugin remove nativescript-bottombar && tns plugin add ../src",
+        "plugin.vue.prepare": "npm run build && cd ../demo-vue && tns plugin remove nativescript-bottombar && tns plugin add ../src",
         "clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
+        "clean.ng": "npm run demo.ng.reset && npx rimraf -- node_modules package-lock.json && npm i",
         "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'",
         "prepack": "npm run build.native"
     },
@@ -48,13 +53,13 @@
     "homepage": "https://github.com/rhanb/nativescript-bottombar",
     "readmeFilename": "README.md",
     "devDependencies": {
-        "tns-core-modules": "^5.0.1",
-        "tns-platform-declarations": "^5.0.0",
-        "typescript": "~2.8.2",
         "prompt": "^1.0.0",
         "rimraf": "^2.6.2",
+        "semver": "^5.6.0",
+        "tns-core-modules": "^4.2.0",
+        "tns-platform-declarations": "^4.2.0",
         "tslint": "^5.11.0",
-        "semver": "^5.6.0"
+        "typescript": "~2.8.2"
     },
     "dependencies": {},
     "bootstrapper": "nativescript-plugin-seed"

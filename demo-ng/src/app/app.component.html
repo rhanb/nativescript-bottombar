@@ -1,14 +1,14 @@
-<GridLayout rows="*, 40px" class="page">
-    <StackLayout row="0" orientation="vertical">
+<GridLayout rows="*, 49" class="page">
+    <StackLayout row="0" orientation="vertical" backgroundColor="black">
         <Label text="demo"></Label>
     </StackLayout>
-    <BottomBar row="1" (tabSelected)="tabSelected($event)"
-        [items]="bottomBarItems" [labelVisibility]="labelVisibility">
-        <!-- [inactiveTintColor]="inactiveTintColor"
-        [barBackgroundColor]="barBackgroundColor"
-        [activeTintColor]="activeTintColor" -->
-        <BottomBarItem icon="ic_home_24_dp" title="Home 1"></BottomBarItem>
-        <BottomBarItem icon="ic_home_24_dp" title="Home 2"></BottomBarItem>
-        <BottomBarItem icon="ic_home_24_dp" title="Home 3"></BottomBarItem>
+    <BottomBar row="1"
+        (tabSelected)="tabSelected($event)"
+        [labelVisibility]="labelVisibility"
+        (loaded)="barLoaded($event)">
+        <BottomBarItem badgeBackgroundColor="green" [badge]="badgeValue" icon="ic_home_outline" title="Home 1" checkedIcon="ic_home_filled"></BottomBarItem>
+        <BottomBarItem icon="ic_home_outline" badge="2" title="Home 2" checkedIcon="ic_home_filled"></BottomBarItem>
+        <BottomBarItem icon="ic_home_outline" badge="3" title="Home 3" checkedIcon="ic_home_filled"></BottomBarItem>
     </BottomBar>
+
 </GridLayout>

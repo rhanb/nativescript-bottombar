@@ -23,5 +23,22 @@
     "exclude": [
         "node_modules"
     ],
+    "files": [
+        "node_modules/tns-platform-declarations/android.d.ts",
+        "node_modules/tns-platform-declarations/ios.d.ts",
+        "./utils/utils.common.ts",
+        "./utils/android/utils.ts",
+        "./bottombar/bottombar.common.ts",
+        "./bottombar/bottombar.base.ts",
+        "./bottombar/ios/bottombar.ts",
+        "./bottombar/android/bottombar.ts",
+        "./bottombar/android/label-visibility.enum.ts",
+        "./bottombar-item/bottombar-item.base.ts",
+        "./bottombar-item/ios/bottombar-item.ts",
+        "./bottombar-item/android/bottombar-item.ts",
+        "./bottombar.android.ts",
+        "./bottombar.ios.ts",
+
+    ],
     "compileOnSave": false
 }

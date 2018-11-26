@@ -1,7 +1,7 @@
 ﻿@import '~nativescript-theme-core/css/core.light.css';
 
 BottomBar {
-    inactive-tint-color: #5CB85C;
     active-tint-color: #022733;
     bar-background-color: #F8FAFD;
+    inactive-tint-color: #5CB85C;
 }

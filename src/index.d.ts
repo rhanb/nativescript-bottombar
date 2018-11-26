@@ -1,23 +1,41 @@
-import { BottomBarBase } from './bottombar.base';
-import { View } from 'tns-core-modules/ui/core/view';
+import { View, ViewBase, Observable, AddChildFromBuilder, EventData } from 'tns-core-modules/ui/core/view';
+import { Color } from 'tns-core-modules/color/color';
+import { ImageSource } from 'tns-core-modules/image-source/image-source';
 
-export declare class BottomBarItemBase {
+export declare class BottomBarItem extends View {
     index?: number;
-    title: string;
+    nativeView: any;
+    readonly ios: any;
+    readonly android: any;
     icon: string;
-    bottomBar?: WeakRef<BottomBarBase>;
-    constructor(title: string, icon: string, bottomBar?: WeakRef<BottomBarBase>);
+    title: string;
+    checkedIcon: string;
+    badge: string;
+    badgeBackgroundColor: string;
+    initNativeView(): void;
 }
 
-export declare class BottomBar extends BottomBarBase {
-    readonly android: any;
-    createNativeView(): any;
-    protected createItems(): void;
-    private setItemsColorStateList(activeTintColor, inactiveTintColor);
-    private _tabBarController;
-    private _delegate;
+export declare class BottomBar extends View implements AddChildFromBuilder {
+    items: BottomBarItem[];
+    selectedIndex: number;
+    inactiveTintColor: Color;
+    activeTintColor: Color;
+    barBackgroundColor: Color;
+    onTabSelected(newIndex: number): void;
+    _addChildFromBuilder(name: string, value: BottomBarItem): void;
+    nativeView: any;
     readonly ios: any;
-    initNativeView(): void;
-    onLoaded(): void;
-    onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
+    readonly android: any;
+}
+
+export declare enum LABEL_VISIBILITY {
+    AUTO = -1,
+    LABELED = 1,
+    SELECTED = 0,
+    UNLABELED = 2,
+}
+
+export interface TabSelectedEventData extends EventData {
+    oldIndex: number;
+    newIndex: number;
 }

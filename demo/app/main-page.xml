@@ -1,17 +1,14 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
   xmlns:ui="nativescript-bottombar">
-  <GridLayout rows="*, 40px" class="page">
+  <GridLayout rows="*, auto" class="page">
     <StackLayout row="0" orientation="vertical">
         <Label text="demo"></Label>
     </StackLayout>
-    <ui:BottomBar row="1">
-        <!-- [inactiveTintColor]="inactiveTintColor"
-        [barBackgroundColor]="barBackgroundColor"
-        [activeTintColor]="activeTintColor" -->
-        <ui:BottomBarItem icon="ic_home_black_24dp" title="Home 1"></ui:BottomBarItem>
-        <ui:BottomBarItem icon="ic_home_black_24dp" title="Home 2"></ui:BottomBarItem>
-        <ui:BottomBarItem icon="ic_home_black_24dp" title="Home 3"></ui:BottomBarItem>
+    <ui:BottomBar row="1"
+        inactiveTintColor="{{ inactiveTintColor }}">
+        <ui:BottomBarItem icon="ic_home_black_24dp" title="Home 1" badge="3"></ui:BottomBarItem>
+        <ui:BottomBarItem icon="ic_home_black_24dp" title="Home 2" badge="3"></ui:BottomBarItem>
+        <ui:BottomBarItem icon="ic_home_black_24dp" title="Home 3" badge="3"></ui:BottomBarItem>
     </ui:BottomBar>
 </GridLayout>
-
 </Page>
