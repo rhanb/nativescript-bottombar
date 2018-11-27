@@ -53,13 +53,13 @@
     "homepage": "https://github.com/rhanb/nativescript-bottombar",
     "readmeFilename": "README.md",
     "devDependencies": {
+        "tns-core-modules": "^5.0.1",
+        "tns-platform-declarations": "^5.0.0",
+        "typescript": "~2.8.2",
         "prompt": "^1.0.0",
         "rimraf": "^2.6.2",
-        "semver": "^5.6.0",
-        "tns-core-modules": "^4.2.0",
-        "tns-platform-declarations": "^4.2.0",
         "tslint": "^5.11.0",
-        "typescript": "~2.8.2"
+        "semver": "^5.6.0"
     },
     "dependencies": {},
     "bootstrapper": "nativescript-plugin-seed"
