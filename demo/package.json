@@ -28,6 +28,7 @@
   },
   "scripts": {
     "build.plugin": "cd ../src && npm run build",
+    "build.iosOnly": "cd ../src && npm run build.iosOnly",
     "ci.tslint": "npm i && tslint --config '../tslint.json' 'app/**/*.ts'"
   }
 }
