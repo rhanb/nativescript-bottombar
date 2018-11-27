@@ -13,6 +13,7 @@ matrix:
       language: node_js 
       node_js: "8"
       jdk: oraclejdk8
+      before_install: pip install six
       script: cd demo && npm run build.iosOnly && npm i && tns build ios --bundle --env.uglify
     - language: android
       os: linux
@@ -37,6 +38,7 @@ matrix:
       language: node_js 
       node_js: "8"
       jdk: oraclejdk8
+      before_install: pip install six
       script: 
         - cd src && npm i && npm run tsc && cd ../demo && tns build ios
     - os: linux
@@ -68,7 +70,6 @@ android:
     - sys-img-armeabi-v7a-android-21
 
 install:
-    - pip install six
     - echo no | npm install -g nativescript
     - tns usage-reporting disable
     - tns error-reporting disable
