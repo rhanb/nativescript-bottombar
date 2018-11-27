@@ -68,6 +68,7 @@ android:
     - sys-img-armeabi-v7a-android-21
 
 install:
+    - pip install six
     - echo no | npm install -g nativescript
     - tns usage-reporting disable
     - tns error-reporting disable
