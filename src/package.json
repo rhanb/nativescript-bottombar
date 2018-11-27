@@ -11,8 +11,8 @@
         }
     },
     "scripts": {
-        "tsc": "./node_modules/typescript/bin/tsc",
-        "build": "npm run tsc && npm run build.native",
+        "tsc": "tsc",
+        "build": "npm i && npm run tsc && npm run build.native",
         "build.native": "node scripts/build-native.js",
         "postclone": "npm i && node scripts/postclone.js && cd ../demo && npm i && npx rimraf -- package-lock.json && cd ../src",
         "test.android": "npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
