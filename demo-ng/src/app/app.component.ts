@@ -35,22 +35,5 @@ export class AppComponent {
 
     barLoaded(event) {
         this.bottomBar = event.object;
-        // this.home = 'Home ter';
-        setTimeout(() => {
-                this.badgeValue = '';
-                console.log('title changed');
-                setTimeout(() => {
-                    this.badgeValue = '6';
-                    console.log('title changed');
-            }, 1000);
-        }, 1000);
-        // // setTimeout(() => {
-        // //     console.log('hidding');
-        // //     this.bottomBar.hide();
-        // //     setTimeout(() => {
-        // //         console.log('showing');
-        // //         this.bottomBar.show();
-        // //     }, 1000)
-        // // }, 1000);
     }
 }

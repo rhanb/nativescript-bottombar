@@ -4,7 +4,8 @@ import {
     BottomBarBase,
     inactiveTintColor,
     activeTintColor,
-    barBackgroundColor
+    barBackgroundColor,
+    items
 } from '../bottombar.base';
 import { BottomBarItem } from '../../bottombar-item/ios/bottombar-item';
 import { imageConverter } from '../../utils/utils.common';
@@ -41,9 +42,7 @@ export class BottomBar extends BottomBarBase {
     public createNativeView(): UITabBar {
         this._tabBarController = UITabBarController.new();
 
-        this._tabBarController.viewControllers = (NSArray as any).arrayWithArray(
-            this.items.map(item => item.viewController)
-        );
+        this.setViewControllers();
 
         const actualHeight = this.getActualSize().height;
         this.height = actualHeight ? actualHeight : 49;
@@ -53,13 +52,9 @@ export class BottomBar extends BottomBarBase {
 
     _addChildFromBuilder(name: string, value: BottomBarItem) {
         if (name === 'BottomBarItem') {
-            const itemViewController = this.createItem(value, this.items.length);
-
-            if (itemViewController) {
-                value.viewController = itemViewController;
-                value.setNativeView(itemViewController.tabBarItem);
-                this.items.push(value);
-            }
+            this.items.push(
+                this.createItem(value, this.items.length)
+            );
         }
     }
 
@@ -68,19 +63,32 @@ export class BottomBar extends BottomBarBase {
         this._delegate = this._tabBarController.delegate = BottomBarControllerDelegate.initWithOwner(new WeakRef(this));
     }
 
-    private createItem(item: BottomBarItem, id: number): UIViewController {
+    private setViewControllers(): void {
+        this._tabBarController.viewControllers = (NSArray as any).arrayWithArray(
+            this.items.map(item => item.viewController)
+        );
+    }
+
+    private createItem(value: BottomBarItem, id: number): BottomBarItem {
+        const itemViewController = this.createItemViewController(value, id);
+        value.viewController = itemViewController;
+        value.setNativeView(itemViewController.tabBarItem);
+        return value;
+    }
+
+    private createItemViewController(item: BottomBarItem, id: number): UIViewController {
         const itemViewController: UIViewController = UIViewController.new();
         itemViewController.tabBarItem = UITabBarItem.new();
 
         if (item._icon && item._title) {
             item.index = id;
 
-            
+
             itemViewController.tabBarItem = itemViewController.tabBarItem.initWithTitleImageTag(
                 item._title,
                 imageConverter(item._icon).ios,
                 item.index
-            )
+            );
 
             if (item._checkedIcon) {
                 itemViewController.tabBarItem.selectedImage = imageConverter(item._checkedIcon).ios;
@@ -109,6 +117,22 @@ export class BottomBar extends BottomBarBase {
         const heightAndState = View.resolveSizeAndState(height, height, heightMode, 0);
 
         this.setMeasuredDimension(widthAndState, heightAndState);
+    }
+
+    [items.setNative](items: BottomBarItem[]): void {
+        if (items) {
+            this.items = [...items];
+
+            if (this._tabBarController.viewControllers.count > 0) {
+                this._tabBarController.viewControllers = null;
+            }
+
+            this.items.forEach((item: BottomBarItem, index: number) => {
+                this.createItem(item, index);
+            });
+
+            this.setViewControllers();
+        }
     }
 
     [inactiveTintColor.getDefault](): UIColor {

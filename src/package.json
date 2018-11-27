@@ -17,7 +17,7 @@
         "postclone": "npm i && node scripts/postclone.js && cd ../demo && npm i && npx rimraf -- package-lock.json && cd ../src",
         "test.android": "npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
         "test.ios": "npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
-        "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\"",
+        "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json",
         "plugin.tscwatch": "npm run tsc -- -w",
         "demo.ios": "npm run tsc && cd ../demo && tns run ios --syncAllFiles --emulator",
         "demo.ng.ios": "npm run tsc && cd ../demo-ng && tns run ios --syncAllFiles --emulator",
@@ -33,7 +33,7 @@
         "plugin.vue.prepare": "npm run build && cd ../demo-vue && tns plugin remove nativescript-bottombar && tns plugin add ../src",
         "clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
         "clean.ng": "npm run demo.ng.reset && npx rimraf -- node_modules package-lock.json && npm i",
-        "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'",
+        "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json'",
         "prepack": "npm run build.native"
     },
     "keywords": [

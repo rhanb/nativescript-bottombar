@@ -17,6 +17,8 @@ export declare class BottomBar extends BottomBarBase {
     createNativeView(): UITabBar;
     _addChildFromBuilder(name: string, value: BottomBarItem): void;
     initNativeView(): void;
-    private createItem(item, id);
+    private setViewControllers();
+    private createItem(value, id);
+    private createItemViewController(item, id);
     onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
 }

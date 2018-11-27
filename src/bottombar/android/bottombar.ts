@@ -37,7 +37,7 @@ export class BottomBar extends BottomBarBase {
             }
         }));
 
-        // Have to instantiate the bottomBar to create children that's why children creation 
+        // Have to instantiate the bottomBar to create children that's why children creation
         // is not done in the _addChildFromBuilder like in ios
         this.createItems(bottomBar);
 
@@ -55,11 +55,11 @@ export class BottomBar extends BottomBarBase {
 
     initNativeView() {
         super.initNativeView();
-    } 
+    }
 
     private createItem(item: BottomBarItem, id: number, bottomBar: BottomNavigationViewType): MenuItemType {
         const nativeItem: MenuItemType = bottomBar.getMenu().add(Menu.NONE, id, Menu.NONE, '');
-        
+
         if (item._icon && item._title) {
             item.index = id;
 
@@ -71,14 +71,14 @@ export class BottomBar extends BottomBarBase {
             if (item._badge) {
                 item.setViewBadge(bottomBar, this._context);
             }
-            
+
         }
         return nativeItem;
     }
 
     protected createItems(bottomNavigationView: BottomNavigationViewType) {
-        const menu: MenuType  = bottomNavigationView.getMenu();
-        
+        const menu: MenuType = bottomNavigationView.getMenu();
+
         if (menu.size() > 0) {
             menu.clear();
         }
@@ -88,7 +88,7 @@ export class BottomBar extends BottomBarBase {
             item.setNativeView(menuItem);
         });
     }
-    
+
 
     private setItemsColorStateList(activeTintColor: number, inactiveTintColor: number): void {
         const stateUnChecked = Array.create('int', 1);
@@ -153,7 +153,7 @@ export class BottomBar extends BottomBarBase {
             opacity: 0
         });
         setTimeout(() => {
-            
+
         }, 100);
         // (this.nativeView as BottomNavigationViewType).animate()
         //     .setDuration(200)

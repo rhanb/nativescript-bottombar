@@ -13,10 +13,7 @@ export class HelloWorldModel extends Observable {
   }
 
   bottomBarLoaded(event) {
-    console.dir(event);
-    // this._bottomBar = event.object;
-    this.badge = '3',
-    this.title = 'test';
+    this._bottomBar = event.object;
   }
 
   bottomBarItemSelected(event: TabSelectedEventData) {

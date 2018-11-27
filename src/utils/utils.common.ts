@@ -3,7 +3,7 @@ import { fromResource, ImageSource } from "tns-core-modules/image-source/image-s
 
 export function colorConverter(colorValue: string): Color {
     return new Color(colorValue);
-};
+}
 
 export class ResourceNotFoundError extends Error {
     constructor(resourceName: string) {
@@ -11,7 +11,7 @@ export class ResourceNotFoundError extends Error {
         this.name = 'ResourceNotFound';
         this.message = `Enable to find resource: ${resourceName}`;
     }
-};
+}
 
 export function imageConverter(path: string): ImageSource {
     const image = fromResource(path);
@@ -21,4 +21,4 @@ export function imageConverter(path: string): ImageSource {
     }
 
     return image;
-};
+}

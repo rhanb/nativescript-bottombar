@@ -22,7 +22,7 @@ export class BottomBarItem extends BottomBarItemBase {
     set title(value: string) {
         if (this._title !== value) {
             this._title = value;
-            if ( this.nativeView) {
+            if (this.nativeView) {
                 this.nativeView.title = this._title;
             }
         }
@@ -42,8 +42,8 @@ export class BottomBarItem extends BottomBarItemBase {
             this._badge = value;
             if (this.nativeView) {
                 // Need to be null to remove badge
-                this.nativeView.badgeValue = this._badge === '' 
-                    ? null 
+                this.nativeView.badgeValue = this._badge === ''
+                    ? null
                     : this._badge;
             }
         }
@@ -53,8 +53,8 @@ export class BottomBarItem extends BottomBarItemBase {
         if (this._badgeBackgroundColor !== color) {
             this._badgeBackgroundColor = color;
             if (this.nativeView) {
-                this.nativeView.badgeColor = new Color(color).ios
-            }               
+                this.nativeView.badgeColor = new Color(color).ios;
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ import { imageConverter } from "../utils.common";
 export declare type StateListDrawableType = android.graphics.drawable.StateListDrawable;
 
 const { StateListDrawable } = android.graphics.drawable;
-const  { BitmapDrawable } = android.graphics.drawable;
+const { BitmapDrawable } = android.graphics.drawable;
 
 // avoid cond redidunsy between item and bar
 export function createIconsStateListDrawable(icon: string, checkedIcon?: string): StateListDrawableType {

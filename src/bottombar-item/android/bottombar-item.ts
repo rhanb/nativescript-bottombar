@@ -26,7 +26,7 @@ export class BottomBarItem extends BottomBarItemBase {
             if (this.nativeView) {
                 this.nativeView
                     .setIcon(createIconsStateListDrawable(this._icon, this._checkedIcon));
-            }   
+            }
         }
     }
 
@@ -86,8 +86,8 @@ export class BottomBarItem extends BottomBarItemBase {
     }
 
     createViewBadge(bottomBar: BottomNavigationViewType, context: any): Label {
-        const textView = new Label();        
-        textView.text = this._badge ? this._badge : '+9'; 
+        const textView = new Label();
+        textView.text = this._badge ? this._badge : '+9';
         textView.textAlignment = textView.horizontalAlignment = 'center';
         textView.fontSize = 8;
         textView.color = new Color('white');

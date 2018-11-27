@@ -80,14 +80,14 @@ export const items = new Property<BottomBarBase, BottomBarItemBase[]>({
 
 export const androidLabelVisibility = new Property<BottomBarBase, LABEL_VISIBILITY>({
     name: 'androidLabelVisibility',
-    equalityComparer:((oldValue: LABEL_VISIBILITY, newValue: LABEL_VISIBILITY) => {
+    equalityComparer: ((oldValue: LABEL_VISIBILITY, newValue: LABEL_VISIBILITY) => {
         return oldValue !== newValue;
     }),
     affectsLayout: isAndroid,
     defaultValue: LABEL_VISIBILITY.SELECTED
 });
 /**
- * CSS Properties 
+ * CSS Properties
  */
 declare module 'tns-core-modules/ui/styling/style' {
     interface Style {
