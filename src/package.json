@@ -6,8 +6,8 @@
     "main": "bottombar",
     "nativescript": {
         "platforms": {
-            "android": "4.0.0",
-            "ios": "4.0.0"
+            "android": "5.0.0",
+            "ios": "5.0.0"
         }
     },
     "scripts": {
