@@ -67,7 +67,6 @@ matrix:
       language: node_js
       node_js: "8"
       before_script:
-         before_script:
         - echo no | android create avd --force -n Pixel_API_26 -t android-26 -b armeabi-v7a
       script:
         - npm i -g appium
