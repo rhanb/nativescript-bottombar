@@ -1,74 +1,81 @@
 {
-    "name": "nativescript-bottombar",
-    "version": "1.0.0",
-    "description": "Your awesome NativeScript plugin.",
-    "typings": "index.d.ts",
-    "main": "bottombar",
-    "nativescript": {
-        "platforms": {
-            "android": "5.0.0",
-            "ios": "5.0.0"
-        }
-    },
-    "scripts": {
-        "tsc": "tsc && cd angular && tsc",
-        "build": "npm run tsc && npm run build.native",
-        "build.ci": "npm run clean.ci && npm run build",
-        "build.native": "node scripts/build-native.js",
-        "build.ci.iosOnly": "npm run clean.ci && tsc",
-        "postclone": "npm i && node scripts/postclone.js && cd ../demo && npm i && npx rimraf -- package-lock.json && cd ../src",
-        "test.android": "npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
-        "test.ci.android": "npm run clean.ci && npm run test.android",
-        "test.ios": "npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
-        "test.ci.ios": "npm run clean.ci && npm run test.ios",
-        "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json",
-        "plugin.tscwatch": "npm run tsc -- -w",
-        "demo.ios": "npm run tsc && cd ../demo && tns run ios --syncAllFiles --emulator",
-        "demo.ng.ios": "npm run tsc && cd ../demo-ng && tns run ios --syncAllFiles --emulator",
-        "demo.vue.ios": "npm run tsc && cd ../demo-vue && tns run ios --syncAllFiles --emulator --bundle",
-        "demo.android": "npm run tsc && cd ../demo && tns run android --syncAllFiles --emulator",
-        "demo.ng.android": "npm run tsc && cd ../demo-ng && tns run android --syncAllFiles --emulator",
-        "demo.vue.android": "npm run tsc && cd ../demo-ng && tns run android --syncAllFiles --emulator --bundle",
-        "demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
-        "demo.ng.reset": "cd ../demo-ng && npx rimraf -- hooks node_modules platforms package-lock.json",
-        "demo.vue.reset": "cd ../demo-vue && npx rimraf -- hooks node_modules platforms package-lock.json",
-        "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-bottombar && tns plugin add ../src",
-        "plugin.ng.prepare": "npm run build && cd ../demo-ng && tns plugin remove nativescript-bottombar && tns plugin add ../src",
-        "plugin.vue.prepare": "npm run build && cd ../demo-vue && tns plugin remove nativescript-bottombar && tns plugin add ../src",
-        "clean.ci": "rm package-lock.json && npm i",
-        "clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
-        "clean.ng": "npm run demo.ng.reset && npx rimraf -- node_modules package-lock.json && npm i",
-        "clean.vue": "npm run demo.ng.reset && npx rimraf -- node_modules package-lock.json && npm i",
-        "ci.tslint": "npm run clean.ci && tslint '**/*.ts' --config '../tslint.json'",
-        "prepack": "npm run build.native"
-    },
-    "keywords": [
-        "NativeScript",
-        "JavaScript",
-        "Android",
-        "iOS"
-    ],
-    "author": {
-        "name": "Your Name",
-        "email": "youremail@yourdomain.com"
-    },
-    "bugs": {
-        "url": "https://github.com/rhanb/nativescript-bottombar/issues"
-    },
-    "license": "Apache-2.0",
-    "homepage": "https://github.com/rhanb/nativescript-bottombar",
-    "readmeFilename": "README.md",
-    "devDependencies": {
-        "@angular/core": "^7.1.0",
-        "nativescript-angular": "^7.0.2",
-        "prompt": "^1.0.0",
-        "rimraf": "^2.6.2",
-        "semver": "^5.6.0",
-        "tns-core-modules": "^5.0.1",
-        "tns-platform-declarations": "^5.0.0",
-        "tslint": "^5.11.0",
-        "typescript": "~2.8.2"
-    },
-    "dependencies": {},
-    "bootstrapper": "nativescript-plugin-seed"
+  "name": "nativescript-bottombar",
+  "version": "1.0.0",
+  "description": "Your awesome NativeScript plugin.",
+  "typings": "index.d.ts",
+  "main": "bottombar",
+  "nativescript": {
+    "platforms": {
+      "android": "5.0.0",
+      "ios": "5.0.0"
+    }
+  },
+  "scripts": {
+    "tsc": "tsc && cd angular && tsc",
+    "build": "npm run tsc && npm run build.native",
+    "build.ci": "npm run clean.ci && npm run build",
+    "build.native": "node scripts/build-native.js",
+    "build.ci.iosOnly": "npm run clean.ci && tsc",
+    "postclone": "npm i && node scripts/postclone.js && cd ../demo && npm i && npx rimraf -- package-lock.json && cd ../src",
+    "test.android": "npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
+    "test.ci.android": "npm run clean.ci && npm run test.android",
+    "test.ios": "npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
+    "test.ci.ios": "npm run clean.ci && npm run test.ios",
+    "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json",
+    "plugin.tscwatch": "npm run tsc -- -w",
+    "demo.ios": "npm run tsc && cd ../demo && tns run ios --syncAllFiles --emulator",
+    "demo.ng.ios": "npm run tsc && cd ../demo-ng && tns run ios --syncAllFiles --emulator",
+    "demo.vue.ios": "npm run tsc && cd ../demo-vue && tns run ios --syncAllFiles --emulator --bundle",
+    "demo.android": "npm run tsc && cd ../demo && tns run android --syncAllFiles --emulator",
+    "demo.ng.android": "npm run tsc && cd ../demo-ng && tns run android --syncAllFiles --emulator",
+    "demo.vue.android": "npm run tsc && cd ../demo-ng && tns run android --syncAllFiles --emulator --bundle",
+    "demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
+    "demo.ng.reset": "cd ../demo-ng && npx rimraf -- hooks node_modules platforms package-lock.json",
+    "demo.vue.reset": "cd ../demo-vue && npx rimraf -- hooks node_modules platforms package-lock.json",
+    "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-bottombar && tns plugin add ../src",
+    "plugin.ng.prepare": "npm run build && cd ../demo-ng && tns plugin remove nativescript-bottombar && tns plugin add ../src",
+    "plugin.vue.prepare": "npm run build && cd ../demo-vue && tns plugin remove nativescript-bottombar && tns plugin add ../src",
+    "clean.ci": "rm package-lock.json && npm i",
+    "clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
+    "clean.ng": "npm run demo.ng.reset && npx rimraf -- node_modules package-lock.json && npm i",
+    "clean.vue": "npm run demo.ng.reset && npx rimraf -- node_modules package-lock.json && npm i",
+    "ci.tslint": "npm run clean.ci && tslint '**/*.ts' --config '../tslint.json'",
+    "prepack": "npm run build.native",
+    "e2e": "tsc -p e2e && mocha --opts ./e2e/config/mocha.opts",
+    "e2e-watch": "tsc -p e2e --watch"
+  },
+  "keywords": [
+    "NativeScript",
+    "JavaScript",
+    "Android",
+    "iOS"
+  ],
+  "author": {
+    "name": "Jean-Baptiste Aniel",
+    "email": "aniel.jeanbaptiste@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/rhanb/nativescript-bottombar/issues"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/rhanb/nativescript-bottombar",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "@angular/core": "^7.1.0",
+    "@types/chai": "~4.1.3",
+    "@types/mocha": "~5.2.1",
+    "@types/node": "^7.0.5",
+    "mocha": "^5.2.0",
+    "nativescript-angular": "^7.0.2",
+    "nativescript-dev-appium": "^4.0.9",
+    "prompt": "^1.0.0",
+    "rimraf": "^2.6.2",
+    "semver": "^5.6.0",
+    "tns-core-modules": "^5.0.1",
+    "tns-platform-declarations": "^5.0.0",
+    "tslint": "^5.11.0",
+    "typescript": "~2.8.2"
+  },
+  "dependencies": {},
+  "bootstrapper": "nativescript-plugin-seed"
 }

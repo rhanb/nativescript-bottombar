@@ -21,7 +21,8 @@
         "noFallthroughCasesInSwitch": true
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "e2e"
     ],
     "files": [
         "node_modules/tns-platform-declarations/android.d.ts",

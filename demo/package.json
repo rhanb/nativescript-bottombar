@@ -15,11 +15,15 @@
     "tns-core-modules": "^5.0.5"
   },
   "devDependencies": {
+    "@types/chai": "~4.1.3",
+    "@types/mocha": "~5.2.1",
+    "@types/node": "^7.0.5",
     "jasmine-core": "^2.5.2",
     "karma": "^1.3.0",
     "karma-jasmine": "^1.0.2",
     "karma-nativescript-launcher": "^0.4.0",
     "nativescript-css-loader": "~0.26.1",
+    "nativescript-dev-appium": "^4.0.9",
     "nativescript-dev-typescript": "~0.7.4",
     "nativescript-dev-webpack": "~0.17.0",
     "tns-platform-declarations": "^5.0.0",
@@ -27,9 +31,13 @@
     "typescript": "~2.8.2"
   },
   "scripts": {
-    "build.plugin": "cd ../src && npm run build",
-    "build.ci.plugin": "cd ../src && npm run build.ci",
-    "build.ci.iosOnly": "cd ../src && npm run build.ci.iosOnly",
-    "ci.tslint": "npm i && tslint --config '../tslint.json' 'app/**/*.ts'"
+    "clean": "npx rimraf package-lock.json node_modules",
+    "build.plugin": "npm run clean && cd ../src && npm run build",
+    "build.ci.plugin": "npm run clean && cd ../src && npm run build.ci",
+    "build.ci.iosOnly": "npm run clean && cd ../src && npm run build.ci.iosOnly",
+    "ci.tslint": "npm i && tslint --config '../tslint.json' 'app/**/*.ts'",
+    "e2e": "npx rimraf e2e && cp -R ../src/e2e ./e2e && tsc -p e2e && mocha --opts ./e2e/config/mocha.opts",
+    "e2e.android": "tns build android && npm run e2e",
+    "e2e.ios": "tns build ios && npm run e2e"
   }
 }
