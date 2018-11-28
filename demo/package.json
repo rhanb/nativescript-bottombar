@@ -35,7 +35,7 @@
     "build.plugin": "npm run clean && cd ../src && npm run build",
     "build.ci.plugin": "npm run clean && cd ../src && npm run build.ci",
     "build.ci.iosOnly": "npm run clean && cd ../src && npm run build.ci.iosOnly",
-    "ci.tslint": "npm i && tslint --config '../tslint.json' 'app/**/*.ts'",
+    "ci.tslint": "npm run clean && npm i && tslint --config '../tslint.json' 'app/**/*.ts'",
     "e2e": "npx rimraf e2e && cp -R ../src/e2e ./e2e && tsc -p e2e && mocha --opts ./e2e/config/mocha.opts",
     "e2e.android": "tns build android && npm run e2e",
     "e2e.ios": "tns build ios && npm run e2e"
