@@ -1,29 +1,63 @@
-# NativeScript Angular Template
+# Nativescript Bottombar usage with Angular
 
-This template creates a "Hello, world" NativeScript app using TypeScript and Angular.
 
-You can create a new app that uses this template with either the `--template` option.
+### Module
+```typescript
+import { BottomBarModule } from 'nativescript-bottombar/angular';
 
-```
-tns create my-app-name --template tns-template-hello-world-ng
-```
-
-Or the `--ng` shorthand.
-
-```
-tns create my-app-name --ng
-```
-
-> Note: Both commands will create a new NativeScript app that uses the latest version of this template published to [npm] (https://www.npmjs.com/package/tns-template-hello-world-ng).
-
-If you want to create a new app that uses the source of the template from the `master` branch, you can execute the following:
-
-```
-tns create my-app-name --template https://github.com/NativeScript/template-hello-world-ng.git#master
+@NgModule({
+    bootstrap: [
+        ...
+    ],
+    imports: [
+        ...
+        BottomBarModule
+    ],
+    declarations: [
+        ...
+    ]
+})
 ```
 
-**NB:** Please, have in mind that the master branch may refer to dependencies that are not on NPM yet!
+### XML
+   
+```xml
+<GridLayout rows="*, auto">
+    <StackLayout row="0" orientation="vertical">
+       <Label text="demo"></Label>
+    </StackLayout>
+    <BottomBar row="1" (tabSelected)="tabSelected($event)">
+        <BottomBarItem icon="ic_home_black_24dp" title="Home"></BottomBarItem>
+        <BottomBarItem icon="ic_calendar" title="Calendar"></BottomBarItem>
+        <BottomBarItem icon="ic_collaborator" title="Profile"></BottomBarItem>
+        <BottomBarItem icon="ic_paperplane" title="Messages"></BottomBarItem>
+    </BottomBar>
+</GridLayout>
+```
+### Component
 
-# Issues
+```typescript
+import { Component } from "@angular/core";
+import { registerElement } from 'nativescript-angular';
+import { BottomBar, BottomBarItemBase } from 'nativescript-bottombar';
 
-Issues related to `template-hello-world-ng` template should be logged in the https://github.com/NativeScript/NativeScript repository.
+registerElement('BottomBar', () => BottomBar);
+
+@Component({
+    selector: "ns-app",
+    moduleId: module.id,
+    templateUrl: "./app.component.html",
+    styles: [`
+        BottomBar {
+            inactive-tint-color: #C34491;
+            active-tint-color: #FFFFFF;
+            bar-background-color: #9F489B;
+        }
+    `]
+})
+export class AppComponent {
+    tabSelected(event) {
+        console.dir(event);
+    }
+}
+```

@@ -22,6 +22,9 @@ No third libraries are used in this plugin.
 
 # Usage
 
+- [Angular](/demo-ng/README.md)
+- [Vue](/demo-vue/README.md)
+- [{N} core](/demo/README.md)
 
 ## Angular NativeScript
 
