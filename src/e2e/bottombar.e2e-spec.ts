@@ -35,7 +35,7 @@ describe("Bottom bar", () => {
         for (let i = 1; i < 4; i++) {
             items.push(
                 await driver.findElementByAccessibilityId(`bottomBarItem${i}`, SearchOptions.exact)
-            )
+            );
         }
         assert.equal(items.length, 3);
     });
