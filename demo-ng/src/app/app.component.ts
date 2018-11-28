@@ -1,9 +1,5 @@
 import { Component } from "@angular/core";
-import { registerElement } from 'nativescript-angular';
-import { BottomBar, BottomBarItem } from 'nativescript-bottombar';
-
-registerElement('BottomBar', () => BottomBar);
-registerElement('BottomBarItem', () => BottomBarItem);
+import { BottomBar } from 'nativescript-bottombar';
 
 @Component({
     selector: "ns-app",

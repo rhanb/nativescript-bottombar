@@ -5,6 +5,8 @@
         <Label text="demo"></Label>
     </StackLayout>
     <ui:BottomBar row="1"
+        loaded="{{ bottomBarLoaded($event) }}"
+        tabSelected="{{ bottomBarItemSelected($event) }}"
         inactiveTintColor="{{ inactiveTintColor }}">
         <ui:BottomBarItem icon="ic_home_black_24dp" title="Home 1" badge="3"></ui:BottomBarItem>
         <ui:BottomBarItem icon="ic_home_black_24dp" title="Home 2" badge="3"></ui:BottomBarItem>

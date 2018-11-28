@@ -37,8 +37,7 @@
         "./bottombar-item/ios/bottombar-item.ts",
         "./bottombar-item/android/bottombar-item.ts",
         "./bottombar.android.ts",
-        "./bottombar.ios.ts",
-
+        "./bottombar.ios.ts"
     ],
     "compileOnSave": false
 }

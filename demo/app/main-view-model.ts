@@ -12,7 +12,8 @@ export class HelloWorldModel extends Observable {
     super();
   }
 
-  bottomBarLoaded(event) {
+  public bottomBarLoaded(event) {
+    console.dir(event);
     this._bottomBar = event.object;
   }
 

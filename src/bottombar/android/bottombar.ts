@@ -57,6 +57,11 @@ export class BottomBar extends BottomBarBase {
         super.initNativeView();
     }
 
+    onLoaded() {
+        console.log('loaded');
+        super.onLoaded();
+    }
+
     private createItem(item: BottomBarItem, id: number, bottomBar: BottomNavigationViewType): MenuItemType {
         const nativeItem: MenuItemType = bottomBar.getMenu().add(Menu.NONE, id, Menu.NONE, '');
 

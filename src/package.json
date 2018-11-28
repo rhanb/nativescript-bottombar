@@ -11,7 +11,7 @@
         }
     },
     "scripts": {
-        "tsc": "tsc",
+        "tsc": "tsc && cd angular && tsc",
         "build": "npm run tsc && npm run build.native",
         "build.ci": "npm run clean.ci && npm run build",
         "build.native": "node scripts/build-native.js",
@@ -38,6 +38,7 @@
         "clean.ci": "rm package-lock.json && npm i",
         "clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
         "clean.ng": "npm run demo.ng.reset && npx rimraf -- node_modules package-lock.json && npm i",
+        "clean.vue": "npm run demo.ng.reset && npx rimraf -- node_modules package-lock.json && npm i",
         "ci.tslint": "npm run clean.ci && tslint '**/*.ts' --config '../tslint.json'",
         "prepack": "npm run build.native"
     },
@@ -58,13 +59,15 @@
     "homepage": "https://github.com/rhanb/nativescript-bottombar",
     "readmeFilename": "README.md",
     "devDependencies": {
-        "tns-core-modules": "^5.0.1",
-        "tns-platform-declarations": "^5.0.0",
-        "typescript": "~2.8.2",
+        "@angular/core": "^7.1.0",
+        "nativescript-angular": "^7.0.2",
         "prompt": "^1.0.0",
         "rimraf": "^2.6.2",
+        "semver": "^5.6.0",
+        "tns-core-modules": "^5.0.1",
+        "tns-platform-declarations": "^5.0.0",
         "tslint": "^5.11.0",
-        "semver": "^5.6.0"
+        "typescript": "~2.8.2"
     },
     "dependencies": {},
     "bootstrapper": "nativescript-plugin-seed"

@@ -10,6 +10,7 @@ export declare class BottomBar extends BottomBarBase {
     createNativeView(): BottomNavigationViewType;
     _addChildFromBuilder(name: string, value: BottomBarItem): void;
     initNativeView(): void;
+    onLoaded(): void;
     private createItem(item, id, bottomBar);
     protected createItems(bottomNavigationView: BottomNavigationViewType): void;
     private setItemsColorStateList(activeTintColor, inactiveTintColor);
