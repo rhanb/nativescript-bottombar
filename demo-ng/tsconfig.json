@@ -24,6 +24,8 @@
     },
     "exclude": [
         "node_modules",
+        "../src/node_modules",
+        "../e2e",
         "platforms"
     ]
 }
