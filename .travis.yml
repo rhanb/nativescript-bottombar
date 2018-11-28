@@ -66,6 +66,9 @@ matrix:
         - Android="26"
       language: node_js
       node_js: "8"
+      before_script:
+         before_script:
+        - echo no | android create avd --force -n Pixel_API_26 -t android-26 -b armeabi-v7a
       script:
         - npm i -g appium
         - cd demo && npm i && tns run build android && npm run e2e -- --runType android26
@@ -93,7 +96,6 @@ android:
     - sys-img-x86-android-26
 
 install:
-    - echo no | android create avd --force -n Pixel_API_26 -t android-26 --abi x86 -no-accel
     - echo no | npm install -g nativescript
     - tns usage-reporting disable
     - tns error-reporting disable
