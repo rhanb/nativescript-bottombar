@@ -6,7 +6,7 @@ const isSauceRun = isSauceLab;
 const isAndroid: Boolean = runType.includes("android");
 
 describe("Bottom bar", () => {
-    const defaultWaitTime = 2000000;
+    const defaultWaitTime = 15000;
     let driver: AppiumDriver;
     let bottomBar;
     const items  = [];
