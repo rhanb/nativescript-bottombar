@@ -1,7 +1,8 @@
 import { AppiumDriver, createDriver, SearchOptions } from "nativescript-dev-appium";
 import { assert } from "chai";
-import { runType } from "nativescript-dev-appium/lib/parser";
+import { runType, isSauceLab } from "nativescript-dev-appium/lib/parser";
 
+const isSauceRun = isSauceLab;
 const isAndroid: Boolean = runType.includes("android");
 
 describe("Bottom bar", () => {
@@ -16,8 +17,15 @@ describe("Bottom bar", () => {
     });
 
     after(async () => {
+        console.log(isSauceRun);
+        if (isSauceRun) {
+            driver.sessionId().then(function (sessionId) {
+                console.log(sessionId);
+                console.log("Report: https://saucelabs.com/beta/tests/" + sessionId);
+            });
+        }
         await driver.quit();
-        console.log("Quit driver!");
+        console.log("Driver successfully quit");
     });
 
     afterEach(async function () {

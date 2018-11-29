@@ -1,3 +1,12 @@
+env:
+  global:
+    - ANDROID_PACKAGE='app-debug.apk'
+    - ANDROID_PACKAGE_FOLDER=$TRAVIS_BUILD_DIR/demo/platforms/android/app/build/outputs/apk/debug
+    - ANDROID_SAUCE_STORAGE="https://saucelabs.com/rest/v1/storage/$SAUCE_USER/$ANDROID_PACKAGE?overwrite=true"
+    - IOS_PACKAGE='demo.zip'
+    - IOS_PACKAGE_FOLDER=$TRAVIS_BUILD_DIR/demo/platforms/ios/build/emulator
+    - IOS_SAUCE_STORAGE="https://saucelabs.com/rest/v1/storage/$SAUCE_USER/$IOS_PACKAGE?overwrite=true"
+
 matrix:
   include:
     - stage: "Lint"
@@ -30,6 +39,7 @@ matrix:
       before_install: nvm install stable
       script:
         - cd src && npm run clean.ci && npm run tsc && cd ../demo && npm run clean && tns build android
+        - "curl -u $SAUCE_USER:$SAUCE_KEY -X POST -H 'Content-Type: application/octet-stream' $ANDROID_SAUCE_STORAGE --data-binary @$ANDROID_PACKAGE_FOLDER/$ANDROID_PACKAGE.apk"
     - os: osx
       env: 
         - BuildiOS="12"
@@ -41,6 +51,8 @@ matrix:
       before_install: pip install six
       script: 
         - cd src && npm run clean.ci && npm run tsc && cd ../demo && npm run clean && tns build ios
+        - cd $IOS_PACKAGE_FOLDER && zip -r $IOS_PACKAGE demo.app
+        - "curl -u $SAUCE_USER:$SAUCE_KEY -X POST -H 'Content-Type: application/octet-stream' $IOS_SAUCE_STORAGE --data-binary @$IOS_PACKAGE_FOLDER/$IOS_PACKAGE"
     - os: linux
       language: android
       dist: precise
@@ -61,27 +73,24 @@ matrix:
       osx_image: xcode10.0
       script: cd src && npm run test.ci.ios
     - stage: "UI Tests"
-    - os: linux
-      env: 
-        - Android="26"
-      language: node_js
-      node_js: "8"
-      before_script:
-        - echo no | android create avd --force -n Pixel_API_26 -t android-26 -b armeabi-v7a
-      script:
-        - npm i -g appium
-        - cd demo && npm run clean && npm i && tns run build android && npm run e2e -- --runType android26
-    - os: osx
-      env: 
-        - iOS="12.1"
-        - Xcode="10.0"
-      osx_image: xcode10.0
-      language: node_js 
-      node_js: "8"
-      script: 
-        - npm i -g appium
-        - cd demo && npm run clean && npm i && tns run ios && npm run e2e -- --runType sim.iPhone6.121
-
+        env: 
+          - Android="23"
+        language: node_js
+        os: linux
+        node_js: "8"
+        script:
+          - npm i -g appium
+          - cd demo && npm i
+          - travis_retry npm run e2e -- --runType android23 --sauceLab --reuseDevice --appPath $ANDROID_PACKAGE
+      - os: linux
+        env: 
+          - iOS="12.1"
+        language: node_js 
+        node_js: "8"
+        script: 
+          - npm i -g appium
+          - cd demo && npm run clean && npm i
+          - travis_wait travis_retry npm run e2e -- --runType sim.iPhone6.121 --sauceLab --reuseDevice --appPath $IOS_PACKAGE
 
 android:
   components:
@@ -92,7 +101,6 @@ android:
     - android-26
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-21
-    - sys-img-x86-android-26
 
 install:
     - echo no | npm install -g nativescript
