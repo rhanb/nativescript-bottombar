@@ -1,24 +1,23 @@
 import { Color } from "tns-core-modules/ui/core/view/view";
-import { fromResource, ImageSource } from "tns-core-modules/image-source/image-source";
+import { ImageSource, fromFileOrResource } from "tns-core-modules/image-source/image-source";
+import { isFileOrResourcePath } from "tns-core-modules/utils/utils";
 
 export function colorConverter(colorValue: string): Color {
     return new Color(colorValue);
 }
 
-export class ResourceNotFoundError extends Error {
-    constructor(resourceName: string) {
+export class FileNotFoundError extends Error {
+    constructor(path: string) {
         super();
         this.name = 'ResourceNotFound';
-        this.message = `Enable to find resource: ${resourceName}`;
+        this.message = `Enable to find file: ${path}`;
     }
 }
 
-export function imageConverter(path: string): ImageSource {
-    const image = fromResource(path);
-
-    if (!image) {
-        throw new ResourceNotFoundError(path);
+export function imageConverter(pathValue: string): ImageSource {
+    if (!isFileOrResourcePath(pathValue)) {
+        throw new FileNotFoundError(pathValue);
     }
 
-    return image;
+    return fromFileOrResource(pathValue);
 }

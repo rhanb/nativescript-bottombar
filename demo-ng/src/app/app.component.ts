@@ -12,10 +12,6 @@ import { BottomBar } from 'nativescript-bottombar';
             bar-background-color: #9F489B;
             badge-background-color: #222222;
         }
-
-        BottomBarItem {
-            badge-background-color: #222222;
-        }
     `]
 })
 export class AppComponent {
@@ -31,5 +27,9 @@ export class AppComponent {
 
     barLoaded(event) {
         this.bottomBar = event.object;
+
+        setTimeout(() => {
+            this.bottomBar.selectItem(1);
+        }, 2000);
     }
 }

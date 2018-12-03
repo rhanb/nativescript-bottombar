@@ -1,6 +1,5 @@
 # Nativescript Bottombar usage with Angular
 
-
 ### Module
 ```typescript
 import { BottomBarModule } from 'nativescript-bottombar/angular';
@@ -61,3 +60,32 @@ export class AppComponent {
     }
 }
 ```
+
+## Common Usage
+
+### Icons
+
+The properties `icon` and `checkedIcon` supports the following path formats:
+
+- `~/`: relative path to the app folder
+- `res://`: icons must be in the App_Resources folder as follow
+
+
+  iOS    |  Android
+-------- | ---------
+![iOS](/src/screenshots/ressources.ios.png) | ![Android](/src/screenshots/ressources.android.png)
+
+### Ripple effect color on Android
+
+To change the color of the ripple effect when an item is tapped, please add the following item to your `AppTheme` inside your `App_Resources` > `Android` > `src` > `main` > `res` > `values` > `styles.xml` file with the desired `color` resource.
+
+```XML
+<!-- Application theme -->
+<style name="AppTheme" parent="AppThemeBase">
+    <item name="colorControlHighlight">@color/ns_accent</item>
+</style>
+```
+
+## More details
+
+[API documentation](https://github.com/rhanbIT/nativescript-bottombar/blob/master/API.md)

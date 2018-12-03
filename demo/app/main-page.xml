@@ -1,17 +1,16 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
   xmlns:ui="nativescript-bottombar">
   <GridLayout rows="*, auto" class="page">
-    <StackLayout row="0" orientation="vertical">
-        <Label text="demo"></Label>
-    </StackLayout>
-    <ui:BottomBar row="1"
-        automationText="bottomBar"
-        loaded="{{ bottomBarLoaded($event) }}"
-        tabSelected="{{ bottomBarItemSelected($event) }}"
-        inactiveTintColor="{{ inactiveTintColor }}">
-        <ui:BottomBarItem automationText="bottomBar1" icon="ic_home_black_24dp" title="Home 1" badge="3"></ui:BottomBarItem>
-        <ui:BottomBarItem automationText="bottomBar2" icon="ic_home_black_24dp" title="Home 2" badge="3"></ui:BottomBarItem>
-        <ui:BottomBarItem automationText="bottomBar3" icon="ic_home_black_24dp" title="Home 3" badge="3"></ui:BottomBarItem>
-    </ui:BottomBar>
-</GridLayout>
+        <StackLayout row="0" orientation="vertical">
+            <Label text="demo"></Label>
+        </StackLayout>
+        <ui:BottomBar row="1"
+            automationText="bottomBar"
+            loaded="{{ bottomBarLoaded($event) }}"
+            tabSelected="{{ bottomBarItemSelected($event) }}">
+            <ui:BottomBarItem badgeBackgroundColor="green" badge="1" icon="res://ic_home_outline" title="Home 1" checkedIcon="res://ic_home_filled"></ui:BottomBarItem>
+            <ui:BottomBarItem icon="res://ic_home_outline" badge="2" title="Home 2" checkedIcon="res://ic_home_filled"></ui:BottomBarItem>
+            <ui:BottomBarItem icon="res://ic_home_outline" badge="3" title="Home 3" checkedIcon="res://ic_home_filled"></ui:BottomBarItem>
+        </ui:BottomBar>
+    </GridLayout>
 </Page>

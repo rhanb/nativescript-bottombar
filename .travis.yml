@@ -72,24 +72,25 @@ matrix:
       before_install: pip install six
       osx_image: xcode10
       script: cd src && npm run test.ci.ios
-    - stage: "UI Tests"
-      env: Android="23"
-      language: node_js
-      os: linux
-      node_js: "8"
-      script:
-        - npm i -g appium
-        - cd demo && npm i
-        - travis_retry npm run e2e -- --runType sauce.android24 --sauceLab --reuseDevice --appPath $ANDROID_PACKAGE
-    - os: linux
-      env: 
-        - iOS="12.1"
-      language: node_js 
-      node_js: "8"
-      script: 
-        - npm i -g appium
-        - cd demo && npm run clean && npm i
-        - travis_wait travis_retry npm run e2e -- --runType sauce.iPhone6.110 --sauceLab --reuseDevice --appPath $IOS_PACKAGE
+    #  Waiting to get access to an open source Sauce Labs account
+    # - stage: "UI Tests"
+    #   env: Android="23"
+    #   language: node_js
+    #   os: linux
+    #   node_js: "8"
+    #   script:
+    #     - npm i -g appium
+    #     - cd demo && npm i
+    #     - travis_retry npm run e2e -- --runType sauce.android24 --sauceLab --reuseDevice --appPath $ANDROID_PACKAGE
+    # - os: linux
+    #   env: 
+    #     - iOS="12.1"
+    #   language: node_js 
+    #   node_js: "8"
+    #   script: 
+    #     - npm i -g appium
+    #     - cd demo && npm run clean && npm i
+    #     - travis_wait travis_retry npm run e2e -- --runType sauce.iPhone6.110 --sauceLab --reuseDevice --appPath $IOS_PACKAGE
 
 android:
   components:

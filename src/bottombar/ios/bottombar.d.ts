@@ -21,4 +21,5 @@ export declare class BottomBar extends BottomBarBase {
     private createItem(value, id);
     private createItemViewController(item, id);
     onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void;
+    selectItem(index: number): void;
 }

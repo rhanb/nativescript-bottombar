@@ -23,6 +23,7 @@ export declare class BottomBar extends View implements AddChildFromBuilder {
     barBackgroundColor: Color;
     onTabSelected(newIndex: number): void;
     _addChildFromBuilder(name: string, value: BottomBarItem): void;
+    selectItem(index: number): void;
     nativeView: any;
     readonly ios: any;
     readonly android: any;

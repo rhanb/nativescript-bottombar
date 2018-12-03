@@ -57,6 +57,8 @@ export abstract class BottomBarBase extends View implements AddChildFromBuilder 
 
     public abstract _addChildFromBuilder(name: string, value: BottomBarItemBase): void;
 
+    public abstract selectItem(index: number): void;
+
     public onTabSelected(newIndex: number): void {
         const oldIndex = this.selectedIndex;
         this.selectedIndex = newIndex;

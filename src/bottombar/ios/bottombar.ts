@@ -80,9 +80,9 @@ export class BottomBar extends BottomBarBase {
         const itemViewController: UIViewController = UIViewController.new();
         itemViewController.tabBarItem = UITabBarItem.new();
 
-        if (item._icon && item._title) {
-            item.index = id;
+        item.index = id;
 
+        if (item._icon && item._title) {
 
             itemViewController.tabBarItem = itemViewController.tabBarItem.initWithTitleImageTag(
                 item._title,
@@ -157,5 +157,9 @@ export class BottomBar extends BottomBarBase {
 
     [barBackgroundColor.setNative](color: Color): void {
         this.nativeView.barTintColor = color.ios;
+    }
+
+    selectItem(index: number): void {
+        this._tabBarController.selectedIndex = index;
     }
 }

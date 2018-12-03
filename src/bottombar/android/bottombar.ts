@@ -53,30 +53,18 @@ export class BottomBar extends BottomBarBase {
         }
     }
 
-    initNativeView() {
-        super.initNativeView();
-    }
-
-    onLoaded() {
-        console.log('loaded');
-        super.onLoaded();
-    }
 
     private createItem(item: BottomBarItem, id: number, bottomBar: BottomNavigationViewType): MenuItemType {
         const nativeItem: MenuItemType = bottomBar.getMenu().add(Menu.NONE, id, Menu.NONE, '');
 
+        item.index = id;
+
         if (item._icon && item._title) {
-            item.index = id;
 
             nativeItem.setTitle(item._title);
 
             nativeItem
                 .setIcon(createIconsStateListDrawable(item._icon, item._checkedIcon));
-
-            if (item._badge) {
-                item.setViewBadge(bottomBar, this._context);
-            }
-
         }
         return nativeItem;
     }
@@ -91,6 +79,20 @@ export class BottomBar extends BottomBarBase {
         this.items.forEach((item: BottomBarItem, index: number) => {
             const menuItem = this.createItem(item, index, bottomNavigationView);
             item.setNativeView(menuItem);
+        });
+
+        this.createBadges(bottomNavigationView);
+    }
+
+    private createBadges(bottomNavigationView: BottomNavigationViewType) {
+        this.items.forEach(item => {
+            /*
+            * weird behavior for badges, can't seem to get the right child
+            * have to loop again once the items are created
+            */ 
+            if (item._badge) {
+                item.setViewBadge(bottomNavigationView, this._context);
+            }
         });
     }
 
@@ -145,43 +147,60 @@ export class BottomBar extends BottomBarBase {
         // (this.nativeView as any).setLabelVisibilityMode(labelVisibility);
     }
 
-    hide() {
-        // const height = (this.nativeView as BottomNavigationViewType).getMeasuredHeight();
-        const height = this.getActualSize().height;
-        this.visibility = 'collapse';
-        this.animate({
-            duration: 200,
-            translate: {
-                x: 0,
-                y: height
-            },
-            opacity: 0
-        });
-        setTimeout(() => {
+    private getItemByIndex(index: number): BottomBarItem {
+        const selectedItem = this.items.find(item => item.index === index);
 
-        }, 100);
-        // (this.nativeView as BottomNavigationViewType).animate()
-        //     .setDuration(200)
-        //     .translationY(height)
-        //     .start();
+        if (!selectedItem) {
+            throw new Error(`Couldn't find the BottomBarItem with the index: ${index}`);
+        }
+        
+        return selectedItem;
     }
 
-    show() {
-        // const height = (this.nativeView as BottomNavigationViewType).getMeasuredHeight();
-        const height = this.getActualSize().height;
-        console.log(height);
-        this.visibility = 'visible';
-        this.animate({
-            duration: 200,
-            translate: {
-                x: 0,
-                y: -height
-            },
-            opacity: 1
-        });
-        // (this.nativeView as BottomNavigationViewType).animate()
-        //     .setDuration(200)
-        //     .translationY(-height)
-        //     .start();
+    selectItem(index: number) {
+        const selectedItem: BottomBarItem = this.getItemByIndex(index);
+        this.nativeView.setSelectedItemId(selectedItem.nativeView.getItemId());
     }
+
+    // hide() {
+    //     // Need to find a solution to fully show  and hide the view
+    //     // const height = (this.nativeView as BottomNavigationViewType).getMeasuredHeight();
+    //     const height = this.getActualSize().height;
+    //     this.visibility = 'collapse';
+    //     this.animate({
+    //         duration: 200,
+    //         translate: {
+    //             x: 0,
+    //             y: height
+    //         },
+    //         opacity: 0
+    //     });
+    //     setTimeout(() => {
+
+    //     }, 100);
+    //     // (this.nativeView as BottomNavigationViewType).animate()
+    //     //     .setDuration(200)
+    //     //     .translationY(height)
+    //     //     .start();
+    // }
+
+    // show() {
+    // Need to find a solution to fully show  and hide the view
+    //     // const height = (this.nativeView as BottomNavigationViewType).getMeasuredHeight();
+    //     const height = this.getActualSize().height;
+    //     console.log(height);
+    //     this.visibility = 'visible';
+    //     this.animate({
+    //         duration: 200,
+    //         translate: {
+    //             x: 0,
+    //             y: -height
+    //         },
+    //         opacity: 1
+    //     });
+    //     // (this.nativeView as BottomNavigationViewType).animate()
+    //     //     .setDuration(200)
+    //     //     .translationY(-height)
+    //     //     .start();
+    // }
 }

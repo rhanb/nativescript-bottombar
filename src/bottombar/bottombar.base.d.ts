@@ -12,6 +12,7 @@ export declare abstract class BottomBarBase extends View implements AddChildFrom
     barBackgroundColor: Color;
     constructor();
     abstract _addChildFromBuilder(name: string, value: BottomBarItemBase): void;
+    abstract selectItem(index: number): void;
     onTabSelected(newIndex: number): void;
 }
 export declare const items: Property<BottomBarBase, BottomBarItemBase[]>;

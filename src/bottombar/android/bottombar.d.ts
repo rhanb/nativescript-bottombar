@@ -9,12 +9,11 @@ export declare class BottomBar extends BottomBarBase {
     readonly android: globalAndroid.support.design.widget.BottomNavigationView;
     createNativeView(): BottomNavigationViewType;
     _addChildFromBuilder(name: string, value: BottomBarItem): void;
-    initNativeView(): void;
-    onLoaded(): void;
     private createItem(item, id, bottomBar);
     protected createItems(bottomNavigationView: BottomNavigationViewType): void;
+    private createBadges(bottomNavigationView);
     private setItemsColorStateList(activeTintColor, inactiveTintColor);
     onTabSelected(index: number): void;
-    hide(): void;
-    show(): void;
+    private getItemByIndex(index);
+    selectItem(index: number): void;
 }

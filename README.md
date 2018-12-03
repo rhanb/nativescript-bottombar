@@ -10,7 +10,9 @@
 
 NativeScript plugin for [BottomNavigationView](https://github.com/aurelhubert/ahbottomnavigation) and [UITabBar](https://developer.apple.com/documentation/uikit/uitabbar).
 
-No third libraries are used in this plugin.
+PS: To have a material design on iOS too, free to use the plugin [nativescript-bottom-navigation](https://github.com/henrychavez/nativescript-bottom-navigation/)
+
+No third libraries are used in this plugin, wich means this plugin is lightweight because only javascript files will be added to your app.
 
  iOS    |  Android
 -------- | ---------
@@ -20,95 +22,44 @@ No third libraries are used in this plugin.
 
 `tns plugin add nativescript-bottombar`
 
-# Usage
+## Usage
 
 - [Angular](/demo-ng/README.md)
 - [Vue](/demo-vue/README.md)
 - [{N} core](/demo/README.md)
 
-## Angular NativeScript
+## Common Usage
 
-### XML
-   
-```xml
-<GridLayout rows="*, auto">
-    <StackLayout row="0" orientation="vertical">
-       <Label text="demo"></Label>
-    </StackLayout>
-    <BottomBar row="1" (tabSelected)="tabSelected($event)">
-        <BottomBarItem icon="ic_home_black_24dp" title="Home"></BottomBarItem>
-        <BottomBarItem icon="ic_calendar" title="Calendar"></BottomBarItem>
-        <BottomBarItem icon="ic_collaborator" title="Profile"></BottomBarItem>
-		<BottomBarItem icon="ic_paperplane" title="Messages"></BottomBarItem>
-    </BottomBar>
-</GridLayout>
-```
-### Component
+### Icons
 
-```typescript
-import { Component } from "@angular/core";
-import { registerElement } from 'nativescript-angular';
-import { BottomBar, BottomBarItemBase } from 'nativescript-bottombar';
+The properties `icon` and `checkedIcon` supports the following path formats:
 
-registerElement('BottomBar', () => BottomBar);
-
-@Component({
-    selector: "ns-app",
-    moduleId: module.id,
-    templateUrl: "./app.component.html",
-    styles: [`
-        BottomBar {
-            inactive-tint-color: #C34491;
-            active-tint-color: #FFFFFF;
-            bar-background-color: #9F489B;
-        }
-    `]
-})
-export class AppComponent {
-    tabSelected(event) {
-        console.dir(event);
-    }
-}
-```
-## TypeScript NativeScript
-
-### XML
-
-```xml
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
-  xmlns:ui="nativescript-bottombar">
-  <GridLayout rows="*, 40px" class="page">
-    <StackLayout row="0" orientation="vertical">
-        <Label text="demo"></Label>
-    </StackLayout>
-    <ui:BottomBar row="1">
-        <ui:BottomBarItem icon="ic_home_black_24dp" title="Home"></ui:BottomBarItem>
-        <ui:BottomBarItem icon="ic_calendar" title="Calendar"></ui:BottomBarItem>
-        <ui:BottomBarItem icon="ic_collaborator" title="Profile"></ui:BottomBarItem>
-		<ui:BottomBarItem icon="ic_paperplane" title="Messages"></ui:BottomBarItem>
-    </ui:BottomBar>
-</GridLayout>
-</Page>
-```
-
-### Model
-
-```typescript
-import { Observable } from 'data/observable';
-import { BottomBar, BottomBarItem, TITLE_STATE, SelectedIndexChangedEventData, Notification } from 'nativescript-bottombar';
-
-export class HomeViewModel extends Observable {
-
-}
-```
-
-# Ressources
-
-Don't forget that you need your icons files to be in your ressources folder as follow:
+- `~/`: relative path to the app folder
+- `res://`: icons must be in the App_Resources folder as follow
 
 
   iOS    |  Android
 -------- | ---------
-![iOS](screenshots/ressources.ios.png) | ![Android](screenshots/ressources.android.png)
+![iOS](/src/screenshots/ressources.ios.png) | ![Android](/src/screenshots/ressources.android.png)
+
+### Ripple effect color on Android
+
+To change the color of the ripple effect when an item is tapped, please add the following item to your `AppTheme` inside your `App_Resources` > `Android` > `src` > `main` > `res` > `values` > `styles.xml` file with the desired `color` resource.
+
+```XML
+<!-- Application theme -->
+<style name="AppTheme" parent="AppThemeBase">
+    <item name="colorControlHighlight">@color/ns_accent</item>
+</style>
+```
+
+## More details
 
 [API documentation](https://github.com/rhanbIT/nativescript-bottombar/blob/master/API.md)
+
+### TODO
+
+- [ ] Allow to hide/show the `BottomBar`
+- [ ] Expose more `BottomBarItem` customisation (font, position, etc..)
+- [ ] Expose selection indicator on `iOS`
+- [ ] Implement more `unit` tests and `e2e` tests
