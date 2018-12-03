@@ -89,7 +89,7 @@ export class BottomBar extends BottomBarBase {
             /*
             * weird behavior for badges, can't seem to get the right child
             * have to loop again once the items are created
-            */ 
+            */
             if (item._badge) {
                 item.setViewBadge(bottomNavigationView, this._context);
             }
@@ -153,7 +153,7 @@ export class BottomBar extends BottomBarBase {
         if (!selectedItem) {
             throw new Error(`Couldn't find the BottomBarItem with the index: ${index}`);
         }
-        
+
         return selectedItem;
     }
 

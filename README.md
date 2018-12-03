@@ -38,9 +38,9 @@ The properties `icon` and `checkedIcon` supports the following path formats:
 - `res://`: icons must be in the App_Resources folder as follow
 
 
-  iOS    |  Android
--------- | ---------
-![iOS](/src/screenshots/ressources.ios.png) | ![Android](/src/screenshots/ressources.android.png)
+|                     iOS                     | Android                                             |
+|:-------------------------------------------:|-----------------------------------------------------|
+| ![iOS](/src/screenshots/ressources.ios.png) | ![Android](/src/screenshots/ressources.android.png) |
 
 ### Ripple effect color on Android
 
