@@ -1,9 +1,13 @@
 [![npm](https://img.shields.io/npm/v/nativescript-bottombar.svg)](https://www.npmjs.com/package/nativescript-bottombar)
 [![npm](https://img.shields.io/npm/dt/nativescript-bottombar.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-bottombar)
 [![twitter: @_rhanb](https://img.shields.io/badge/twitter-%40rhanb-2F98C1.svg)](https://twitter.com/_rhanb)
+
 [![Build Status](https://travis-ci.org/rhanb/nativescript-bottombar.svg?branch=4.0-rc)](https://travis-ci.org/rhanb/nativescript-bottombar)
+![Package size](https://img.shields.io/badge/package%20size-15.1%20kB-lightgrey.svg)
+![Unpacked size](https://img.shields.io/badge/unpacked%20size-58.9%20kB-brightgreen.svg)
 
 [![NPM](https://nodei.co/npm/nativescript-bottombar.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/nativescript-bottombar/)
+
 
 # NativeScript BottomBar :beers::fire::fr:
 
@@ -20,7 +24,7 @@ No third libraries are used in this plugin, wich means this plugin is lightweigh
 
 ## Installation
 
-`tns plugin add nativescript-bottombar`
+`tns plugin add nativescript-bottombar@next`
 
 ## Usage
 
