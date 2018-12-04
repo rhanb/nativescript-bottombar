@@ -1,11 +1,12 @@
 import { CssProperty, Style, Color, AddChildFromBuilder, Property, View } from 'tns-core-modules/ui/core/view';
 import { BottomBarItemBase } from '../bottombar-item/bottombar-item.base';
-import { LABEL_VISIBILITY } from './android/label-visibility.enum';
+import { LABEL_VISIBILITY } from './bottombar.common';
 export declare namespace knownCollections {
     const items = "items";
 }
 export declare abstract class BottomBarBase extends View implements AddChildFromBuilder {
-    items: BottomBarItemBase[];
+    protected _items: BottomBarItemBase[];
+    readonly items: BottomBarItemBase[];
     selectedIndex: number;
     inactiveTintColor: Color;
     activeTintColor: Color;

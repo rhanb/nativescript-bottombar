@@ -33,7 +33,6 @@
         "./bottombar/bottombar.base.ts",
         "./bottombar/ios/bottombar.ts",
         "./bottombar/android/bottombar.ts",
-        "./bottombar/android/label-visibility.enum.ts",
         "./bottombar-item/bottombar-item.base.ts",
         "./bottombar-item/ios/bottombar-item.ts",
         "./bottombar-item/android/bottombar-item.ts",

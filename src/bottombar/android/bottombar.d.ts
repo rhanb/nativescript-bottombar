@@ -5,7 +5,7 @@ export declare type MenuItemType = android.view.MenuItem;
 export declare type MenuType = android.view.Menu;
 export declare class BottomBar extends BottomBarBase {
     nativeView: BottomNavigationViewType;
-    items: BottomBarItem[];
+    _items: BottomBarItem[];
     readonly android: globalAndroid.support.design.widget.BottomNavigationView;
     createNativeView(): BottomNavigationViewType;
     _addChildFromBuilder(name: string, value: BottomBarItem): void;

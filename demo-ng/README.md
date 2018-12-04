@@ -25,11 +25,30 @@ import { BottomBarModule } from 'nativescript-bottombar/angular';
     <StackLayout row="0" orientation="vertical">
        <Label text="demo"></Label>
     </StackLayout>
-    <BottomBar row="1" (tabSelected)="tabSelected($event)">
-        <BottomBarItem icon="ic_home_black_24dp" title="Home"></BottomBarItem>
-        <BottomBarItem icon="ic_calendar" title="Calendar"></BottomBarItem>
-        <BottomBarItem icon="ic_collaborator" title="Profile"></BottomBarItem>
-        <BottomBarItem icon="ic_paperplane" title="Messages"></BottomBarItem>
+    <BottomBar row="1"
+        (tabSelected)="tabSelected($event)"
+        [androidLabelVisibility]="labelVisibility"
+        (loaded)="barLoaded($event)">
+        <BottomBarItem
+            badgeBackgroundColor="#FF0C3E"
+            badge="1"
+            icon="res://ic_home_outline"
+            title="Home 1" checkedIcon="res://ic_home_filled">
+        </BottomBarItem>
+        <BottomBarItem
+            badgeBackgroundColor="#FF0C3E"
+            icon="res://ic_home_outline"
+            badge="2"
+            title="Home 2"
+            checkedIcon="res://ic_home_filled">
+        </BottomBarItem>
+        <BottomBarItem
+            badgeBackgroundColor="#FF0C3E"
+            icon="res://ic_home_outline"
+            badge="3"
+            title="Home 3"
+            checkedIcon="res://ic_home_filled">
+        </BottomBarItem>
     </BottomBar>
 </GridLayout>
 ```
@@ -37,10 +56,7 @@ import { BottomBarModule } from 'nativescript-bottombar/angular';
 
 ```typescript
 import { Component } from "@angular/core";
-import { registerElement } from 'nativescript-angular';
-import { BottomBar, BottomBarItemBase } from 'nativescript-bottombar';
-
-registerElement('BottomBar', () => BottomBar);
+import { BottomBar, LABEL_VISIBILITY, TabSelectedEventData } from 'nativescript-bottombar';
 
 @Component({
     selector: "ns-app",
@@ -48,15 +64,26 @@ registerElement('BottomBar', () => BottomBar);
     templateUrl: "./app.component.html",
     styles: [`
         BottomBar {
-            inactive-tint-color: #C34491;
+            inactive-tint-color: #B98AF9;
             active-tint-color: #FFFFFF;
-            bar-background-color: #9F489B;
+            bar-background-color: #6800F4;
         }
     `]
 })
 export class AppComponent {
-    tabSelected(event) {
+    private bottomBar: BottomBar;
+    labelVisibility: LABEL_VISIBILITY;
+
+    constructor() {
+        this.labelVisibility = LABEL_VISIBILITY.SELECTED;
+    }
+
+    tabSelected(event: TabSelectedEventData) {
         console.dir(event);
+    }
+
+    barLoaded(event) {
+        this.bottomBar = event.object;
     }
 }
 ```
@@ -88,4 +115,4 @@ To change the color of the ripple effect when an item is tapped, please add the 
 
 ## More details
 
-[API documentation](https://github.com/rhanbIT/nativescript-bottombar/blob/master/API.md)
+[API documentation](/API_DOCUMENTATION.md)

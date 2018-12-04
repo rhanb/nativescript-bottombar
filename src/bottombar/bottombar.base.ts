@@ -10,8 +10,7 @@ import {
 } from 'tns-core-modules/ui/core/view';
 import { BottomBarItemBase } from '../bottombar-item/bottombar-item.base';
 import { colorConverter } from '../utils/utils.common';
-import { TabSelectedEventData } from './bottombar.common';
-import { LABEL_VISIBILITY } from './android/label-visibility.enum';
+import { TabSelectedEventData, LABEL_VISIBILITY } from './bottombar.common';
 
 export namespace knownCollections {
     export const items = 'items';
@@ -20,7 +19,10 @@ export namespace knownCollections {
 @CSSType('BottomBar')
 export abstract class BottomBarBase extends View implements AddChildFromBuilder {
 
-    items: BottomBarItemBase[];
+    protected _items: BottomBarItemBase[];
+    get items(): BottomBarItemBase[] {
+        return this._items;
+    };
 
     selectedIndex: number;
 
@@ -51,7 +53,7 @@ export abstract class BottomBarBase extends View implements AddChildFromBuilder 
     constructor() {
         super();
         this.selectedIndex = 0;
-        this.items = <BottomBarItemBase[]>[];
+        this._items = <BottomBarItemBase[]>[];
     }
 
 
@@ -79,15 +81,15 @@ export const items = new Property<BottomBarBase, BottomBarItemBase[]>({
     affectsLayout: true,
     defaultValue: []
 });
+items.register(BottomBarBase);
 
 export const androidLabelVisibility = new Property<BottomBarBase, LABEL_VISIBILITY>({
     name: 'androidLabelVisibility',
-    equalityComparer: ((oldValue: LABEL_VISIBILITY, newValue: LABEL_VISIBILITY) => {
-        return oldValue !== newValue;
-    }),
+    equalityComparer: (oldValue: LABEL_VISIBILITY, newValue: LABEL_VISIBILITY) => oldValue === newValue,
     affectsLayout: isAndroid,
-    defaultValue: LABEL_VISIBILITY.SELECTED
+    defaultValue: LABEL_VISIBILITY.AUTO
 });
+androidLabelVisibility.register(BottomBarBase);
 /**
  * CSS Properties
  */

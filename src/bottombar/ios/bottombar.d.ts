@@ -11,7 +11,7 @@ export declare class BottomBarControllerDelegate extends NSObject implements UIT
 export declare class BottomBar extends BottomBarBase {
     _tabBarController: UITabBarController;
     private _delegate;
-    items: BottomBarItem[];
+    _items: BottomBarItem[];
     nativeView: UITabBar;
     readonly ios: UITabBar;
     createNativeView(): UITabBar;

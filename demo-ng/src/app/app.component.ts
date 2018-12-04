@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { BottomBar } from 'nativescript-bottombar';
+import { BottomBar, LABEL_VISIBILITY, TabSelectedEventData } from 'nativescript-bottombar';
 
 @Component({
     selector: "ns-app",
@@ -7,29 +7,25 @@ import { BottomBar } from 'nativescript-bottombar';
     templateUrl: "./app.component.html",
     styles: [`
         BottomBar {
-            inactive-tint-color: #C34491;
+            inactive-tint-color: #B98AF9;
             active-tint-color: #FFFFFF;
-            bar-background-color: #9F489B;
-            badge-background-color: #222222;
+            bar-background-color: #6800F4;
         }
     `]
 })
 export class AppComponent {
     private bottomBar: BottomBar;
+    labelVisibility: LABEL_VISIBILITY;
 
-    home: string = 'Home bis';
+    constructor() {
+        this.labelVisibility = LABEL_VISIBILITY.SELECTED;
+    }
 
-    badgeValue: string = '1';
-
-    tabSelected(event) {
+    tabSelected(event: TabSelectedEventData) {
         console.dir(event);
     }
 
     barLoaded(event) {
         this.bottomBar = event.object;
-
-        setTimeout(() => {
-            this.bottomBar.selectItem(1);
-        }, 2000);
     }
 }

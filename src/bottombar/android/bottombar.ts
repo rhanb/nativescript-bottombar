@@ -9,7 +9,7 @@ import {
 import { Color } from 'tns-core-modules/color/color';
 import { BottomBarItem } from '../../bottombar-item/android/bottombar-item';
 import { createIconsStateListDrawable } from '../../utils/android/utils';
-import { LABEL_VISIBILITY } from './label-visibility.enum';
+import { LABEL_VISIBILITY } from '../bottombar.common';
 // Types declaration
 export declare type BottomNavigationViewType = android.support.design.widget.BottomNavigationView;
 export declare type MenuItemType = android.view.MenuItem;
@@ -21,7 +21,7 @@ const { ColorStateList } = android.content.res;
 
 export class BottomBar extends BottomBarBase {
     nativeView: BottomNavigationViewType;
-    items: BottomBarItem[];
+    _items: BottomBarItem[];
     get android() {
         return this.nativeView;
     }
@@ -42,14 +42,14 @@ export class BottomBar extends BottomBarBase {
         this.createItems(bottomBar);
 
         // Typings don't match design API >28.0
-        // (bottomBar as any).setLabelVisibilityMode(LABEL_VISIBILITY.AUTO);
+        (bottomBar as any).setLabelVisibilityMode(LABEL_VISIBILITY.AUTO);
 
         return bottomBar;
     }
 
     public _addChildFromBuilder(name: string, value: BottomBarItem) {
         if (name === 'BottomBarItem') {
-            this.items.push(value);
+            this._items.push(value);
         }
     }
 
@@ -76,7 +76,7 @@ export class BottomBar extends BottomBarBase {
             menu.clear();
         }
 
-        this.items.forEach((item: BottomBarItem, index: number) => {
+        this._items.forEach((item: BottomBarItem, index: number) => {
             const menuItem = this.createItem(item, index, bottomNavigationView);
             item.setNativeView(menuItem);
         });
@@ -85,7 +85,7 @@ export class BottomBar extends BottomBarBase {
     }
 
     private createBadges(bottomNavigationView: BottomNavigationViewType) {
-        this.items.forEach(item => {
+        this._items.forEach(item => {
             /*
             * weird behavior for badges, can't seem to get the right child
             * have to loop again once the items are created
@@ -124,7 +124,7 @@ export class BottomBar extends BottomBarBase {
 
     [items.setNative](items: BottomBarItem[]) {
         if (items) {
-            this.items = [...items];
+            this._items = [...items];
             this.createItems(this.nativeView);
         }
     }
@@ -144,11 +144,11 @@ export class BottomBar extends BottomBarBase {
 
     [androidLabelVisibility.setNative](labelVisibility: LABEL_VISIBILITY): void {
         // Typings don't match design API >28.0
-        // (this.nativeView as any).setLabelVisibilityMode(labelVisibility);
+        (this.nativeView as any).setLabelVisibilityMode(labelVisibility);
     }
 
     private getItemByIndex(index: number): BottomBarItem {
-        const selectedItem = this.items.find(item => item.index === index);
+        const selectedItem = this._items.find(item => item.index === index);
 
         if (!selectedItem) {
             throw new Error(`Couldn't find the BottomBarItem with the index: ${index}`);

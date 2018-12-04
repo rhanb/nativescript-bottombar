@@ -31,7 +31,7 @@ export class BottomBar extends BottomBarBase {
 
     public _tabBarController: UITabBarController;
     private _delegate: BottomBarControllerDelegate;
-    items: BottomBarItem[];
+    _items: BottomBarItem[];
 
     nativeView: UITabBar;
 
@@ -52,8 +52,8 @@ export class BottomBar extends BottomBarBase {
 
     _addChildFromBuilder(name: string, value: BottomBarItem) {
         if (name === 'BottomBarItem') {
-            this.items.push(
-                this.createItem(value, this.items.length)
+            this._items.push(
+                this.createItem(value, this._items.length)
             );
         }
     }
@@ -65,7 +65,7 @@ export class BottomBar extends BottomBarBase {
 
     private setViewControllers(): void {
         this._tabBarController.viewControllers = (NSArray as any).arrayWithArray(
-            this.items.map(item => item.viewController)
+            this._items.map(item => item.viewController)
         );
     }
 
@@ -121,13 +121,13 @@ export class BottomBar extends BottomBarBase {
 
     [items.setNative](items: BottomBarItem[]): void {
         if (items) {
-            this.items = [...items];
+            this._items = [...items];
 
             if (this._tabBarController.viewControllers.count > 0) {
                 this._tabBarController.viewControllers = null;
             }
 
-            this.items.forEach((item: BottomBarItem, index: number) => {
+            this._items.forEach((item: BottomBarItem, index: number) => {
                 this.createItem(item, index);
             });
 

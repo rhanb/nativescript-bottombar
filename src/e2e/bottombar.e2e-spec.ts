@@ -17,10 +17,8 @@ describe("Bottom bar", () => {
     });
 
     after(async () => {
-        console.log(isSauceRun);
         if (isSauceRun) {
             driver.sessionId().then(function (sessionId) {
-                console.log(sessionId);
                 console.log("Report: https://saucelabs.com/beta/tests/" + sessionId);
             });
         }

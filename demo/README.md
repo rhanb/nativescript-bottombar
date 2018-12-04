@@ -87,4 +87,4 @@ To change the color of the ripple effect when an item is tapped, please add the 
 
 ## More details
 
-[API documentation](https://github.com/rhanbIT/nativescript-bottombar/blob/master/API.md)
+[API documentation](/API_DOCUMENTATION.md)

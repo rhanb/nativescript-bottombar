@@ -16,13 +16,15 @@ No third libraries are used in this plugin, wich means this plugin is lightweigh
 
  iOS    |  Android
 -------- | ---------
-![iOS](screenshots/showcase-ios.gif) | ![Android](https://github.com/rhanb/nativescript-bottombar/blob/master/screenshots/showcase-android.png)
+![iOS](/src/screenshots/showcase.ios.gif) | ![Android](/src/screenshots/showcase.android.gif)
 
 ## Installation
 
 `tns plugin add nativescript-bottombar`
 
 ## Usage
+
+[API documentation](/API_DOCUMENTATION.md)
 
 - [Angular](/demo-ng/README.md)
 - [Vue](/demo-vue/README.md)
@@ -53,9 +55,13 @@ To change the color of the ripple effect when an item is tapped, please add the 
 </style>
 ```
 
+### Android support
+
+You will need Support Library APIs v28 installed on your developer machine to be able to successfully use this plugin. If you already use the latest {N} version `5.0`, you should be good to go.
+
 ## More details
 
-[API documentation](https://github.com/rhanbIT/nativescript-bottombar/blob/master/API.md)
+[API documentation](/API_DOCUMENTATION.md)
 
 ### TODO
 
