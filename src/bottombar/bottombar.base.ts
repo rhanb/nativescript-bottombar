@@ -22,7 +22,7 @@ export abstract class BottomBarBase extends View implements AddChildFromBuilder 
     protected _items: BottomBarItemBase[];
     get items(): BottomBarItemBase[] {
         return this._items;
-    };
+    }
 
     selectedIndex: number;
 
