@@ -1,6 +1,6 @@
 {
   "name": "nativescript-bottombar",
-  "version": "4.0.0-rc1.1",
+  "version": "4.0.0-rc1.2",
   "description": "NativeScript plugin to integrate a bottom navigation menu easily",
   "typings": "index.d.ts",
   "main": "bottombar",
