@@ -47,6 +47,12 @@ export class BottomBar extends BottomBarBase {
         const actualHeight = this.getActualSize().height;
         this.height = actualHeight ? actualHeight : 49;
 
+        this._tabBarController.tabBar.barTintColor = this.barBackgroundColor.ios;
+
+        this._tabBarController.tabBar.unselectedItemTintColor = this.inactiveTintColor.ios;
+
+        this._tabBarController.tabBar.tintColor = this.activeTintColor.ios;
+
         return this._tabBarController.tabBar;
     }
 
@@ -135,24 +141,12 @@ export class BottomBar extends BottomBarBase {
         }
     }
 
-    [inactiveTintColor.getDefault](): UIColor {
-        return this.nativeView.unselectedItemTintColor;
-    }
-
     [inactiveTintColor.setNative](color: Color): void {
         this.nativeView.unselectedItemTintColor = color.ios;
     }
 
-    [activeTintColor.getDefault](): UIColor {
-        return this.nativeView.tintColor;
-    }
-
     [activeTintColor.setNative](color: Color): void {
         this.nativeView.tintColor = color.ios;
-    }
-
-    [barBackgroundColor.getDefault](): UIColor {
-        return this.nativeView.barTintColor;
     }
 
     [barBackgroundColor.setNative](color: Color): void {

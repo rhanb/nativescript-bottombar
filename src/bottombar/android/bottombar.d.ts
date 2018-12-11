@@ -12,7 +12,7 @@ export declare class BottomBar extends BottomBarBase {
     private createItem(item, id, bottomBar);
     protected createItems(bottomNavigationView: BottomNavigationViewType): void;
     private createBadges(bottomNavigationView);
-    private setItemsColorStateList(activeTintColor, inactiveTintColor);
+    private setItemsColorStateList(activeTintColor, inactiveTintColor, bottomBarValue?);
     onTabSelected(index: number): void;
     private getItemByIndex(index);
     selectItem(index: number): void;

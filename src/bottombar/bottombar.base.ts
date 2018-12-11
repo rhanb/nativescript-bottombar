@@ -122,7 +122,7 @@ barBackgroundColor.register(Style);
 export const activeTintColor = new CssProperty<Style, Color>({
     name: 'activeTintColor',
     cssName: 'active-tint-color',
-    defaultValue: new Color('black'),
+    defaultValue: new Color('#000000'),
     valueConverter: colorConverter,
     equalityComparer: Color.equals
 });

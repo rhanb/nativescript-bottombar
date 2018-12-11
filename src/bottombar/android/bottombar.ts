@@ -41,6 +41,10 @@ export class BottomBar extends BottomBarBase {
         // is not done in the _addChildFromBuilder like in ios
         this.createItems(bottomBar);
 
+        bottomBar.setBackgroundColor(this.barBackgroundColor.android);
+
+        this.setItemsColorStateList(this.activeTintColor.android, this.inactiveTintColor.android, bottomBar);
+
         // Typings don't match design API >28.0
         (bottomBar as any).setLabelVisibilityMode(LABEL_VISIBILITY.AUTO);
 
@@ -97,7 +101,7 @@ export class BottomBar extends BottomBarBase {
     }
 
 
-    private setItemsColorStateList(activeTintColor: number, inactiveTintColor: number): void {
+    private setItemsColorStateList(activeTintColor: number, inactiveTintColor: number, bottomBarValue?: BottomNavigationViewType): void {
         const stateUnChecked = Array.create('int', 1);
         stateUnChecked[0] = -android.R.attr.state_checked;
         const defaultState = Array.create('int', 0);
@@ -110,7 +114,7 @@ export class BottomBar extends BottomBarBase {
         colors[0] = inactiveTintColor;
         colors[1] = activeTintColor;
 
-        const bottomBar: BottomNavigationViewType = this.nativeView;
+        const bottomBar: BottomNavigationViewType = bottomBarValue ? bottomBarValue : this.nativeView;
 
         const colorStateList = new ColorStateList(states, colors);
 
