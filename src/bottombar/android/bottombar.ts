@@ -11,11 +11,11 @@ import { BottomBarItem } from '../../bottombar-item/android/bottombar-item';
 import { createIconsStateListDrawable } from '../../utils/android/utils';
 import { LABEL_VISIBILITY } from '../bottombar.common';
 // Types declaration
-export declare type BottomNavigationViewType = android.support.design.widget.BottomNavigationView;
+export declare type BottomNavigationViewType = com.google.android.material.bottomnavigation.BottomNavigationView;
 export declare type MenuItemType = android.view.MenuItem;
 export declare type MenuType = android.view.Menu;
 // Classes shortcuts
-const { BottomNavigationView } = android.support.design.widget;
+const { BottomNavigationView } = com.google.android.material.bottomnavigation;
 const { Menu } = android.view;
 const { ColorStateList } = android.content.res;
 
