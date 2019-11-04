@@ -1,6 +1,6 @@
 {
   "name": "nativescript-bottombar",
-  "version": "4.0.0-rc1.2",
+  "version": "4.0.0",
   "description": "NativeScript plugin to integrate a bottom navigation menu easily",
   "typings": "index.d.ts",
   "main": "bottombar",
@@ -19,7 +19,7 @@
     }
   },
   "scripts": {
-    "tsc": "tsc && cd angular && tsc",
+    "tsc": "npm i && tsc && cd angular && tsc",
     "build": "npm run tsc && npm run build.native",
     "build.ci": "npm run clean.ci && npm run build",
     "build.native": "node scripts/build-native.js",
@@ -88,8 +88,8 @@
     "prompt": "^1.0.0",
     "rimraf": "^2.6.2",
     "semver": "^5.6.0",
-    "tns-core-modules": "^5.0.1",
-    "tns-platform-declarations": "^5.0.0",
+    "tns-core-modules": "^6.1.2",
+    "tns-platform-declarations": "^6.1.2",
     "tslint": "^5.11.0",
     "typescript": "~2.8.2"
   },
