@@ -1,13 +1,13 @@
 {
   "name": "nativescript-bottombar",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "NativeScript plugin to integrate a bottom navigation menu easily",
   "typings": "index.d.ts",
   "main": "bottombar",
   "nativescript": {
     "platforms": {
-        "android": "6.0.0",
-        "ios": "6.0.1"
+      "android": "6.0.0",
+      "ios": "6.0.1"
     },
     "plugin": {
       "nan": "true",
@@ -91,7 +91,7 @@
     "tns-core-modules": "^6.0.0",
     "tns-platform-declarations": "^6.0.0",
     "tslint": "^5.12.1",
-    "typescript": "~3.4.5",
+    "typescript": "~3.4.5"
   },
   "dependencies": {},
   "bootstrapper": "nativescript-plugin-seed"

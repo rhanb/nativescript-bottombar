@@ -32,7 +32,7 @@ export class BottomBarItem extends BottomBarItemBase {
         if (this._checkedIcon !== image) {
             this._checkedIcon = image;
             if (this.nativeView) {
-                this.nativeView.selectedImage = imageConverter(this._checkedIcon).ios;
+                this.nativeView.selectedImage = imageConverter(this._checkedIcon).ios.imageRenderingMode(UIImageRenderingMode.AlwaysOriginal);
             }
         }
     }
