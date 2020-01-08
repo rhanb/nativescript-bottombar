@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "noEmitOnError": true,
+    "noEmitHelpers": true,
+    "sourceMap": false,
+    "removeComments": true,
+    "declaration": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es6", "dom"],
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "./node_modules/*"
+      ]
+    },
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true
+  },
+  "files": [
+    "angular/index.ts"
+  ],
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true
+  }
+}

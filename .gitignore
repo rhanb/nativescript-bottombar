@@ -5,7 +5,8 @@
 *.js
 *.js.map
 *.log
-src/*.d.ts
+*.metadata.json
+*.d.ts
 !src/vue/index.js
 !src/index.d.ts
 !src/references.d.ts
