@@ -29,6 +29,7 @@ pack() {
     echo 'Building /src...'
     cd "$TO_SOURCE_DIR"
     node_modules/.bin/tsc
+    node_modules/.bin/ngc --project tsconfig.aot.json
     cd ..
 
     echo 'Creating package...'
