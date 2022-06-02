@@ -78,7 +78,7 @@
   "homepage": "https://github.com/rhanb/nativescript-bottombar",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "@angular/core": "^7.1.0",
+    "@angular/core": "^11.0.5",
     "@types/chai": "~4.1.3",
     "@types/mocha": "~5.2.1",
     "@types/node": "^7.0.5",
