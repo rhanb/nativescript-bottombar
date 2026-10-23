@@ -73,3 +73,7 @@ You will need Support Library APIs v28 installed on your developer machine to be
 - [ ] Expose more `BottomBarItem` customisation (font, position, etc..)
 - [ ] Expose selection indicator on `iOS`
 - [ ] Implement more `unit` tests and `e2e` tests
+
+## License
+
+Apache-2.0, see [LICENSE](LICENSE).
